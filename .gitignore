@@ -45,3 +45,5 @@ Temporary Items
 #AndroidStudio
 .gradle/
 .idea/
+app/build
+build
