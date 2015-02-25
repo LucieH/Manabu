@@ -12,5 +12,8 @@
     <string name="title_activity_img">ImgActivity</string>
     <string name="title_activity_son">SonActivity</string>
     <string name="title_activity_anagramme">AnagrammeActivity</string>
+    <string name="img_0">Plume</string>
+    <string name="img_1">Crayon</string>
+    <string name="img_2">Banane</string>
 
 </resources>
