@@ -12,8 +12,18 @@
     <string name="title_activity_img">ImgActivity</string>
     <string name="title_activity_son">SonActivity</string>
     <string name="title_activity_anagramme">AnagrammeActivity</string>
-    <string name="img_0">Plume</string>
-    <string name="img_1">Crayon</string>
-    <string name="img_2">Banane</string>
+    <string name="img_0">Une plume</string>
+    <string name="img_01">Une dune</string>
+    <string name="img_02">Une prune</string>
+    <string name="img_1">Un crayon</string>
+    <string name="img_11">Un canyon</string>
+    <string name="img_12">Un camion</string>
+    <string name="img_2">Une banane</string>
+    <string name="img_21">Un bandage</string>
+    <string name="img_22">Un ananas</string>
+
+    <string name="refresh">Recharger</string>
+    <string name="memo">Mémorisé !</string>
+
 
 </resources>
