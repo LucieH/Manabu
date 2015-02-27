@@ -11,13 +11,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="be.manabu.ImgActivity" >
 
-        <Button
-            android:id="@+id/bImgStart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="startImage"
-            android:text="@string/demarrerjeu"
-            android:textColor="#FFF"/>
+    <Button
+        android:id="@+id/bSonStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="startSon"
+        android:text="@string/demarrerjeu"
+        android:textColor="#FFF"/>
 
 
 </LinearLayout>

@@ -3,17 +3,22 @@ package be.manabu;
 import java.util.Random;
 
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Color;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -101,15 +106,6 @@ public class ImgActivity extends ActionBarActivity {
         }
     }
 
-    /** Called when the user clicks the Sons button */
-    public void refresh(View view) {
-        view.invalidate();
-        setContentView(R.layout.activity_img);
-        // Do something in response to button
-        randomImg(strTmp);
-
-    }
-
     /** Démarrer le jeu imagerie ave les fiches Freinet*/
     public void startImage(View view) {
         view.invalidate();
@@ -134,56 +130,7 @@ public class ImgActivity extends ActionBarActivity {
         final Button b3 = (Button) findViewById(R.id.choix3);
 
         //texte ramdom dans les boutons
-
-        int i = rnd.nextInt(3);
-        int j = rnd.nextInt(2);
-        switch(i){
-            case 0:
-                b1.setText(getStringResourceByName(strTmp));
-                switch(j){
-                    case 0:
-                        b3.setText(getStringResourceByName(strTmp+"1"));
-                        b2.setText(getStringResourceByName(strTmp+"2"));
-                        break;
-                    case 1:
-                        b2.setText(getStringResourceByName(strTmp+"1"));
-                        b3.setText(getStringResourceByName(strTmp+"2"));
-                        break;
-                }
-                break;
-            case 1:
-                b2.setText(getStringResourceByName(strTmp));
-                switch(j){
-                    case 0:
-                        b3.setText(getStringResourceByName(strTmp+"1"));
-                        b1.setText(getStringResourceByName(strTmp+"2"));
-                        break;
-                    case 1:
-                        b1.setText(getStringResourceByName(strTmp+"1"));
-                        b3.setText(getStringResourceByName(strTmp+"2"));
-                        break;
-                }
-                break;
-            case 2:
-                b3.setText(getStringResourceByName(strTmp));
-                switch(j){
-                    case 0:
-                        b1.setText(getStringResourceByName(strTmp+"1"));
-                        b2.setText(getStringResourceByName(strTmp+"2"));
-                        break;
-                    case 1:
-                        b2.setText(getStringResourceByName(strTmp+"1"));
-                        b1.setText(getStringResourceByName(strTmp+"2"));
-                        break;
-                }
-                break;
-
-        }
-
-
-        /*b1.setText(getStringResourceByName(strTmp));
-        b2.setText(getStringResourceByName(strTmp+"1"));
-        b3.setText(getStringResourceByName(strTmp+"2"));*/
+        creerBoutonRandom(b1, b2, b3);
     }
 
      /**  Permet d'avoir les images prises au hasard avec le mot correspondant  */
@@ -202,6 +149,111 @@ public class ImgActivity extends ActionBarActivity {
         final TextView tv = (TextView) findViewById(R.id.tv1);
         tv.setText(getStringResourceByName(str));
         setStrTmp(str);
+    }
+
+    protected void creerBoutonRandom(Button b1, Button b2, Button b3){
+        int i = rnd.nextInt(3);
+        int j = rnd.nextInt(2);
+        switch(i){
+            case 0:
+                setBonneReponse(b1);
+                switch(j){
+                    case 0:
+                        b3.setText(getStringResourceByName(strTmp+"1"));
+                        b2.setText(getStringResourceByName(strTmp+"2"));
+                        break;
+                    case 1:
+                        b2.setText(getStringResourceByName(strTmp+"1"));
+                        b3.setText(getStringResourceByName(strTmp+"2"));
+                        break;
+                }
+                setMauvaiseReponse(b2, b3);
+                break;
+            case 1:
+                setBonneReponse(b2);
+                switch(j){
+                    case 0:
+                        b3.setText(getStringResourceByName(strTmp+"1"));
+                        b1.setText(getStringResourceByName(strTmp+"2"));
+                        break;
+                    case 1:
+                        b1.setText(getStringResourceByName(strTmp+"1"));
+                        b3.setText(getStringResourceByName(strTmp+"2"));
+                        break;
+                }
+                setMauvaiseReponse(b1, b3);
+                break;
+            case 2:
+                setBonneReponse(b3);
+                switch(j){
+                    case 0:
+                        b1.setText(getStringResourceByName(strTmp+"1"));
+                        b2.setText(getStringResourceByName(strTmp+"2"));
+                        break;
+                    case 1:
+                        b2.setText(getStringResourceByName(strTmp+"1"));
+                        b1.setText(getStringResourceByName(strTmp+"2"));
+                        break;
+                }
+                setMauvaiseReponse(b2, b1);
+                break;
+
+        }
+    }
+
+    protected void setBonneReponse(Button b){
+        b.setText(getStringResourceByName(strTmp));
+        b.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+                afficherToastReponse(true);
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Do something after 5s = 5000ms
+                        startImage(v);
+                    }
+                }, 2500);
+            }
+        });
+    }
+
+    protected void setMauvaiseReponse(final Button a, final Button b){
+        a.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                afficherToastReponse(false);
+            }
+        });
+        b.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                afficherToastReponse(false);
+            }
+        });
+    }
+
+    protected void afficherToastReponse(Boolean res){
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_layout,
+                (ViewGroup) findViewById(R.id.toast_layout_root));
+
+        TextView text = (TextView) layout.findViewById(R.id.text);
+        ImageView img = (ImageView) layout.findViewById(R.id.resultImg);
+
+        if (res){
+            text.setText("Bien joué !");
+            text.setTextColor(Color.parseColor("#00A000"));
+            img.setImageDrawable(getResources().getDrawable(R.drawable.ok));
+        }
+        else{
+            text.setText("Essaye encore !");
+            text.setTextColor(Color.RED);
+            img.setImageDrawable(getResources().getDrawable(R.drawable.ko));
+        }
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.CENTER,0,0);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
     }
 }
 

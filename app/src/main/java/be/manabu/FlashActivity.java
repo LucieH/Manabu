@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -24,7 +25,7 @@ public class FlashActivity extends ActionBarActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
                                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.activity_flash);
+		setContentView(R.layout.activity_flash_start);
 	}
 
 	@Override
@@ -50,5 +51,11 @@ public class FlashActivity extends ActionBarActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    /** Démarrer le jeu imagerie ave les fiches Freinet*/
+    public void startFlash(View view) {
+        view.invalidate();
+        setContentView(R.layout.activity_flash);
     }
 }

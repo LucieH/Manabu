@@ -12,6 +12,9 @@
     <string name="title_activity_img">ImgActivity</string>
     <string name="title_activity_son">SonActivity</string>
     <string name="title_activity_anagramme">AnagrammeActivity</string>
+    <string name="demarrerjeu">Démarrer le jeu >></string>
+
+    <!-- Mots et phrases pour l'activité Imagerie-->
     <string name="img_0">Une plume</string>
     <string name="img_01">Une dune</string>
     <string name="img_02">Une prune</string>
