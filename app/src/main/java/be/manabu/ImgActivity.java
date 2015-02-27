@@ -1,6 +1,7 @@
 package be.manabu;
 
 import java.util.Random;
+import java.util.Arrays;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -26,7 +27,10 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class ImgActivity extends ActionBarActivity {
 
     final Random rnd = new Random();
+    final int NB_IMAGES = 9;
     private String strTmp = "start";
+    private int tabNbImages[] = new int[NB_IMAGES];
+    private int cmptImages = 0;
 
     //Getters et setters
     public void setStrTmp(String s){
@@ -109,8 +113,12 @@ public class ImgActivity extends ActionBarActivity {
     /** Démarrer le jeu imagerie ave les fiches Freinet*/
     public void startImage(View view) {
         view.invalidate();
-        setContentView(R.layout.activity_img);
-        randomImg(strTmp);
+        if (cmptImages < NB_IMAGES) {
+            setContentView(R.layout.activity_img);
+            randomImg();
+        }
+        else
+            setContentView(R.layout.activity_flash);
 
     }
 
@@ -124,23 +132,32 @@ public class ImgActivity extends ActionBarActivity {
                         getResources().getDrawable(getResourceID(strTmp, "drawable",
                                 getApplicationContext()))
                 );
-        rnd.nextInt(3);
         final Button b1 = (Button) findViewById(R.id.choix1);
         final Button b2 = (Button) findViewById(R.id.choix2);
         final Button b3 = (Button) findViewById(R.id.choix3);
+        final Button test = (Button) findViewById(R.id.recharger);
+        test.setText(""+cmptImages+"");
 
         //texte ramdom dans les boutons
         creerBoutonRandom(b1, b2, b3);
     }
 
      /**  Permet d'avoir les images prises au hasard avec le mot correspondant  */
-    protected void randomImg(String strTmp){
+    protected void randomImg(){
         final ImageView img = (ImageView) findViewById(R.id.imgRandom);
         // I have 3 images named img_0 to img_2, so...
         String str;
+        int rand;
+        int idx=-1;
         do {
-            str = "img_" + rnd.nextInt(3);
-        }while (strTmp.equals(str));
+            rand = rnd.nextInt(NB_IMAGES);
+            str = "img_" + rand;
+            if(cmptImages >0) {
+                //ARRAYS A MODIFIER
+
+                idx = Arrays.binarySearch(tabNbImages, rand);
+            }
+        }while (idx >= 0);
         img.setImageDrawable
                 (
                         getResources().getDrawable(getResourceID(str, "drawable",
@@ -149,6 +166,10 @@ public class ImgActivity extends ActionBarActivity {
         final TextView tv = (TextView) findViewById(R.id.tv1);
         tv.setText(getStringResourceByName(str));
         setStrTmp(str);
+        this.tabNbImages[cmptImages]=rand;
+        //ARRAYS A MODIFIER
+        Arrays.sort(this.tabNbImages);
+        this.cmptImages++;
     }
 
     protected void creerBoutonRandom(Button b1, Button b2, Button b3){

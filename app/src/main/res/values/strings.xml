@@ -24,6 +24,25 @@
     <string name="img_2">Une banane</string>
     <string name="img_21">Un bandage</string>
     <string name="img_22">Un ananas</string>
+    <string name="img_3">Une voiture</string>
+    <string name="img_31">Une toiture</string>
+    <string name="img_32">Un bus</string>
+    <string name="img_4">Une tulipe</string>
+    <string name="img_41">Une fleur</string>
+    <string name="img_42">Une rose</string>
+    <string name="img_5">Le soleil</string>
+    <string name="img_51">Une étoile</string>
+    <string name="img_52">Le sommeil</string>
+    <string name="img_6">Un parapluie</string>
+    <string name="img_61">Un parasol</string>
+    <string name="img_62">Un parapente</string>
+    <string name="img_7">Un crabe</string>
+    <string name="img_71">Un crâne</string>
+    <string name="img_72">Une fable</string>
+    <string name="img_8">Une chaise</string>
+    <string name="img_81">Un tabouret</string>
+    <string name="img_82">Une laisse</string>
+
 
     <string name="refresh">Recharger</string>
     <string name="memo">Mémorisé !</string>
