@@ -46,6 +46,9 @@
 
     <string name="refresh">Recharger</string>
     <string name="memo">Mémorisé !</string>
+    <string name="menu">Menu</string>
+    <string name="rejouer">Rejouer</string>
+    <string name="spr">Super, tu es arrivé à la fin, que veux-tu faire ?</string>
 
 
 </resources>

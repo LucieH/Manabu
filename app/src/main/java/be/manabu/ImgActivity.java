@@ -118,7 +118,7 @@ public class ImgActivity extends ActionBarActivity {
             randomImg();
         }
         else
-            setContentView(R.layout.activity_flash);
+            setContentView(R.layout.activity_img_fin);
 
     }
 
@@ -135,8 +135,6 @@ public class ImgActivity extends ActionBarActivity {
         final Button b1 = (Button) findViewById(R.id.choix1);
         final Button b2 = (Button) findViewById(R.id.choix2);
         final Button b3 = (Button) findViewById(R.id.choix3);
-        final Button test = (Button) findViewById(R.id.recharger);
-        test.setText(""+tabNbImages[cmptImages-1]+"");
 
         //texte ramdom dans les boutons
         creerBoutonRandom(b1, b2, b3);
@@ -274,6 +272,17 @@ public class ImgActivity extends ActionBarActivity {
             if (tabNbImages[i] == rand) return true;
         }
         return false;
+    }
+
+    public void rejouer(View view) {
+        view.invalidate();
+        this.cmptImages=0;
+        setContentView(R.layout.activity_img_start);
+    }
+
+    public void retournerMenu(View view){
+        view.invalidate();
+        this.finish();
     }
 }
 
