@@ -136,7 +136,7 @@ public class ImgActivity extends ActionBarActivity {
         final Button b2 = (Button) findViewById(R.id.choix2);
         final Button b3 = (Button) findViewById(R.id.choix3);
         final Button test = (Button) findViewById(R.id.recharger);
-        test.setText(""+cmptImages+"");
+        test.setText(""+tabNbImages[cmptImages-1]+"");
 
         //texte ramdom dans les boutons
         creerBoutonRandom(b1, b2, b3);
@@ -145,19 +145,12 @@ public class ImgActivity extends ActionBarActivity {
      /**  Permet d'avoir les images prises au hasard avec le mot correspondant  */
     protected void randomImg(){
         final ImageView img = (ImageView) findViewById(R.id.imgRandom);
-        // I have 3 images named img_0 to img_2, so...
         String str;
         int rand;
-        int idx=-1;
         do {
             rand = rnd.nextInt(NB_IMAGES);
             str = "img_" + rand;
-            if(cmptImages >0) {
-                //ARRAYS A MODIFIER
-
-                idx = Arrays.binarySearch(tabNbImages, rand);
-            }
-        }while (idx >= 0);
+        }while (existeImageAffichee(rand));
         img.setImageDrawable
                 (
                         getResources().getDrawable(getResourceID(str, "drawable",
@@ -167,58 +160,58 @@ public class ImgActivity extends ActionBarActivity {
         tv.setText(getStringResourceByName(str));
         setStrTmp(str);
         this.tabNbImages[cmptImages]=rand;
-        //ARRAYS A MODIFIER
-        Arrays.sort(this.tabNbImages);
         this.cmptImages++;
     }
 
     protected void creerBoutonRandom(Button b1, Button b2, Button b3){
         int i = rnd.nextInt(3);
         int j = rnd.nextInt(2);
+        Button a = null;
+        Button b = null;
         switch(i){
             case 0:
                 setBonneReponse(b1);
                 switch(j){
                     case 0:
-                        b3.setText(getStringResourceByName(strTmp+"1"));
-                        b2.setText(getStringResourceByName(strTmp+"2"));
+                        a=b3;
+                        b=b2;
+
                         break;
                     case 1:
-                        b2.setText(getStringResourceByName(strTmp+"1"));
-                        b3.setText(getStringResourceByName(strTmp+"2"));
+                        a=b2;
+                        b=b3;
                         break;
                 }
-                setMauvaiseReponse(b2, b3);
+                setMauvaiseReponse(a, b);
                 break;
             case 1:
                 setBonneReponse(b2);
                 switch(j){
                     case 0:
-                        b3.setText(getStringResourceByName(strTmp+"1"));
-                        b1.setText(getStringResourceByName(strTmp+"2"));
+                        a=b3;
+                        b=b1;
                         break;
                     case 1:
-                        b1.setText(getStringResourceByName(strTmp+"1"));
-                        b3.setText(getStringResourceByName(strTmp+"2"));
+                        a=b1;
+                        b=b3;
                         break;
                 }
-                setMauvaiseReponse(b1, b3);
+                setMauvaiseReponse(a, b);
                 break;
             case 2:
                 setBonneReponse(b3);
                 switch(j){
                     case 0:
-                        b1.setText(getStringResourceByName(strTmp+"1"));
-                        b2.setText(getStringResourceByName(strTmp+"2"));
+                        a=b1;
+                        b=b2;
                         break;
                     case 1:
-                        b2.setText(getStringResourceByName(strTmp+"1"));
-                        b1.setText(getStringResourceByName(strTmp+"2"));
+                        a=b2;
+                        b=b1;
                         break;
                 }
-                setMauvaiseReponse(b2, b1);
+                setMauvaiseReponse(a, b);
                 break;
-
         }
     }
 
@@ -226,7 +219,7 @@ public class ImgActivity extends ActionBarActivity {
         b.setText(getStringResourceByName(strTmp));
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
-                afficherToastReponse(true);
+                afficherToastReponse(true, "Bien joué !", "#00A000");
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -240,34 +233,33 @@ public class ImgActivity extends ActionBarActivity {
     }
 
     protected void setMauvaiseReponse(final Button a, final Button b){
+        a.setText(getStringResourceByName(strTmp+"1"));
+        b.setText(getStringResourceByName(strTmp+"2"));
         a.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                afficherToastReponse(false);
+                afficherToastReponse(false, "Essaye encore !", "#FF0000");
             }
         });
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                afficherToastReponse(false);
+                afficherToastReponse(false, "Essaye encore !", "#FF0000");
             }
         });
     }
 
-    protected void afficherToastReponse(Boolean res){
+    protected void afficherToastReponse(Boolean res, String message, String col){
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.toast_layout,
                 (ViewGroup) findViewById(R.id.toast_layout_root));
 
         TextView text = (TextView) layout.findViewById(R.id.text);
         ImageView img = (ImageView) layout.findViewById(R.id.resultImg);
-
+        text.setText(message);
+        text.setTextColor(Color.parseColor(col));
         if (res){
-            text.setText("Bien joué !");
-            text.setTextColor(Color.parseColor("#00A000"));
             img.setImageDrawable(getResources().getDrawable(R.drawable.ok));
         }
         else{
-            text.setText("Essaye encore !");
-            text.setTextColor(Color.RED);
             img.setImageDrawable(getResources().getDrawable(R.drawable.ko));
         }
         Toast toast = new Toast(getApplicationContext());
@@ -275,6 +267,13 @@ public class ImgActivity extends ActionBarActivity {
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();
+    }
+
+    private boolean existeImageAffichee(int rand){
+        for(int i=0; i<cmptImages; i++){
+            if (tabNbImages[i] == rand) return true;
+        }
+        return false;
     }
 }
 
