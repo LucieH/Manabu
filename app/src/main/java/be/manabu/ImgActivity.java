@@ -1,7 +1,6 @@
 package be.manabu;
 
 import java.util.Random;
-import java.util.Arrays;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -27,7 +26,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class ImgActivity extends ActionBarActivity {
 
     final Random rnd = new Random();
-    final int NB_IMAGES = 9;
+    final int NB_IMAGES = 11;
     private String strTmp = "start";
     private int tabNbImages[] = new int[NB_IMAGES];
     private int cmptImages = 0;
@@ -231,8 +230,8 @@ public class ImgActivity extends ActionBarActivity {
     }
 
     protected void setMauvaiseReponse(final Button a, final Button b){
-        a.setText(getStringResourceByName(strTmp+"1"));
-        b.setText(getStringResourceByName(strTmp+"2"));
+        a.setText(getStringResourceByName(strTmp+"_1"));
+        b.setText(getStringResourceByName(strTmp+"_2"));
         a.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 afficherToastReponse(false, "Essaye encore !", "#FF0000");
