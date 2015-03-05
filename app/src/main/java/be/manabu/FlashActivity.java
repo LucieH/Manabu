@@ -1,6 +1,7 @@
 package be.manabu;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,11 +9,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.NumberPicker;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class FlashActivity extends ActionBarActivity {
+
+    private NumberPicker np;
+
+    protected void setNp(int min, int max){
+        this.np = (NumberPicker) findViewById(R.id.nbSec);
+        this.np.setMinValue(min);
+        this.np.setMaxValue(max);
+    }
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +36,7 @@ public class FlashActivity extends ActionBarActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
                                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_flash_start);
+        setNp(5,10);
 	}
 
 	@Override
@@ -57,5 +68,15 @@ public class FlashActivity extends ActionBarActivity {
     public void startFlash(View view) {
         view.invalidate();
         setContentView(R.layout.activity_flash);
+        view.invalidate();
+        final Handler handler = new Handler();
+        int temps=(this.np.getValue()) *1000;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setContentView(R.layout.activity_flash_start);
+                setNp(5,10);
+            }
+        }, temps);
     }
 }
