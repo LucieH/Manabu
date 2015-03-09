@@ -8,10 +8,10 @@
     <string name="img">Imagerie</string>
     <string name="ana">Anagrammes</string>
     <string name="son">Ecouter le son</string>
-    <string name="title_activity_flash">FlashActivity</string>
-    <string name="title_activity_img">ImgActivity</string>
-    <string name="title_activity_son">SonActivity</string>
-    <string name="title_activity_anagramme">AnagrammeActivity</string>
+    <string name="title_activity_flash">@string/flash</string>
+    <string name="title_activity_img">@string/img</string>
+    <string name="title_activity_son">@string/son</string>
+    <string name="title_activity_anagramme">@string/ana</string>
     <string name="demarrerjeu">Démarrer le jeu >></string>
 
     <!-- Mots et phrases pour l'activité Imagerie-->
