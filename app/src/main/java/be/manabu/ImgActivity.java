@@ -24,6 +24,8 @@ import android.widget.Toast;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static be.manabu.Utilities.*;
+
 public class ImgActivity extends ActionBarActivity {
 
     final Random rnd = new Random();
@@ -47,7 +49,7 @@ public class ImgActivity extends ActionBarActivity {
                         .build()
         );
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_img_start);
 	}
@@ -81,35 +83,6 @@ public class ImgActivity extends ActionBarActivity {
 
 
     //Fonctions personnelles
-
-    /** Fonction prise depuis
-    * http://stackoverflow.com/questions/7493287/android-how-do-i-get-string-from-resources-using-its-name
-            * permettant de récupérer une string de string.xml depuis son nom (ici lié avec l'image. */
-            private String getStringResourceByName(String aString) {
-        String packageName = getPackageName();
-        int resId = getResources().getIdentifier(aString, "string", packageName);
-        return getString(resId);
-    }
-
-
-    protected final static int getResourceID
-            (final String resName, final String resType, final Context ctx)
-    {
-        final int ResourceID =
-                ctx.getResources().getIdentifier(resName, resType,
-                        ctx.getApplicationInfo().packageName);
-        if (ResourceID == 0)
-        {
-            throw new IllegalArgumentException
-                    (
-                            "No resource string found with name " + resName
-                    );
-        }
-        else
-        {
-            return ResourceID;
-        }
-    }
 
     /** Démarrer le jeu imagerie ave les fiches Freinet*/
     public void startImage(View view) {
@@ -156,7 +129,7 @@ public class ImgActivity extends ActionBarActivity {
                                 getApplicationContext()))
                 );
         final TextView tv = (TextView) findViewById(R.id.tv1);
-        tv.setText(getStringResourceByName(str));
+        tv.setText(getStringResourceByName(str, getApplicationContext()));
         setStrTmp(str);
         this.tabNbImages[cmptImages]=rand;
         this.cmptImages++;
@@ -215,7 +188,7 @@ public class ImgActivity extends ActionBarActivity {
     }
 
     protected void setBonneReponse(Button b){
-        b.setText(getStringResourceByName(strTmp));
+        b.setText(getStringResourceByName(strTmp,getApplicationContext()));
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
                 afficherToastReponse(true, "Bien joué !", "#00A000");
@@ -232,8 +205,8 @@ public class ImgActivity extends ActionBarActivity {
     }
 
     protected void setMauvaiseReponse(final Button a, final Button b){
-        a.setText(getStringResourceByName(strTmp+"_1"));
-        b.setText(getStringResourceByName(strTmp+"_2"));
+        a.setText(getStringResourceByName(strTmp+"_1",getApplicationContext()));
+        b.setText(getStringResourceByName(strTmp+"_2",getApplicationContext()));
         a.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 afficherToastReponse(false, "Essaye encore !", "#FF0000");
