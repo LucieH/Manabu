@@ -1,6 +1,12 @@
 package be.manabu;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by Lucie on 10-03-15.
@@ -35,6 +41,24 @@ public class Utilities {
         return ctx.getString(resId);
     }
 
+    protected static void afficherToastReponse(Boolean res, String message, String col, Context ctx, View layout){
+
+        TextView text = (TextView) layout.findViewById(R.id.text);
+        ImageView img = (ImageView) layout.findViewById(R.id.resultImg);
+        text.setText(message);
+        text.setTextColor(Color.parseColor(col));
+        if (res){
+            img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ok));
+        }
+        else{
+            img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ko));
+        }
+        Toast toast = new Toast(ctx.getApplicationContext());
+        toast.setGravity(Gravity.CENTER,0,0);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+    }
 
 
 }

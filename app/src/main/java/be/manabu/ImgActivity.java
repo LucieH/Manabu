@@ -191,7 +191,7 @@ public class ImgActivity extends ActionBarActivity {
         b.setText(getStringResourceByName(strTmp,getApplicationContext()));
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
-                afficherToastReponse(true, "Bien joué !", "#00A000");
+                afficherToast(true, "Bien joué !", "#00A000");
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -209,36 +209,21 @@ public class ImgActivity extends ActionBarActivity {
         b.setText(getStringResourceByName(strTmp+"_2",getApplicationContext()));
         a.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                afficherToastReponse(false, "Essaye encore !", "#FF0000");
+                afficherToast(false, "Essaye encore !", "#FF0000");
             }
         });
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                afficherToastReponse(false, "Essaye encore !", "#FF0000");
+                afficherToast(false, "Essaye encore !", "#FF0000");
             }
         });
     }
 
-    protected void afficherToastReponse(Boolean res, String message, String col){
+    protected void afficherToast(Boolean res, String message, String col){
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.toast_layout,
                 (ViewGroup) findViewById(R.id.toast_layout_root));
-
-        TextView text = (TextView) layout.findViewById(R.id.text);
-        ImageView img = (ImageView) layout.findViewById(R.id.resultImg);
-        text.setText(message);
-        text.setTextColor(Color.parseColor(col));
-        if (res){
-            img.setImageDrawable(getResources().getDrawable(R.drawable.ok));
-        }
-        else{
-            img.setImageDrawable(getResources().getDrawable(R.drawable.ko));
-        }
-        Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.CENTER,0,0);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(layout);
-        toast.show();
+        afficherToastReponse(res, message, col, getApplicationContext(), layout);
     }
 
     private boolean existeImageAffichee(int rand){

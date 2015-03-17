@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ public class FlashActivity extends ActionBarActivity {
 
     final Random rnd = new Random();
     private NumberPicker np;
+    private int nbEssai;
     protected int compteur = 0;
     protected String strTmp;
 
@@ -83,34 +85,38 @@ public class FlashActivity extends ActionBarActivity {
 
     /** Démarrer le jeu flash*/
     public void startFlash(View view) {
-        //do {
-        String str;
-        int rand = rnd.nextInt(10);
-        str = "str_" + rand;
-            view.invalidate();
-            setContentView(R.layout.activity_flash);
-            TextView tv = (TextView)findViewById(R.id.TVflash);
-            tv.setText(getStringResourceByName(str,getApplicationContext()));
-            view.invalidate();
+        if(compteur < 10){
+            String str;
+            int rand = rnd.nextInt(480);
+            str = "str_" + rand;
+            strTmp=getStringResourceByName(str,getApplicationContext());
+            showWord(view);
             final Handler handler = new Handler();
             int temps = (this.np.getValue()) * 1000;
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    setContentView(R.layout.activity_flash_start);
-                    setNp(5, 10);
+                    setViewAnswer();
+                    //setNp(5, 10);
                     compteur ++;
                 }
             }, temps);
-        //}while(compteur<10);
+        }
+        else {
+            setContentView(R.layout.activity_img_fin);
+        }
+
     }
 
 
-    protected void verifierReponse(Button b){
+    protected void verifierReponse(final Button b){
+        this.nbEssai = 0;
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
-                if (strTmp.equals("")){
-                    afficherToastReponse(true, "Bien joué !", "#00A000");
+                EditText text = (EditText) findViewById(R.id.Answflash);
+                String tmp = text.getText().toString().trim();
+                if (strTmp.equalsIgnoreCase(tmp)){
+                    afficherToast(true, "Bien joué !", "#00A000");
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -121,31 +127,59 @@ public class FlashActivity extends ActionBarActivity {
                     }, 2500);
                 }
                 else{
-                    afficherToastReponse(false, "Essaye encore !", "#FF0000");
+                    afficherToast(false, "Essaye encore !", "#FF0000");
+                }
+                nbEssai++;
+                if (nbEssai >= 3) {
+                    Button aide = (Button) findViewById(R.id.AideFlash);
+                    aide.setVisibility(View.VISIBLE);
                 }
             }
         });
     }
 
-    protected void afficherToastReponse(Boolean res, String message, String col){
+    protected void afficherToast(Boolean res, String message, String col){
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.toast_layout,
                 (ViewGroup) findViewById(R.id.toast_layout_root));
+        afficherToastReponse(res, message, col, getApplicationContext(), layout);
+    }
 
-        TextView text = (TextView) layout.findViewById(R.id.text);
-        ImageView img = (ImageView) layout.findViewById(R.id.resultImg);
-        text.setText(message);
-        text.setTextColor(Color.parseColor(col));
-        if (res){
-            img.setImageDrawable(getResources().getDrawable(R.drawable.ok));
-        }
-        else{
-            img.setImageDrawable(getResources().getDrawable(R.drawable.ko));
-        }
-        Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.CENTER,0,0);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(layout);
-        toast.show();
+    public void revoirMot(View v){
+        showWord(v);
+        final Handler handler = new Handler();
+        int temps = (this.np.getValue()) * 1000;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setViewAnswer();
+            }
+        }, temps);
+
+    }
+
+    private void setViewAnswer(){
+        setContentView(R.layout.activity_flash_answer);
+        Button b=(Button) findViewById(R.id.VerifFlash);
+        verifierReponse(b);
+    }
+
+    private void showWord(View view){
+        view.invalidate();
+        setContentView(R.layout.activity_flash);
+        TextView tv = (TextView)findViewById(R.id.TVflash);
+        tv.setText(strTmp);
+        view.invalidate();
+    }
+
+    public void rejouer(View view) {
+        view.invalidate();
+        this.compteur=0;
+        setContentView(R.layout.activity_flash_start);
+    }
+
+    public void retournerMenu(View view){
+        view.invalidate();
+        this.finish();
     }
 }

@@ -573,6 +573,8 @@
     <string name="menu">Menu</string>
     <string name="rejouer">Rejouer</string>
     <string name="spr">Super, tu es arrivé à la fin, que veux-tu faire ?</string>
+    <string name="verifier">Vérifier</string>
+    <string name="revoir">Relire</string>
 
 
 </resources>

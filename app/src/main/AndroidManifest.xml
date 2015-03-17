@@ -22,7 +22,8 @@
         <activity
             android:name=".FlashActivity"
             android:label="@string/title_activity_flash"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
             android:name=".ImgActivity"
