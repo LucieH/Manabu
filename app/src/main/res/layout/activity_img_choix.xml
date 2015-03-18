@@ -8,6 +8,7 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
+            android:background="@drawable/fondsimple"
             tools:context="be.manabu.ImgActivity" >
 
 
@@ -36,17 +37,29 @@
             <Button
                 android:id="@+id/choix1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="#FFF"
+                android:background="@drawable/button_menu"
+                android:padding="5dp"
+                android:layout_margin="5dp"/>
 
             <Button
                 android:id="@+id/choix2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="#FFF"
+                android:background="@drawable/button_menu"
+                android:padding="5dp"
+                android:layout_margin="5dp"/>
 
             <Button
                 android:id="@+id/choix3"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textColor="#FFF"
+                android:background="@drawable/button_menu"
+                android:padding="5dp"
+                android:layout_margin="5dp"/>
 
             <!--<Button-->
                 <!--android:id="@+id/recharger"-->
