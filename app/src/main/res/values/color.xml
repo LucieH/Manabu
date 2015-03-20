@@ -142,4 +142,6 @@
     <color name="Black">#000000</color>
     <color name="Goldfish">#F38630</color>
     <color name="DarkGoldfish">#FA6900</color>
+    <color name="BleuBouton">#0088DD</color>
+    <color name="BleuBoutonTransp">#0099EE</color>
 </resources>

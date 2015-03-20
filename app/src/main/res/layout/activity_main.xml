@@ -38,7 +38,10 @@
                 android:layout_height="wrap_content"
                 android:onClick="startAnagrammes"
                 android:text="@string/ana" 
-                android:textColor="#FFF"/>
+                android:textColor="#FFF"
+                android:background="@drawable/button_menu"
+                android:padding="5dp"
+                android:layout_margin="5dp"/>
 
             <Space
                 android:layout_width="match_parent"
@@ -51,7 +54,10 @@
                 android:layout_height="wrap_content"
                 android:onClick="startSon"
                 android:text="@string/son"
-                android:textColor="#FFF" />
+                android:textColor="#FFF"
+                android:background="@drawable/button_menu"
+                android:padding="5dp"
+                android:layout_margin="5dp"/>
 
             <Space
                 android:layout_width="match_parent"
@@ -81,7 +87,10 @@
                 android:layout_height="wrap_content"
                 android:onClick="startImagerie"
                 android:text="@string/img"
-                android:textColor="#FFF" />
+                android:textColor="#FFF"
+                android:background="@drawable/button_menu"
+                android:padding="2dp"
+                android:layout_margin="5dp"/>
 
             <Space
                 android:layout_width="match_parent"
@@ -94,7 +103,10 @@
                 android:layout_height="wrap_content"
                 android:onClick="startFlash"
                 android:text="@string/flash"
-                android:textColor="#FFF" />
+                android:textColor="#FFF"
+                android:background="@drawable/button_menu"
+                android:padding="2dp"
+                android:layout_margin="5dp"/>
 
             <Space
                 android:layout_width="match_parent"

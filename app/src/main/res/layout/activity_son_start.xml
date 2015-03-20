@@ -17,7 +17,10 @@
         android:layout_height="wrap_content"
         android:onClick="startSon"
         android:text="@string/demarrerjeu"
-        android:textColor="#FFF"/>
+        android:textColor="#FFF"
+        android:background="@drawable/button_menu"
+        android:padding="5dp"
+        android:layout_margin="5dp"/>
 
 
 </LinearLayout>

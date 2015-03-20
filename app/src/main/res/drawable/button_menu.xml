@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true"
-        android:drawable="@color/Goldfish">
+
+    <selector xmlns:android="http://schemas.android.com/apk/res/android" >
+        <item android:state_pressed="true">
+            <shape xmlns:android="http://schemas.android.com/apk/res/android"  android:shape="rectangle">
+            <solid android:color="@color/BleuBoutonTransp"/>
+            <stroke android:width="2dp"
+                android:color="@color/BleuBouton"/>
+            <corners android:bottomLeftRadius="8dp"
+                    android:bottomRightRadius="8dp"
+                    android:topLeftRadius="8dp"
+                    android:topRightRadius="8dp"/>
+            </shape>
         </item>
-    <item android:state_pressed="false"
-        android:drawable="@color/DarkGoldfish">
+        <item android:state_pressed="false">
+            <shape xmlns:android="http://schemas.android.com/apk/res/android"  android:shape="rectangle">
+            <solid android:color="@color/BleuBouton"/>
+            <stroke android:width="2dp"
+                android:color="@color/BleuBoutonTransp"/>
+            <corners android:bottomLeftRadius="8dp"
+                    android:bottomRightRadius="8dp"
+                    android:topLeftRadius="8dp"
+                    android:topRightRadius="8dp"/>
+            </shape>
         </item>
-</selector>
+
+    </selector>

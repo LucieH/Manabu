@@ -15,5 +15,7 @@
         android:layout_height="wrap_content"
         android:textSize="25sp"
         android:layout_gravity="center"
+        android:shadowColor="@color/White"
+        android:shadowRadius="6"
         />
 </LinearLayout>

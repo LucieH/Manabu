@@ -41,7 +41,10 @@
             android:layout_height="wrap_content"
             android:text="@string/verifier"
             android:onClick="verifierReponse"
-            android:textColor="#FFF"/>
+            android:textColor="#FFF"
+            android:background="@drawable/button_menu"
+            android:padding="5dp"
+            android:layout_margin="5dp"/>
 
         <Button
             android:id="@+id/AideFlash"
@@ -50,7 +53,10 @@
             android:visibility="gone"
             android:text="@string/revoir"
             android:onClick="revoirMot"
-            android:textColor="#FFF"/>
+            android:textColor="#FFF"
+            android:background="@drawable/button_menu"
+            android:padding="5dp"
+            android:layout_margin="5dp"/>
 
         </LinearLayout>
 
