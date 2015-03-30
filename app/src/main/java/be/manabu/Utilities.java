@@ -1,5 +1,6 @@
 package be.manabu;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
@@ -11,7 +12,7 @@ import android.widget.Toast;
 /**
  * Created by Lucie on 10-03-15.
  */
-public class Utilities {
+public class Utilities{
 
     protected final static int getResourceID
             (final String resName, final String resType, final Context ctx)
@@ -58,6 +59,51 @@ public class Utilities {
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();
+    }
+
+    public static void changeLvl1(View view, int lvl, ImageView lvl2, ImageView lvl3){
+        lvl2.setImageResource(R.drawable.etoile_non);
+        lvl3.setImageResource(R.drawable.etoile_non);
+        lvl=1;
+
+    }
+
+    public void changeLvl2(Activity a, View view, int lvl){
+        ImageView lvl2 = (ImageView) a.findViewById(R.id.EtoileLvl2);
+        ImageView lvl3 = (ImageView) a.findViewById(R.id.EtoileLvl3);
+        if (lvl==3){
+            lvl3.setImageResource(R.drawable.etoile_non);
+            lvl=2;
+        }
+        else {
+            if(lvl==2){
+                lvl2.setImageResource(R.drawable.etoile_non);
+                lvl=1;
+            }
+            else{
+                lvl2.setImageResource(R.drawable.etoile_oui);
+                lvl=2;
+            }
+        }
+    }
+    public void changeLvl3(Activity a, View view, int lvl){
+        ImageView lvl2 = (ImageView) a.findViewById(R.id.EtoileLvl2);
+        ImageView lvl3 = (ImageView) a.findViewById(R.id.EtoileLvl3);
+        if (lvl==2){
+            lvl3.setImageResource(R.drawable.etoile_oui);
+            lvl=3;
+        }
+        else{
+            if (lvl==1){
+                lvl2.setImageResource(R.drawable.etoile_oui);
+                lvl3.setImageResource(R.drawable.etoile_oui);
+                lvl=3;
+            }
+            else{
+                lvl3.setImageResource(R.drawable.etoile_non);
+                lvl=2;
+            }
+        }
     }
 
 

@@ -40,7 +40,6 @@
                 android:text="@string/ana" 
                 android:textColor="#FFF"
                 android:background="@drawable/button_menu"
-                android:padding="5dp"
                 android:layout_margin="5dp"/>
 
             <Space
@@ -56,7 +55,6 @@
                 android:text="@string/son"
                 android:textColor="#FFF"
                 android:background="@drawable/button_menu"
-                android:padding="5dp"
                 android:layout_margin="5dp"/>
 
             <Space
@@ -89,7 +87,6 @@
                 android:text="@string/img"
                 android:textColor="#FFF"
                 android:background="@drawable/button_menu"
-                android:padding="2dp"
                 android:layout_margin="5dp"/>
 
             <Space
@@ -105,7 +102,6 @@
                 android:text="@string/flash"
                 android:textColor="#FFF"
                 android:background="@drawable/button_menu"
-                android:padding="2dp"
                 android:layout_margin="5dp"/>
 
             <Space

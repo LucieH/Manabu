@@ -19,11 +19,17 @@
 
     <style name="texteSurFond">
         <item name="android:textColor">@color/White</item>
-        <item name="android:shadowColor">@color/BleuBouton</item>
-        <item name="android:shadowRadius">4</item>
+        <item name="android:shadowColor">@color/Black</item>
+        <item name="android:shadowRadius">10</item>
     </style>
-    
-    
+
+    <style name="texteBleu">
+        <item name="android:textColor">@color/BleuBouton</item>
+        <item name="android:shadowColor">@color/White</item>
+        <item name="android:shadowRadius">10</item>
+    </style>
+
+
     <!-- Styles personnels -->
 
 </resources>

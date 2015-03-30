@@ -45,7 +45,8 @@
             android:layout_weight="1"
             android:onClick="retournerMenu"
             android:text="@string/menu"
-            android:textColor="#FFF"/>
+            android:textColor="#FFF"
+            android:background="@drawable/button_menu"/>
 
         <Space
             android:layout_width="wrap_content"
@@ -59,7 +60,8 @@
             android:layout_weight="1"
             android:onClick="rejouer"
             android:text="@string/rejouer"
-            android:textColor="#FFF"/>
+            android:textColor="#FFF"
+            android:background="@drawable/button_menu"/>
 
         <Space
             android:layout_width="wrap_content"

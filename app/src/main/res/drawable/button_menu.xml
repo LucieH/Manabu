@@ -14,9 +14,11 @@
         </item>
         <item android:state_pressed="false">
             <shape xmlns:android="http://schemas.android.com/apk/res/android"  android:shape="rectangle">
-            <solid android:color="@color/BleuBouton"/>
-            <stroke android:width="2dp"
-                android:color="@color/BleuBoutonTransp"/>
+                <gradient
+                    android:startColor="@color/BleuBouton"
+                    android:centerColor="@color/BleuBoutonTransp"
+                    android:endColor="@color/BleuBouton"
+                    android:angle="90"/>
             <corners android:bottomLeftRadius="8dp"
                     android:bottomRightRadius="8dp"
                     android:topLeftRadius="8dp"

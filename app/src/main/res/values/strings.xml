@@ -575,6 +575,10 @@
     <string name="spr">Super, tu es arrivé à la fin, que veux-tu faire ?</string>
     <string name="verifier">Vérifier</string>
     <string name="revoir">Relire</string>
+    <string name="moins">-</string>
+    <string name="plus">+</string>
+    <string name="duree">Secondes d\'affichage</string>
+    <string name="niveau">Niveau</string>
 
 
 </resources>

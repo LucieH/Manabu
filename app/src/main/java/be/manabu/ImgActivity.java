@@ -33,6 +33,7 @@ public class ImgActivity extends ActionBarActivity {
     private String strTmp = "start";
     private int tabNbImages[] = new int[NB_IMAGES];
     private int cmptImages = 0;
+    private int lvl = 1;
 
     //Getters et setters
     public void setStrTmp(String s){
@@ -51,7 +52,7 @@ public class ImgActivity extends ActionBarActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.activity_img_start);
+		setContentView(R.layout.activity_start);
 	}
 
 
@@ -85,7 +86,7 @@ public class ImgActivity extends ActionBarActivity {
     //Fonctions personnelles
 
     /** Démarrer le jeu imagerie ave les fiches Freinet*/
-    public void startImage(View view) {
+    public void start(View view) {
         view.invalidate();
         if (cmptImages < NB_IMAGES) {
             setContentView(R.layout.activity_img);
@@ -197,7 +198,7 @@ public class ImgActivity extends ActionBarActivity {
                     @Override
                     public void run() {
                         // Do something after 5s = 5000ms
-                        startImage(v);
+                        start(v);
                     }
                 }, 2500);
             }
@@ -236,12 +237,59 @@ public class ImgActivity extends ActionBarActivity {
     public void rejouer(View view) {
         view.invalidate();
         this.cmptImages=0;
-        setContentView(R.layout.activity_img_start);
+        setContentView(R.layout.activity_start);
     }
 
     public void retournerMenu(View view){
         view.invalidate();
         this.finish();
+    }
+
+    public void changeLvl1(View view){
+        ImageView lvl2 = (ImageView) findViewById(R.id.EtoileLvl2);
+        ImageView lvl3 = (ImageView) findViewById(R.id.EtoileLvl3);
+        lvl2.setImageResource(R.drawable.etoile_non);
+        lvl3.setImageResource(R.drawable.etoile_non);
+        lvl=1;
+
+    }
+
+    public void changeLvl2(View view){
+        ImageView lvl2 = (ImageView) findViewById(R.id.EtoileLvl2);
+        ImageView lvl3 = (ImageView) findViewById(R.id.EtoileLvl3);
+        if (lvl==3){
+            lvl3.setImageResource(R.drawable.etoile_non);
+            lvl=2;
+        }
+        else {
+            if(lvl==2){
+                lvl2.setImageResource(R.drawable.etoile_non);
+                lvl=1;
+            }
+            else{
+                lvl2.setImageResource(R.drawable.etoile_oui);
+                lvl=2;
+            }
+        }
+    }
+    public void changeLvl3(View view){
+        ImageView lvl2 = (ImageView) findViewById(R.id.EtoileLvl2);
+        ImageView lvl3 = (ImageView) findViewById(R.id.EtoileLvl3);
+        if (lvl==2){
+            lvl3.setImageResource(R.drawable.etoile_oui);
+            lvl=3;
+        }
+        else{
+            if (lvl==1){
+                lvl2.setImageResource(R.drawable.etoile_oui);
+                lvl3.setImageResource(R.drawable.etoile_oui);
+                lvl=3;
+            }
+            else{
+                lvl3.setImageResource(R.drawable.etoile_non);
+                lvl=2;
+            }
+        }
     }
 }
 

@@ -141,7 +141,10 @@
     <color name="Navy">#000080</color>
     <color name="Black">#000000</color>
     <color name="Goldfish">#F38630</color>
+    <color name="GoldfishPressed">#F4A851</color>
     <color name="DarkGoldfish">#FA6900</color>
+    <color name="DarkGoldfishPressed">#FC8B11</color>
     <color name="BleuBouton">#0088DD</color>
-    <color name="BleuBoutonTransp">#0099EE</color>
+    <color name="BleuBoutonTransp">#00AAFF</color>
+    <color name="Transparent">#00000000</color>
 </resources>
