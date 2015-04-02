@@ -2,12 +2,11 @@ package be.manabu;
 
 import java.util.Random;
 
+import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,7 +18,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -29,11 +27,12 @@ import static be.manabu.Utilities.*;
 public class ImgActivity extends ActionBarActivity {
 
     final Random rnd = new Random();
-    final int NB_IMAGES = 11;
+    final int NB_IMAGES = 21;
     private String strTmp = "start";
     private int tabNbImages[] = new int[NB_IMAGES];
     private int cmptImages = 0;
-    private int lvl = 1;
+    public int lvl = 1;
+    private Niveaux niv = new Niveaux();
 
     //Getters et setters
     public void setStrTmp(String s){
@@ -189,10 +188,11 @@ public class ImgActivity extends ActionBarActivity {
     }
 
     protected void setBonneReponse(Button b){
+        final Activity act = this;
         b.setText(getStringResourceByName(strTmp,getApplicationContext()));
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
-                afficherToast(true, "Bien joué !", "#00A000");
+                afficherToast(act, true, "Bien joué !", "#00A000", getApplicationContext());
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -206,25 +206,19 @@ public class ImgActivity extends ActionBarActivity {
     }
 
     protected void setMauvaiseReponse(final Button a, final Button b){
+        final Activity act = this;
         a.setText(getStringResourceByName(strTmp+"_1",getApplicationContext()));
         b.setText(getStringResourceByName(strTmp+"_2",getApplicationContext()));
         a.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                afficherToast(false, "Essaye encore !", "#FF0000");
+                afficherToast(act, false, "Essaye encore !", "#FF0000", getApplicationContext());
             }
         });
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                afficherToast(false, "Essaye encore !", "#FF0000");
+                afficherToast(act, false, "Essaye encore !", "#FF0000", getApplicationContext());
             }
         });
-    }
-
-    protected void afficherToast(Boolean res, String message, String col){
-        LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.toast_layout,
-                (ViewGroup) findViewById(R.id.toast_layout_root));
-        afficherToastReponse(res, message, col, getApplicationContext(), layout);
     }
 
     private boolean existeImageAffichee(int rand){
@@ -245,51 +239,20 @@ public class ImgActivity extends ActionBarActivity {
         this.finish();
     }
 
+    public void afficheRegles(View view){
+        chargerRegles(this, view, R.string.regleImg);
+    }
+
     public void changeLvl1(View view){
-        ImageView lvl2 = (ImageView) findViewById(R.id.EtoileLvl2);
-        ImageView lvl3 = (ImageView) findViewById(R.id.EtoileLvl3);
-        lvl2.setImageResource(R.drawable.etoile_non);
-        lvl3.setImageResource(R.drawable.etoile_non);
-        lvl=1;
+        lvl=niv.changeLvl1(this, lvl);
 
     }
 
     public void changeLvl2(View view){
-        ImageView lvl2 = (ImageView) findViewById(R.id.EtoileLvl2);
-        ImageView lvl3 = (ImageView) findViewById(R.id.EtoileLvl3);
-        if (lvl==3){
-            lvl3.setImageResource(R.drawable.etoile_non);
-            lvl=2;
-        }
-        else {
-            if(lvl==2){
-                lvl2.setImageResource(R.drawable.etoile_non);
-                lvl=1;
-            }
-            else{
-                lvl2.setImageResource(R.drawable.etoile_oui);
-                lvl=2;
-            }
-        }
+        lvl=niv.changeLvl2(this, lvl);
     }
     public void changeLvl3(View view){
-        ImageView lvl2 = (ImageView) findViewById(R.id.EtoileLvl2);
-        ImageView lvl3 = (ImageView) findViewById(R.id.EtoileLvl3);
-        if (lvl==2){
-            lvl3.setImageResource(R.drawable.etoile_oui);
-            lvl=3;
-        }
-        else{
-            if (lvl==1){
-                lvl2.setImageResource(R.drawable.etoile_oui);
-                lvl3.setImageResource(R.drawable.etoile_oui);
-                lvl=3;
-            }
-            else{
-                lvl3.setImageResource(R.drawable.etoile_non);
-                lvl=2;
-            }
-        }
+        lvl=niv.changeLvl3(this, lvl);
     }
 }
 

@@ -2,6 +2,7 @@ package be.manabu;
 
 import java.util.Random;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -17,7 +18,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -32,10 +32,8 @@ public class FlashActivity extends ActionBarActivity {
     protected int compteur = 0;
     protected String strTmp;
     private int secondes=5;
-    private boolean isLvl1 = true;
-    private boolean isLvl2 = false;
-    private boolean isLvl3 = false;
     private int lvl = 1;
+    private Niveaux niv = new Niveaux();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -112,12 +110,14 @@ public class FlashActivity extends ActionBarActivity {
 
     protected void verifierReponse(final Button b){
         this.nbEssai = 0;
+        final Activity act = this;
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
                 EditText text = (EditText) findViewById(R.id.Answflash);
                 String tmp = text.getText().toString().trim();
+
                 if (strTmp.equalsIgnoreCase(tmp)){
-                    afficherToast(true, "Bien joué !", "#00A000");
+                    afficherToast(act, true, "Bien joué !", "#00A000", getApplicationContext());
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -128,7 +128,7 @@ public class FlashActivity extends ActionBarActivity {
                     }, 2500);
                 }
                 else{
-                    afficherToast(false, "Essaye encore !", "#FF0000");
+                    afficherToast(act, false, "Essaye encore !", "#FF0000", getApplicationContext());
                 }
                 nbEssai++;
                 if (nbEssai >= 3) {
@@ -137,13 +137,6 @@ public class FlashActivity extends ActionBarActivity {
                 }
             }
         });
-    }
-
-    protected void afficherToast(Boolean res, String message, String col){
-        LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.toast_layout,
-                (ViewGroup) findViewById(R.id.toast_layout_root));
-        afficherToastReponse(res, message, col, getApplicationContext(), layout);
     }
 
     public void revoirMot(View v){
@@ -200,50 +193,19 @@ public class FlashActivity extends ActionBarActivity {
         }
     }
 
+    public void afficheRegles(View view){
+        chargerRegles(this, view, R.string.regleFlash);
+    }
+
     public void changeLvl1(View view){
-        ImageView lvl2 = (ImageView) findViewById(R.id.EtoileLvl2);
-        ImageView lvl3 = (ImageView) findViewById(R.id.EtoileLvl3);
-        lvl2.setImageResource(R.drawable.etoile_non);
-        lvl3.setImageResource(R.drawable.etoile_non);
-        lvl=1;
+        lvl=niv.changeLvl1(this, lvl);
 
     }
 
     public void changeLvl2(View view){
-        ImageView lvl2 = (ImageView) findViewById(R.id.EtoileLvl2);
-        ImageView lvl3 = (ImageView) findViewById(R.id.EtoileLvl3);
-        if (lvl==3){
-                lvl3.setImageResource(R.drawable.etoile_non);
-                lvl=2;
-        }
-        else {
-                if(lvl==2){
-                    lvl2.setImageResource(R.drawable.etoile_non);
-                    lvl=1;
-                }
-                else{
-                    lvl2.setImageResource(R.drawable.etoile_oui);
-                    lvl=2;
-                }
-        }
+        lvl=niv.changeLvl2(this, lvl);
     }
     public void changeLvl3(View view){
-        ImageView lvl2 = (ImageView) findViewById(R.id.EtoileLvl2);
-        ImageView lvl3 = (ImageView) findViewById(R.id.EtoileLvl3);
-        if (lvl==2){
-            lvl3.setImageResource(R.drawable.etoile_oui);
-            lvl=3;
-        }
-        else{
-            if (lvl==1){
-                lvl2.setImageResource(R.drawable.etoile_oui);
-                lvl3.setImageResource(R.drawable.etoile_oui);
-                lvl=3;
-            }
-            else{
-                lvl3.setImageResource(R.drawable.etoile_non);
-                lvl=2;
-            }
-        }
+        lvl=niv.changeLvl3(this, lvl);
     }
 }

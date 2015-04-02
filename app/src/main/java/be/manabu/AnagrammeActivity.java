@@ -14,8 +14,11 @@ import android.widget.ImageView;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static be.manabu.Utilities.*;
+
 public class AnagrammeActivity extends ActionBarActivity {
     private int lvl = 1;
+    private Niveaux niv = new Niveaux();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,50 +65,19 @@ public class AnagrammeActivity extends ActionBarActivity {
         setContentView(R.layout.activity_anagramme);
     }
 
+    public void afficheRegles(View view){
+        chargerRegles(this, view, R.string.regleAna);
+    }
+
     public void changeLvl1(View view){
-        ImageView lvl2 = (ImageView) findViewById(R.id.EtoileLvl2);
-        ImageView lvl3 = (ImageView) findViewById(R.id.EtoileLvl3);
-        lvl2.setImageResource(R.drawable.etoile_non);
-        lvl3.setImageResource(R.drawable.etoile_non);
-        lvl=1;
+        lvl=niv.changeLvl1(this, lvl);
 
     }
 
     public void changeLvl2(View view){
-        ImageView lvl2 = (ImageView) findViewById(R.id.EtoileLvl2);
-        ImageView lvl3 = (ImageView) findViewById(R.id.EtoileLvl3);
-        if (lvl==3){
-            lvl3.setImageResource(R.drawable.etoile_non);
-            lvl=2;
-        }
-        else {
-            if(lvl==2){
-                lvl2.setImageResource(R.drawable.etoile_non);
-                lvl=1;
-            }
-            else{
-                lvl2.setImageResource(R.drawable.etoile_oui);
-                lvl=2;
-            }
-        }
+        lvl=niv.changeLvl2(this, lvl);
     }
     public void changeLvl3(View view){
-        ImageView lvl2 = (ImageView) findViewById(R.id.EtoileLvl2);
-        ImageView lvl3 = (ImageView) findViewById(R.id.EtoileLvl3);
-        if (lvl==2){
-            lvl3.setImageResource(R.drawable.etoile_oui);
-            lvl=3;
-        }
-        else{
-            if (lvl==1){
-                lvl2.setImageResource(R.drawable.etoile_oui);
-                lvl3.setImageResource(R.drawable.etoile_oui);
-                lvl=3;
-            }
-            else{
-                lvl3.setImageResource(R.drawable.etoile_non);
-                lvl=2;
-            }
-        }
+        lvl=niv.changeLvl3(this, lvl);
     }
 }

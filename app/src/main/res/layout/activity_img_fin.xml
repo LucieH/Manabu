@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:text="@string/spr"
         android:textColor="#FFF"
+        android:gravity="center"
         android:textSize="20sp"/>
 
     <Space

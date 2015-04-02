@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,8 +44,10 @@ public class Utilities{
         return ctx.getString(resId);
     }
 
-    protected static void afficherToastReponse(Boolean res, String message, String col, Context ctx, View layout){
-
+    protected static void afficherToast(final Activity act, Boolean res, String message, String col, Context ctx){
+        LayoutInflater inflater = act.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_layout,
+                (ViewGroup) act.findViewById(R.id.toast_layout_root));
         TextView text = (TextView) layout.findViewById(R.id.text);
         ImageView img = (ImageView) layout.findViewById(R.id.resultImg);
         text.setText(message);
@@ -61,49 +65,11 @@ public class Utilities{
         toast.show();
     }
 
-    public static void changeLvl1(View view, int lvl, ImageView lvl2, ImageView lvl3){
-        lvl2.setImageResource(R.drawable.etoile_non);
-        lvl3.setImageResource(R.drawable.etoile_non);
-        lvl=1;
-
-    }
-
-    public void changeLvl2(Activity a, View view, int lvl){
-        ImageView lvl2 = (ImageView) a.findViewById(R.id.EtoileLvl2);
-        ImageView lvl3 = (ImageView) a.findViewById(R.id.EtoileLvl3);
-        if (lvl==3){
-            lvl3.setImageResource(R.drawable.etoile_non);
-            lvl=2;
-        }
-        else {
-            if(lvl==2){
-                lvl2.setImageResource(R.drawable.etoile_non);
-                lvl=1;
-            }
-            else{
-                lvl2.setImageResource(R.drawable.etoile_oui);
-                lvl=2;
-            }
-        }
-    }
-    public void changeLvl3(Activity a, View view, int lvl){
-        ImageView lvl2 = (ImageView) a.findViewById(R.id.EtoileLvl2);
-        ImageView lvl3 = (ImageView) a.findViewById(R.id.EtoileLvl3);
-        if (lvl==2){
-            lvl3.setImageResource(R.drawable.etoile_oui);
-            lvl=3;
-        }
-        else{
-            if (lvl==1){
-                lvl2.setImageResource(R.drawable.etoile_oui);
-                lvl3.setImageResource(R.drawable.etoile_oui);
-                lvl=3;
-            }
-            else{
-                lvl3.setImageResource(R.drawable.etoile_non);
-                lvl=2;
-            }
-        }
+    protected static void chargerRegles(final Activity act, View view, int id){
+        view.invalidate();
+        act.setContentView(R.layout.regles);
+        TextView tv = (TextView) act.findViewById(R.id.TVregles);
+        tv.setText(id);
     }
 
 
