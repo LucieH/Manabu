@@ -193,6 +193,7 @@ public class ImgActivity extends ActionBarActivity {
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
                 afficherToast(act, true, "Bien joué !", "#00A000", getApplicationContext());
+                disableButtons();
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -219,6 +220,15 @@ public class ImgActivity extends ActionBarActivity {
                 afficherToast(act, false, "Essaye encore !", "#FF0000", getApplicationContext());
             }
         });
+    }
+
+    private void disableButtons(){
+        Button a = (Button) findViewById(R.id.choix1);
+        Button b = (Button) findViewById(R.id.choix2);
+        Button c = (Button) findViewById(R.id.choix3);
+        a.setEnabled(false);
+        b.setEnabled(false);
+        c.setEnabled(false);
     }
 
     private boolean existeImageAffichee(int rand){

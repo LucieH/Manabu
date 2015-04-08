@@ -15,6 +15,7 @@ import android.widget.Toast;
  * Created by Lucie on 10-03-15.
  */
 public class Utilities{
+    public static Toast toast;
 
     protected final static int getResourceID
             (final String resName, final String resType, final Context ctx)
@@ -58,7 +59,7 @@ public class Utilities{
         else{
             img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ko));
         }
-        Toast toast = new Toast(ctx.getApplicationContext());
+        if (toast == null) toast = new Toast(ctx.getApplicationContext());
         toast.setGravity(Gravity.CENTER,0,0);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);

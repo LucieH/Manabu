@@ -29,6 +29,10 @@
         <item name="android:shadowRadius">10</item>
     </style>
 
+    <style name="TextViewCustomFont">
+        <item name="fontPath">fonts/opendyslexic.ttf</item>
+    </style>
+
 
     <!-- Styles personnels -->
 
