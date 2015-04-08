@@ -70,7 +70,10 @@
         android:text="@string/demarrerjeu"
         android:textColor="#FFF"
         android:background="@drawable/button_menu"
-        android:padding="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_margin="5dp"/>
     <Space
         android:layout_width="wrap_content"

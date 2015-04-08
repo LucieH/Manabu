@@ -264,6 +264,7 @@ public class ImgActivity extends ActionBarActivity {
     public void changeLvl3(View view){
         lvl=niv.changeLvl3(this, lvl);
     }
+    public void back(View view){ revenirDebut(this, view);}
 }
 
 

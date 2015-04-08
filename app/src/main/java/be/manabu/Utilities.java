@@ -73,5 +73,9 @@ public class Utilities{
         tv.setText(id);
     }
 
+    protected static void revenirDebut(final Activity act, View view){
+        view.invalidate();
+        act.setContentView(R.layout.activity_start);
+    }
 
 }

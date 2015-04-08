@@ -12,7 +12,7 @@
     <string name="title_activity_img">@string/img</string>
     <string name="title_activity_son">@string/son</string>
     <string name="title_activity_anagramme">@string/ana</string>
-    <string name="demarrerjeu">Démarrer le jeu >></string>
+    <string name="demarrerjeu">Jouer !</string>
 
     <!-- Mots et phrases pour l'activité Imagerie-->
     <!-- Niveau facile -->
@@ -572,6 +572,7 @@
     <string name="memo">Mémorisé !</string>
     <string name="menu">Menu</string>
     <string name="rejouer">Rejouer</string>
+    <string name="retour">Revenir</string>
     <string name="spr">Super, tu es arrivé à la fin.\nQue veux-tu faire ?</string>
     <string name="verifier">Vérifier</string>
     <string name="revoir">Relire</string>

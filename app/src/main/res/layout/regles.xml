@@ -18,6 +18,47 @@
             android:gravity="center"
             style="@style/texteSurFond"/>
         </ScrollView>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
 
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/retour"
+            android:background="@drawable/button_menu"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:textColor="#FFF"
+            android:onClick="back"/>
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/demarrerjeu"
+            android:background="@drawable/button_menu"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:textColor="#FFF"
+            android:onClick="start"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"/>
+
+        </LinearLayout>
 
 </LinearLayout>

@@ -158,16 +158,12 @@ public class AnagrammeActivity extends ActionBarActivity {
     public void afficheRegles(View view){
         chargerRegles(this, view, R.string.regleAna);
     }
-
-    public void changeLvl1(View view){
-        lvl=niv.changeLvl1(this, lvl);
-
-    }
-
+    public void changeLvl1(View view){ lvl=niv.changeLvl1(this, lvl);}
     public void changeLvl2(View view){
         lvl=niv.changeLvl2(this, lvl);
     }
     public void changeLvl3(View view){
         lvl=niv.changeLvl3(this, lvl);
     }
+    public void back(View view){ revenirDebut(this, view);}
 }

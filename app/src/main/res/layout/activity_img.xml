@@ -39,19 +39,25 @@
                 style="@style/texteSurFond"/>
 
             </LinearLayout>
-
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
                 <Button
                     android:id="@+id/bRefresh"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:shadowColor="#FA6900"
                     android:onClick="afficherChoix"
                     android:text="@string/memo"
                     android:textColor="#FFF"
                     android:background="@drawable/button_menu"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"/>
+                </LinearLayout>
+
 
 
         </LinearLayout>

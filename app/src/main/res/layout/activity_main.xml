@@ -37,7 +37,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:onClick="startAnagrammes"
-                android:text="@string/ana" 
+                android:text="@string/ana"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:textColor="#FFF"
                 android:background="@drawable/button_menu"
                 android:layout_margin="5dp"/>
@@ -53,6 +55,8 @@
                 android:layout_height="wrap_content"
                 android:onClick="startSon"
                 android:text="@string/son"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:textColor="#FFF"
                 android:background="@drawable/button_menu"
                 android:layout_margin="5dp"/>
@@ -85,6 +89,8 @@
                 android:layout_height="wrap_content"
                 android:onClick="startImagerie"
                 android:text="@string/img"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:textColor="#FFF"
                 android:background="@drawable/button_menu"
                 android:layout_margin="5dp"/>
@@ -100,6 +106,8 @@
                 android:layout_height="wrap_content"
                 android:onClick="startFlash"
                 android:text="@string/flash"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:textColor="#FFF"
                 android:background="@drawable/button_menu"
                 android:layout_margin="5dp"/>
