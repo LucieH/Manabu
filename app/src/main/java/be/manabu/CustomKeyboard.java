@@ -25,6 +25,7 @@ import android.inputmethodservice.KeyboardView;
 import android.inputmethodservice.KeyboardView.OnKeyboardActionListener;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -73,19 +74,23 @@ public class CustomKeyboard {
                 hideCustomKeyboard();
             } else if (primaryCode==CodeShift){
                if (isShift){
-                    mKeyboardView.setKeyboard(new Keyboard(mHostActivity, R.xml.alphabet_keyboard));
+                   if (isAccents) mKeyboardView.setKeyboard(new Keyboard(mHostActivity, R.xml.accents_keyboard));
+                   else mKeyboardView.setKeyboard(new Keyboard(mHostActivity, R.xml.alphabet_keyboard));
                    isShift = false;
                }else {
-                   mKeyboardView.setKeyboard(new Keyboard(mHostActivity, R.xml.alphabet_keyboard_shift));
+                   if (isAccents) mKeyboardView.setKeyboard(new Keyboard(mHostActivity, R.xml.accents_keyboard_shift));
+                   else mKeyboardView.setKeyboard(new Keyboard(mHostActivity, R.xml.alphabet_keyboard_shift));
                    isShift = true;
                }
             } else if (primaryCode==CodeAccents){
                 if (isAccents){
-                    mKeyboardView.setKeyboard(new Keyboard(mHostActivity, R.xml.accents_keyboard));
+                    if (isShift) mKeyboardView.setKeyboard(new Keyboard(mHostActivity, R.xml.alphabet_keyboard_shift));
+                    else mKeyboardView.setKeyboard(new Keyboard(mHostActivity, R.xml.alphabet_keyboard));
                     isAccents = false;
                 }
                 else {
-                    mKeyboardView.setKeyboard(new Keyboard(mHostActivity, R.xml.alphabet_keyboard));
+                    if (isShift) mKeyboardView.setKeyboard(new Keyboard(mHostActivity, R.xml.accents_keyboard_shift));
+                    else mKeyboardView.setKeyboard(new Keyboard(mHostActivity, R.xml.accents_keyboard));
                     isAccents = true;
                 }
             } else { // insert character
@@ -161,7 +166,7 @@ public class CustomKeyboard {
      */
     public void registerEditText(int resid) {
         // Find the EditText 'resid'
-        final EditText edittext= (EditText)mHostActivity.findViewById(resid);
+        final EditText edittext= ((EditText)mHostActivity.findViewById(resid));
         // Make the custom keyboard appear
         edittext.setOnFocusChangeListener(new OnFocusChangeListener() {
             // NOTE By setting the on focus listener, we can show the custom keyboard when the edit box gets focus, but also hide it when the edit box loses focus
@@ -184,11 +189,27 @@ public class CustomKeyboard {
                 edittext.setInputType(InputType.TYPE_NULL); // Disable standard keyboard
                 edittext.onTouchEvent(event);               // Call native handler
                 edittext.setInputType(inType);              // Restore input type
+                edittext.moveCursorToVisibleOffset();
                 return true; // Consume touch event
             }
         });
         // Disable spell check (hex strings look like words to Android)
         edittext.setInputType(edittext.getInputType() | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        edittext.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                String searchString = s.toString();
+                int textLength = searchString.length();
+                edittext.setSelection(textLength);
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
 }

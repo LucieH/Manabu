@@ -22,7 +22,8 @@
         android:textSize="28sp"
         android:gravity="center"
         android:background="#FFF"
-        android:textColor="#08D"/>
+        android:textColor="#08D"
+        android:inputType="text"/>
 
     <Space
         android:layout_width="wrap_content"
@@ -73,6 +74,7 @@
         android:layout_centerHorizontal="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:visibility="gone" />
+        android:visibility="gone"
+        style="@style/texteBleu"/>
 
 </LinearLayout>
