@@ -11,12 +11,12 @@
     android:background="@drawable/fondsimple"
     tools:context="be.manabu.AnagrammeActivity" >
 
-    <TextView
-        android:id="@+id/TVAnag"
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ana"
-        style="@style/texteSurFond"/>
+        android:text="replay"
+        android:layout_gravity="right"
+        android:onClick="jouerSon"/>
 
     <Button
         android:layout_width="wrap_content"

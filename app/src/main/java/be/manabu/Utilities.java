@@ -3,6 +3,7 @@ package be.manabu;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,6 +77,16 @@ public class Utilities{
     protected static void revenirDebut(final Activity act, View view){
         view.invalidate();
         act.setContentView(R.layout.activity_start);
+    }
+
+    protected static void jouerSon(String str, Context ctx){
+        MediaPlayer mp = MediaPlayer.create(ctx, getResourceID(str, "raw", ctx));
+        mp.start();
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mp) {
+                mp.release();
+            };
+        });
     }
 
 }

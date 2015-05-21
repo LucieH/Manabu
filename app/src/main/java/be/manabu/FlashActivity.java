@@ -4,16 +4,13 @@ import java.util.Random;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -34,6 +31,7 @@ public class FlashActivity extends ActionBarActivity {
     private int secondes=5;
     private int lvl = 1;
     private Niveaux niv = new Niveaux();
+    CustomKeyboard mCustomKeyboard;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +45,7 @@ public class FlashActivity extends ActionBarActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
                                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_start);
-	}
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -73,6 +71,12 @@ public class FlashActivity extends ActionBarActivity {
         } else {
             return super.onKeyDown(keyCode, event);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        // NOTE Trap the back key: when the CustomKeyboard is still visible hide it, only when it is invisible, finish activity
+        if( mCustomKeyboard.isCustomKeyboardVisible() ) mCustomKeyboard.hideCustomKeyboard(); else this.finish();
     }
 
     public void start(View view) {
@@ -113,6 +117,7 @@ public class FlashActivity extends ActionBarActivity {
         final Activity act = this;
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
+                if( mCustomKeyboard.isCustomKeyboardVisible() ) mCustomKeyboard.hideCustomKeyboard();
                 EditText text = (EditText) findViewById(R.id.Answflash);
                 String tmp = text.getText().toString().trim();
 
@@ -154,6 +159,8 @@ public class FlashActivity extends ActionBarActivity {
 
     private void setViewAnswer(){
         setContentView(R.layout.activity_flash_answer);
+        mCustomKeyboard= new CustomKeyboard(this, R.id.keyboardview, R.xml.alphabet_keyboard);
+        mCustomKeyboard.registerEditText(R.id.Answflash);
         Button b=(Button) findViewById(R.id.VerifFlash);
         verifierReponse(b);
     }
@@ -209,4 +216,6 @@ public class FlashActivity extends ActionBarActivity {
         lvl=niv.changeLvl3(this, lvl);
     }
     public void back(View view){ revenirDebut(this, view);}
+
+
 }

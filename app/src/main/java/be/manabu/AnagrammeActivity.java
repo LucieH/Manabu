@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Display;
@@ -33,6 +34,7 @@ public class AnagrammeActivity extends ActionBarActivity {
     private Niveaux niv = new Niveaux();
     final Random rnd = new Random();
     protected String strTmp;
+    private String strName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +79,12 @@ public class AnagrammeActivity extends ActionBarActivity {
     public void start(View view) {
         view.invalidate();
         setContentView(R.layout.activity_anagramme);
-
-        String str;
         do{
             int rand = rnd.nextInt(480);
-            str = "str_" + rand;
-            strTmp=getStringResourceByName(str,getApplicationContext());
+            strName = "str_" + rand;
+            strTmp=getStringResourceByName(strName,getApplicationContext());
         } while (strTmp.length()>5 || strTmp.length()< 3);
+        Utilities.jouerSon(strName, getApplicationContext());
         int lgt = strTmp.length();
         strTmp = strTmp.toUpperCase();
         Button[] tbLettres = new Button[lgt];
@@ -109,8 +110,6 @@ public class AnagrammeActivity extends ActionBarActivity {
             ll.addView(tbLettres[i]);
             addMouvementBouton(tbLettres[i]);
         }
-        TextView tvAna = (TextView) findViewById(R.id.TVAnag);
-        tvAna.setText(strTmp);
     }
 
     private void setBoutonLettre(Button b, String temp, LinearLayout.LayoutParams params){
@@ -153,6 +152,10 @@ public class AnagrammeActivity extends ActionBarActivity {
                 return true;
             }
         });
+    }
+
+    public void jouerSon(View v){
+        Utilities.jouerSon(strName, getApplicationContext());
     }
 
     public void afficheRegles(View view){

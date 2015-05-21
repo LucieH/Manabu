@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+    android:keyWidth="14.28%p"
+    android:keyHeight="12%p">
+    <!--
+        android:horizontalGap="0.50%p"
+        android:verticalGap="0.50%p"
+        NOTE When we add a horizontalGap in pixels, this interferes with keyWidth in percentages adding up to 100%
+        NOTE When we have a horizontalGap (on Keyboard level) of 0, this make the horizontalGap (on Key level) to move from after the key to before the key... (I consider this a bug)
+     -->
+
+    <Row>
+        <Key android:codes="133"    android:keyLabel="à" android:keyEdgeFlags="left" />
+        <Key android:codes="131"    android:keyLabel="â" />
+        <Key android:codes="135"    android:keyLabel="ç" />
+        <Key android:codes="130"    android:keyLabel="é" />
+        <Key android:codes="138"    android:keyLabel="è" />
+        <Key android:codes="136"    android:keyLabel="ê" />
+        <Key android:codes="137" android:keyLabel="ë" android:keyEdgeFlags="right"/>
+    </Row>
+    <Row>
+        <Key android:codes="140"    android:keyLabel="î" android:keyEdgeFlags="left" />
+        <Key android:codes="139"    android:keyLabel="ï" />
+        <Key android:codes="147"    android:keyLabel="ô" />
+        <Key android:codes="151"    android:keyLabel="ù" />
+        <Key android:codes="150"    android:keyLabel="û" />
+        <Key android:codes="129"    android:keyLabel="ü" />
+        <Key android:codes="152" android:keyLabel="ÿ" android:keyEdgeFlags="right"/>
+    </Row>
+    <Row>
+        <Key android:codes="-1"    android:keyLabel="MAJ" android:keyWidth="21.44%p" android:isModifier="true" android:keyEdgeFlags="left" />
+        <Key android:codes="39"    android:keyLabel="'" />
+        <Key android:codes="45"    android:keyLabel="-" />
+        <Key android:codes="46"    android:keyLabel="." />
+        <Key android:codes="44"    android:keyLabel="," />
+        <Key android:codes="-5" android:keyLabel="BCK" android:keyWidth="21.44%p" android:keyEdgeFlags="right"/>
+    </Row>
+    <Row>
+        <Key android:codes="-2" android:keyLabel="Accents" android:keyWidth="25%p"  android:keyEdgeFlags="left" />
+        <Key android:codes="32"    android:keyLabel="Espace" android:keyWidth="50%p" />
+        <Key android:codes="55001" android:keyLabel="OK" android:keyWidth="25%p" android:keyEdgeFlags="right"/>
+    </Row>
+</Keyboard>

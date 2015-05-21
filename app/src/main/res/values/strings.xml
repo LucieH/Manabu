@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">Manabu</string>
@@ -107,7 +107,8 @@
     <string name="str_23">avant</string>
     <string name="str_24">avec</string>
     <string name="str_25">avion</string>
-    <string name="str_26">avoir</string>
+    <string name="str_26">avis</string>
+    <string name="str_27">avoir</string>
     <string name="str_28">avril</string>
     <string name="str_29">balle</string>
     <string name="str_30">ballon</string>
