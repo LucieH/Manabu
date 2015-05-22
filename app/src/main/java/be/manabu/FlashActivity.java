@@ -30,6 +30,7 @@ public class FlashActivity extends ActionBarActivity {
     protected String strTmp;
     private int secondes=5;
     private int lvl = 1;
+    private int idLayout = 0;
     private Niveaux niv = new Niveaux();
     CustomKeyboard mCustomKeyboard;
 
@@ -45,6 +46,7 @@ public class FlashActivity extends ActionBarActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
                                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_start);
+        idLayout = R.layout.activity_start;
     }
 
     @Override
@@ -76,12 +78,16 @@ public class FlashActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         // NOTE Trap the back key: when the CustomKeyboard is still visible hide it, only when it is invisible, finish activity
+        if (idLayout == R.layout.activity_flash_answer){
         if( mCustomKeyboard.isCustomKeyboardVisible() ) mCustomKeyboard.hideCustomKeyboard(); else this.finish();
+        }
+        else this.finish();
     }
 
     public void start(View view) {
         view.invalidate();
         setContentView(R.layout.activity_flash_start);
+        idLayout = R.layout.activity_flash_start;
         TextView nbSec = (TextView) findViewById(R.id.TVSecondesFlash);
         nbSec.setText(""+secondes+"");
     }
@@ -107,6 +113,7 @@ public class FlashActivity extends ActionBarActivity {
         }
         else {
             setContentView(R.layout.activity_img_fin);
+            idLayout = R.layout.activity_img_fin;
         }
 
     }
@@ -159,7 +166,8 @@ public class FlashActivity extends ActionBarActivity {
 
     private void setViewAnswer(){
         setContentView(R.layout.activity_flash_answer);
-        mCustomKeyboard= new CustomKeyboard(this, R.id.keyboardview, R.xml.alphabet_keyboard);
+        idLayout = R.layout.activity_flash_answer;
+        mCustomKeyboard= new CustomKeyboard(getApplicationContext(),this, R.id.keyboardview, R.xml.alphabet_keyboard);
         mCustomKeyboard.registerEditText(R.id.Answflash);
         Button b=(Button) findViewById(R.id.VerifFlash);
         verifierReponse(b);
@@ -168,6 +176,7 @@ public class FlashActivity extends ActionBarActivity {
     private void showWord(View view){
         view.invalidate();
         setContentView(R.layout.activity_flash);
+        idLayout = R.layout.activity_flash;
         TextView tv = (TextView)findViewById(R.id.TVflash);
         tv.setText(strTmp);
         view.invalidate();
@@ -177,6 +186,7 @@ public class FlashActivity extends ActionBarActivity {
         view.invalidate();
         this.compteur=0;
         setContentView(R.layout.activity_flash_start);
+        idLayout = R.layout.activity_flash_start;
     }
 
     public void retournerMenu(View view){
@@ -185,7 +195,7 @@ public class FlashActivity extends ActionBarActivity {
     }
 
     public void decrementer(View view){
-        if (secondes >0) {
+        if (secondes >1) {
             this.secondes--;
             TextView nbSec = (TextView) findViewById(R.id.TVSecondesFlash);
             nbSec.setText(""+secondes+"");

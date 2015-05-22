@@ -10,7 +10,7 @@
      -->
 
     <Row>
-        <Key android:codes="64"    android:keyLabel="A" android:keyEdgeFlags="left" />
+        <Key android:codes="65"    android:keyLabel="A" android:keyEdgeFlags="left" />
         <Key android:codes="66"    android:keyLabel="B" />
         <Key android:codes="67"    android:keyLabel="C" />
         <Key android:codes="68"    android:keyLabel="D" />
@@ -41,7 +41,7 @@
         <Key android:codes="88"    android:keyLabel="X" />
         <Key android:codes="89"    android:keyLabel="Y" />
         <Key android:codes="90"    android:keyLabel="Z" />
-        <Key android:codes="-5" android:keyLabel="BCK" android:keyWidth="20%p" android:keyEdgeFlags="right"/>
+        <Key android:codes="-5" android:keyIcon="@drawable/sym_keyboard_delete" android:keyWidth="20%p" android:isRepeatable="true" android:keyEdgeFlags="right"/>
     </Row>
     <Row>
         <Key android:codes="-2" android:keyLabel="Accents" android:keyWidth="25%p"  android:keyEdgeFlags="left" />

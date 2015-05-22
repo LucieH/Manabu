@@ -147,4 +147,7 @@
     <color name="BleuBouton">#0088DD</color>
     <color name="BleuBoutonTransp">#00AAFF</color>
     <color name="Transparent">#00000000</color>
+    <color name="BleuBoutonClair">#33AAFF</color>
+    <color name="BleuBoutonTranspClair">#22CCFF</color>
+
 </resources>

@@ -20,12 +20,17 @@
 package be.manabu;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.inputmethodservice.KeyboardView.OnKeyboardActionListener;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -41,7 +46,7 @@ import android.widget.EditText;
  * @author Maarten Pennings
  * @date   2012 December 23
  */
-public class CustomKeyboard {
+public class CustomKeyboard extends View{
 
     /** A link to the KeyboardView that is used to render this CustomKeyboard. */
     private KeyboardView mKeyboardView;
@@ -94,7 +99,7 @@ public class CustomKeyboard {
                     isAccents = true;
                 }
             } else { // insert character
-                editable.insert(start, Character.toString((char) primaryCode));
+                editable.insert(start, String.valueOf(Character.toChars(primaryCode))/*Character.toString((char) primaryCode)*/);
             }
         }
 
@@ -131,7 +136,8 @@ public class CustomKeyboard {
      * @param viewid The id of the KeyboardView.
      * @param layoutid The id of the xml file containing the keyboard layout.
      */
-    public CustomKeyboard(Activity host, int viewid, int layoutid) {
+    public CustomKeyboard(Context context, Activity host, int viewid, int layoutid) {
+        super(context);
         mHostActivity= host;
         mKeyboardView= (KeyboardView)mHostActivity.findViewById(viewid);
         mKeyboardView.setKeyboard(new Keyboard(mHostActivity, layoutid));
@@ -140,6 +146,16 @@ public class CustomKeyboard {
         // Hide the standard keyboard initially
         mHostActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
+
+    //Essai de changer la police du clavier, qui ne marche pas.
+   /* @Override
+    protected void onDraw(Canvas canvas){
+        super.onDraw(canvas);
+        Paint mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mTextPaint.setTypeface(Typeface.createFromAsset(mHostActivity.getApplicationContext().getAssets(), "opendyslexic.ttf"));
+        canvas.drawPaint(mTextPaint);
+        mKeyboardView.draw(canvas);
+    }*/
 
     /** Returns whether the CustomKeyboard is visible. */
     public boolean isCustomKeyboardVisible() {

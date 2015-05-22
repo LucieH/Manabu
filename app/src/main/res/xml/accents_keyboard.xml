@@ -10,22 +10,22 @@
      -->
 
     <Row>
-        <Key android:codes="133"    android:keyLabel="à" android:keyEdgeFlags="left" />
-        <Key android:codes="131"    android:keyLabel="â" />
-        <Key android:codes="135"    android:keyLabel="ç" />
-        <Key android:codes="130"    android:keyLabel="é" />
-        <Key android:codes="138"    android:keyLabel="è" />
-        <Key android:codes="136"    android:keyLabel="ê" />
-        <Key android:codes="137" android:keyLabel="ë" android:keyEdgeFlags="right"/>
+        <Key android:codes="224"    android:keyLabel="à" android:keyEdgeFlags="left" />
+        <Key android:codes="226"    android:keyLabel="â" />
+        <Key android:codes="231"    android:keyLabel="ç" />
+        <Key android:codes="233"    android:keyLabel="é" />
+        <Key android:codes="232"    android:keyLabel="è" />
+        <Key android:codes="234"    android:keyLabel="ê" />
+        <Key android:codes="235" android:keyLabel="ë" android:keyEdgeFlags="right"/>
     </Row>
     <Row>
-        <Key android:codes="140"    android:keyLabel="î" android:keyEdgeFlags="left" />
-        <Key android:codes="139"    android:keyLabel="ï" />
-        <Key android:codes="147"    android:keyLabel="ô" />
-        <Key android:codes="151"    android:keyLabel="ù" />
-        <Key android:codes="150"    android:keyLabel="û" />
-        <Key android:codes="129"    android:keyLabel="ü" />
-        <Key android:codes="152" android:keyLabel="ÿ" android:keyEdgeFlags="right"/>
+        <Key android:codes="238"    android:keyLabel="î" android:keyEdgeFlags="left" />
+        <Key android:codes="239"    android:keyLabel="ï" />
+        <Key android:codes="244"    android:keyLabel="ô" />
+        <Key android:codes="249"    android:keyLabel="ù" />
+        <Key android:codes="251"    android:keyLabel="û" />
+        <Key android:codes="252"    android:keyLabel="ü" />
+        <Key android:codes="255" android:keyLabel="ÿ" android:keyEdgeFlags="right"/>
     </Row>
     <Row>
         <Key android:codes="-1"    android:keyLabel="MAJ" android:keyWidth="21.44%p" android:isModifier="true" android:keyEdgeFlags="left" />
@@ -33,7 +33,7 @@
         <Key android:codes="45"    android:keyLabel="-" />
         <Key android:codes="46"    android:keyLabel="." />
         <Key android:codes="44"    android:keyLabel="," />
-        <Key android:codes="-5" android:keyLabel="BCK" android:keyWidth="21.44%p" android:keyEdgeFlags="right"/>
+        <Key android:codes="-5" android:keyIcon="@drawable/sym_keyboard_delete" android:keyWidth="21.44%p" android:isRepeatable="true" android:keyEdgeFlags="right"/>
     </Row>
     <Row>
         <Key android:codes="-2" android:keyLabel="Accents" android:keyWidth="25%p"  android:keyEdgeFlags="left" />

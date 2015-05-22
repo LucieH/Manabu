@@ -75,6 +75,6 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:visibility="gone"
-        style="@style/texteBleu"/>
+        android:keyBackground="@drawable/keyboard_keys"/>
 
 </LinearLayout>
