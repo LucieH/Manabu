@@ -5,9 +5,11 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
+import android.provider.SyncStateContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +18,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.text.Normalizer;
@@ -79,40 +83,64 @@ public class AnagrammeActivity extends ActionBarActivity {
     public void start(View view) {
         view.invalidate();
         setContentView(R.layout.activity_anagramme);
+        //trouver un mot
         do{
             int rand = rnd.nextInt(480);
             strName = "str_" + rand;
             strTmp=getStringResourceByName(strName,getApplicationContext());
         } while (strTmp.length()>5 || strTmp.length()< 3);
+        //jouer le son du mot
         Utilities.jouerSon(strName, getApplicationContext());
+        //prendre la longueur et mettre en majuscule
         int lgt = strTmp.length();
         strTmp = strTmp.toUpperCase();
+        // créer un tableau de boutons de la longueur du mot
         Button[] tbLettres = new Button[lgt];
         char[] arStr = strTmp.toCharArray();
+        //creer une liste pour mélanger les caractères
         ArrayList<Character> tbStr = new ArrayList<Character>();
         for(int i=0; i<lgt; i++){
             tbStr.add(arStr[i]);
         }
         Collections.shuffle(tbStr);
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        params.setMargins(10, 10, 10, 10);
+        /*TableRow.LayoutParams params = new TableRow.LayoutParams(
+                TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT
+        );*/
 
-        LinearLayout ll = (LinearLayout) findViewById(R.id.LayoutAnag);
+
+        GridLayout tr = (GridLayout) findViewById(R.id.LayoutAna);
+        tr.setRowCount(3);
+        tr.setColumnCount(lgt);
+
+
+
+        for(int i=0; i<lgt; i++){
+            tbLettres[i] = new Button(this);
+            String temp = String.valueOf(arStr[i]);
+            setBoutonVerif(tbLettres[i], temp, i);
+            //A continuer
+            tr.addView(tbLettres[i]);
+        }
         for(int i=0; i<lgt; i++){
             tbLettres[i] = new Button(this);
             String temp = "" +tbStr.get(i)+"";
-            setBoutonLettre(tbLettres[i], temp, params);
+           // params.columnSpec = GridLayout.spec(i);
+            setBoutonLettre(tbLettres[i], temp, i);
             //A continuer
-            ll.addView(tbLettres[i]);
+            tr.addView(tbLettres[i]);
             addMouvementBouton(tbLettres[i]);
         }
     }
 
-    private void setBoutonLettre(Button b, String temp, LinearLayout.LayoutParams params){
+    private void setBoutonLettre(Button b, String temp, int i){
+        GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+        params.height = GridLayout.LayoutParams.WRAP_CONTENT;
+        params.width = GridLayout.LayoutParams.WRAP_CONTENT;
+        params.columnSpec = GridLayout.spec(i,1);
+        params.rowSpec = GridLayout.spec(2);
+        params.setGravity(Gravity.TOP);
         b.setText(temp);
         b.setTextAppearance(this, R.style.texteSurFond);
         b.setShadowLayer(10, 0, 0, Color.BLACK);
@@ -123,8 +151,25 @@ public class AnagrammeActivity extends ActionBarActivity {
         if (temp.equals("A") || temp.equals("E") || temp.equals("I") || temp.equals("O") || temp.equals("U") || temp.equals("Y"))
             b.setBackgroundResource(R.drawable.voyelles);
         else b.setBackgroundResource(R.drawable.consonnes);
+       // params.rowSpec = GridLayout.spec(2);
         b.setLayoutParams(params);
     }
+
+    private void setBoutonVerif(Button b, String temp, int i){
+        GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+        params.height = GridLayout.LayoutParams.WRAP_CONTENT;
+        params.width = GridLayout.LayoutParams.WRAP_CONTENT;
+        params.columnSpec = GridLayout.spec(i,1);
+        params.rowSpec = GridLayout.spec(1);
+        params.setGravity(Gravity.TOP);
+        // params.setMargins(10, 10, 10, 10);
+        b.setText(temp);
+        b.setTextAppearance(this, R.style.texteSurFond);
+        temp = Normalizer.normalize(temp, Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", "");
+        b.setBackgroundResource(R.color.Red);
+        b.setLayoutParams(params);
+    }
+
     private void addMouvementBouton(final Button b){
         b.setOnTouchListener(new View.OnTouchListener() {
             private float x
@@ -143,7 +188,7 @@ public class AnagrammeActivity extends ActionBarActivity {
                         mx = (int) (event.getRawX() - x);
                         my = (int) (event.getRawY() - y);
                         v.getScaleX();
-                        if (mx > 30 && my > 30) {
+                        if (mx > 0 && my > 0) {
                             b.setX(mx);
                             b.setY(my);
                         }

@@ -26,8 +26,9 @@ import static be.manabu.Utilities.*;
 
 public class ImgActivity extends ActionBarActivity {
 
-    final Random rnd = new Random();
-    final int NB_IMAGES = 21;
+    private final Random rnd = new Random();
+    private final static int NB_IMAGES = 21;
+    private final static int NB_TOURS = 10;
     private String strTmp = "start";
     private int tabNbImages[] = new int[NB_IMAGES];
     private int cmptImages = 0;
@@ -87,7 +88,7 @@ public class ImgActivity extends ActionBarActivity {
     /** Démarrer le jeu imagerie ave les fiches Freinet*/
     public void start(View view) {
         view.invalidate();
-        if (cmptImages < NB_IMAGES) {
+        if (cmptImages < NB_TOURS) {
             setContentView(R.layout.activity_img);
             randomImg();
         }
