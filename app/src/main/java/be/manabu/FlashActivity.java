@@ -127,20 +127,26 @@ public class FlashActivity extends ActionBarActivity {
                 if( mCustomKeyboard.isCustomKeyboardVisible() ) mCustomKeyboard.hideCustomKeyboard();
                 EditText text = (EditText) findViewById(R.id.Answflash);
                 String tmp = text.getText().toString().trim();
-
+                final Handler handler = new Handler();
                 if (strTmp.equalsIgnoreCase(tmp)){
                     afficherToast(act, true, "Bien joué !", "#00A000", getApplicationContext());
-                    final Handler handler = new Handler();
+                    b.setEnabled(false);
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            // Do something after 5s = 5000ms
                             startFlash(v);
                         }
                     }, 2500);
                 }
                 else{
                     afficherToast(act, false, "Essaye encore !", "#FF0000", getApplicationContext());
+                    b.setEnabled(false);
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            b.setEnabled(true);
+                        }
+                    }, 2500);
                 }
                 nbEssai++;
                 if (nbEssai >= 3) {

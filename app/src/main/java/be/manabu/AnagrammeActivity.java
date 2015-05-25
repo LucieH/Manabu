@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -39,6 +40,15 @@ public class AnagrammeActivity extends ActionBarActivity {
     final Random rnd = new Random();
     protected String strTmp;
     private String strName;
+    private structBouton[] tbStructBouton;
+    private int nbChar;
+    private boolean isSetPos = false;
+
+    class structBouton {
+        public float posX, posY;
+        public String lettre;
+        public boolean ok = false;
+    }
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +91,8 @@ public class AnagrammeActivity extends ActionBarActivity {
     }
 
     public void start(View view) {
+        nbChar = 0;
+        isSetPos = false;
         view.invalidate();
         setContentView(R.layout.activity_anagramme);
         //trouver un mot
@@ -92,14 +104,16 @@ public class AnagrammeActivity extends ActionBarActivity {
         //jouer le son du mot
         Utilities.jouerSon(strName, getApplicationContext());
         //prendre la longueur et mettre en majuscule
-        int lgt = strTmp.length();
+        nbChar = strTmp.length();
         strTmp = strTmp.toUpperCase();
         // créer un tableau de boutons de la longueur du mot
-        Button[] tbLettres = new Button[lgt];
+        Button[] tbLettres = new Button[nbChar];
+        //créer le tableau qui permettra la vérification
+        tbStructBouton = new structBouton[nbChar];
         char[] arStr = strTmp.toCharArray();
         //creer une liste pour mélanger les caractères
         ArrayList<Character> tbStr = new ArrayList<Character>();
-        for(int i=0; i<lgt; i++){
+        for(int i=0; i<nbChar; i++){
             tbStr.add(arStr[i]);
         }
         Collections.shuffle(tbStr);
@@ -112,21 +126,21 @@ public class AnagrammeActivity extends ActionBarActivity {
 
         GridLayout tr = (GridLayout) findViewById(R.id.LayoutAna);
         tr.setRowCount(3);
-        tr.setColumnCount(lgt);
+        tr.setColumnCount(nbChar);
 
-
-
-        for(int i=0; i<lgt; i++){
+        for(int i=0; i<nbChar; i++){
             tbLettres[i] = new Button(this);
             String temp = String.valueOf(arStr[i]);
             setBoutonVerif(tbLettres[i], temp, i);
             //A continuer
             tr.addView(tbLettres[i]);
         }
-        for(int i=0; i<lgt; i++){
+
+
+
+        for(int i=0; i<nbChar; i++){
             tbLettres[i] = new Button(this);
             String temp = "" +tbStr.get(i)+"";
-           // params.columnSpec = GridLayout.spec(i);
             setBoutonLettre(tbLettres[i], temp, i);
             //A continuer
             tr.addView(tbLettres[i]);
@@ -135,12 +149,6 @@ public class AnagrammeActivity extends ActionBarActivity {
     }
 
     private void setBoutonLettre(Button b, String temp, int i){
-        GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-        params.height = GridLayout.LayoutParams.WRAP_CONTENT;
-        params.width = GridLayout.LayoutParams.WRAP_CONTENT;
-        params.columnSpec = GridLayout.spec(i,1);
-        params.rowSpec = GridLayout.spec(2);
-        params.setGravity(Gravity.TOP);
         b.setText(temp);
         b.setTextAppearance(this, R.style.texteSurFond);
         b.setShadowLayer(10, 0, 0, Color.BLACK);
@@ -151,23 +159,30 @@ public class AnagrammeActivity extends ActionBarActivity {
         if (temp.equals("A") || temp.equals("E") || temp.equals("I") || temp.equals("O") || temp.equals("U") || temp.equals("Y"))
             b.setBackgroundResource(R.drawable.voyelles);
         else b.setBackgroundResource(R.drawable.consonnes);
-       // params.rowSpec = GridLayout.spec(2);
-        b.setLayoutParams(params);
+        b.setLayoutParams(setParams(2, i));
     }
 
     private void setBoutonVerif(Button b, String temp, int i){
+        b.setText(temp);
+        b.setTextAppearance(this, R.style.texteSurFond);
+        b.setTextSize(25);
+        b.setId(i);
+        b.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/opendyslexic.ttf"));
+        temp = Normalizer.normalize(temp, Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", "");
+        b.setBackgroundResource(R.drawable.anagramme_validate);
+        b.setLayoutParams(setParams(1, i));
+
+    }
+
+    private GridLayout.LayoutParams setParams(int row, int i){
         GridLayout.LayoutParams params = new GridLayout.LayoutParams();
         params.height = GridLayout.LayoutParams.WRAP_CONTENT;
         params.width = GridLayout.LayoutParams.WRAP_CONTENT;
         params.columnSpec = GridLayout.spec(i,1);
-        params.rowSpec = GridLayout.spec(1);
+        params.rowSpec = GridLayout.spec(row);
         params.setGravity(Gravity.TOP);
-        // params.setMargins(10, 10, 10, 10);
-        b.setText(temp);
-        b.setTextAppearance(this, R.style.texteSurFond);
-        temp = Normalizer.normalize(temp, Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", "");
-        b.setBackgroundResource(R.color.Red);
-        b.setLayoutParams(params);
+        params.setMargins(10, 10, 10, 10);
+        return params;
     }
 
     private void addMouvementBouton(final Button b){
@@ -178,23 +193,63 @@ public class AnagrammeActivity extends ActionBarActivity {
             private int mx
                     ,
                     my;
-
             public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        x = event.getX();
-                        y = event.getY();
-                    case MotionEvent.ACTION_MOVE:
-                        mx = (int) (event.getRawX() - x);
-                        my = (int) (event.getRawY() - y);
-                        v.getScaleX();
-                        if (mx > 0 && my > 0) {
-                            b.setX(mx);
-                            b.setY(my);
-                        }
-                        break;
+                if (! isSetPos){
+                    for (int i = 0; i < nbChar; i++) {
+                        Button b = (Button) findViewById(i);
+                        tbStructBouton[i] = new structBouton();
+                        tbStructBouton[i].posX = b.getX();
+                        System.out.println(b.getX());
+                        tbStructBouton[i].posY = b.getY();
+                        System.out.println(b.getY());
+                        tbStructBouton[i].lettre = b.getText().toString();
+                        System.out.println(b.getText().toString());
+                    }
+                    isSetPos = true;
+
                 }
-                return true;
+                //Utilities.jouerSon("ok_lettre",getApplicationContext());
+                int pos = -1;
+                float minX, maxX, minY, maxY;
+                for (int i = 0; i < nbChar; i++) {
+                    if (!tbStructBouton[i].ok) {
+
+                        if (b.getText().toString().equals(tbStructBouton[i].lettre)) {
+                            pos = i;
+                            break;
+                        }
+                    }
+                }
+                minX = (tbStructBouton[pos].posX) - 10;
+                maxX = (tbStructBouton[pos].posX) + 10;
+                minY = (tbStructBouton[pos].posY) - 10;
+                maxY = (tbStructBouton[pos].posY) + 10;
+                //System.out.println(b.getX());
+                if (b.getX() < maxX && b.getX() > minX && b.getY() < maxY && b.getY() > minY){
+                    b.setX(tbStructBouton[pos].posX);
+                    b.setY(tbStructBouton[pos].posY);
+                   // tbStructBouton[pos].ok = true;
+                    Utilities.jouerSon("ok_lettre",getApplicationContext());
+                    return true;
+
+                }
+                else {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            x = event.getX();
+                            y = event.getY();
+                        case MotionEvent.ACTION_MOVE:
+                            mx = (int) (event.getRawX() - x);
+                            my = (int) (event.getRawY() - y);
+                            v.getScaleX();
+                            if (mx > 0 && my > 0) {
+                                b.setX(mx);
+                                b.setY(my);
+                            }
+                            break;
+                    }
+                    return true;
+                }
             }
         });
     }

@@ -199,7 +199,6 @@ public class ImgActivity extends ActionBarActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        // Do something after 5s = 5000ms
                         start(v);
                     }
                 }, 2500);
@@ -214,11 +213,15 @@ public class ImgActivity extends ActionBarActivity {
         a.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 afficherToast(act, false, "Essaye encore !", "#FF0000", getApplicationContext());
+                disableButtons();
+                reEnableButtons();
             }
         });
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 afficherToast(act, false, "Essaye encore !", "#FF0000", getApplicationContext());
+                disableButtons();
+                reEnableButtons();
             }
         });
     }
@@ -230,6 +233,21 @@ public class ImgActivity extends ActionBarActivity {
         a.setEnabled(false);
         b.setEnabled(false);
         c.setEnabled(false);
+    }
+
+    private void reEnableButtons(){
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Button a = (Button) findViewById(R.id.choix1);
+                Button b = (Button) findViewById(R.id.choix2);
+                Button c = (Button) findViewById(R.id.choix3);
+                a.setEnabled(true);
+                b.setEnabled(true);
+                c.setEnabled(true);
+            }
+        }, 2500);
     }
 
     private boolean existeImageAffichee(int rand){

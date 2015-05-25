@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,9 +57,11 @@ public class Utilities{
         text.setTextColor(Color.parseColor(col));
         if (res){
             img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ok));
+            jouerSon("ok",ctx);
         }
         else{
             img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ko));
+            jouerSon("ko",ctx);
         }
         if (toast == null) toast = new Toast(ctx.getApplicationContext());
         toast.setGravity(Gravity.CENTER,0,0);
