@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.provider.SyncStateContract;
@@ -22,7 +23,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Space;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -132,24 +135,16 @@ public class AnagrammeActivity extends ActionBarActivity {
             }
             Collections.shuffle(tbStr);
 
-        /*TableRow.LayoutParams params = new TableRow.LayoutParams(
-                TableRow.LayoutParams.WRAP_CONTENT,
-                TableRow.LayoutParams.WRAP_CONTENT
-        );*/
+            RelativeLayout lay = (RelativeLayout) findViewById(R.id.LayoutAna);
 
-
-            GridLayout tr = (GridLayout) findViewById(R.id.LayoutAna);
-            tr.setRowCount(3);
-            tr.setColumnCount(nbChar);
-
+            int idBouton = R.id.bReplay;
             for (int i = 0; i < nbChar; i++) {
-                //tbLettres[i] = new Button(this);
                 tbBoutonLettres[i] = new boutonLettre();
                 tbBoutonLettres[i].b = new Button(this);
                 String temp = String.valueOf(arStr[i]);
-                setBoutonVerif(tbBoutonLettres[i].b, temp, i);
+                idBouton = setBoutonVerif(tbBoutonLettres[i].b, temp, i,idBouton);
                 //A continuer
-                tr.addView(tbBoutonLettres[i].b);
+                lay.addView(tbBoutonLettres[i].b);
             }
 
 
@@ -157,32 +152,53 @@ public class AnagrammeActivity extends ActionBarActivity {
                 tbBoutonLettres[i] = new boutonLettre();
                 tbBoutonLettres[i].b = new Button(this);
                 String temp = "" + tbStr.get(i) + "";
-                setBoutonLettre(tbBoutonLettres[i].b, temp, i);
+                idBouton = setBoutonLettre(tbBoutonLettres[i].b, temp, i, idBouton);
                 //A continuer
-                tr.addView(tbBoutonLettres[i].b);
+                lay.addView(tbBoutonLettres[i].b);
                 addMouvementBouton(tbBoutonLettres[i], this);
             }
+
+            final Button b = tbBoutonLettres[0].b;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Button replay = (Button) findViewById(R.id.bReplay);
+                    replay.setHeight(b.getHeight());
+                    replay.setWidth(b.getWidth());
+                    //replay.setBackgroundResource(R.drawable.button_replay);
+                    Drawable image = getResources().getDrawable( R.drawable.listen );
+                    int h = b.getHeight();
+                    int w = b.getWidth();
+                    image.setBounds( 0, 0, w, h );
+                    replay.setCompoundDrawables(image, null, null, null);
+                }
+            }, 50);
+
+
         }
         else{
             setContentView(R.layout.activity_img_fin);
         }
     }
 
-    private void setBoutonLettre(Button b, String temp, int i){
+    private int setBoutonLettre(Button b, String temp, int i, int idBouton){
         b.setText(temp);
         b.setTextAppearance(this, R.style.texteSurFond);
         b.setShadowLayer(10, 0, 0, Color.BLACK);
         b.setTextSize(25);
+        b.setId(i + 10);
         b.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/opendyslexic.ttf"));
         //permet de ne pas prendre en compte les accents pour le choix des couleurs entre voyelles et consonnes
         temp = Normalizer.normalize(temp, Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", "");
         if (temp.equals("A") || temp.equals("E") || temp.equals("I") || temp.equals("O") || temp.equals("U") || temp.equals("Y"))
             b.setBackgroundResource(R.drawable.voyelles);
         else b.setBackgroundResource(R.drawable.consonnes);
-        b.setLayoutParams(setParams(2, i, b, nbChar));
+        b.setLayoutParams(setParams(i, 0, idBouton, false));
+        return i+10;
     }
 
-    private void setBoutonVerif(Button b, String temp, int i){
+    private int setBoutonVerif(Button b, String temp, int i, int idBouton){
         b.setText(temp);
         b.setTextAppearance(this, R.style.texteSurFond);
         b.setTextSize(25);
@@ -190,22 +206,46 @@ public class AnagrammeActivity extends ActionBarActivity {
         b.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/opendyslexic.ttf"));
         temp = Normalizer.normalize(temp, Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", "");
         b.setBackgroundResource(R.drawable.anagramme_validate);
-        b.setLayoutParams(setParams(1, i, b, nbChar));
+        b.setLayoutParams(setParams(i, R.id.bReplay, idBouton, true));
+        return i;
 
     }
 
-    private GridLayout.LayoutParams setParams(int row, int i, Button b, int length){
-        Configuration configuration = this.getResources().getConfiguration();
-        int screenWidth = configuration.screenWidthDp/length;
-        System.out.println(b.getWidth());
-        int screenHeight = configuration.screenHeightDp/3;
-        GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-        params.height = GridLayout.LayoutParams.WRAP_CONTENT;
-        params.width = GridLayout.LayoutParams.WRAP_CONTENT;
-        params.columnSpec = GridLayout.spec(i);
-        params.rowSpec = GridLayout.spec(row);
-        if (i==0) params.setMargins(screenWidth, 10, 10, 10);
-        else params.setMargins(10, 10, 10, 10);
+    private RelativeLayout.LayoutParams setParams(int i, int buttonTop, int idButton, boolean verif ){
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+        if (i==0) {
+            params.addRule(RelativeLayout.BELOW, buttonTop);
+            params.addRule(RelativeLayout.ALIGN_LEFT, buttonTop);
+            params.addRule(RelativeLayout.ALIGN_START, buttonTop);
+        }
+        else{
+                if (i==1 && verif){
+                    params.addRule(RelativeLayout.BELOW,buttonTop);
+                    params.addRule(RelativeLayout.RIGHT_OF, buttonTop);
+                    params.addRule(RelativeLayout.END_OF, buttonTop);
+                }
+            else {
+                    if (verif) params.addRule(RelativeLayout.ALIGN_TOP, idButton);
+                    else params.addRule(RelativeLayout.ALIGN_BOTTOM,idButton);
+                    params.addRule(RelativeLayout.RIGHT_OF, idButton);
+                    params.addRule(RelativeLayout.END_OF, idButton);
+                }
+
+        }
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int height = (size.y)/2;
+        if (verif) {
+            if(i != 0) {
+                if (i == 1) params.setMargins(20, 0, 10, 0);
+                else params.setMargins(10, 0, 10, 0);
+            }
+        }
+        else params.setMargins(0,height,20,0);
         return params;
     }
 

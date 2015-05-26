@@ -16,4 +16,5 @@
         android:text="@string/son"
         style="@style/texteSurFond"/>
 
+
 </LinearLayout>
