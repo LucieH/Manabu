@@ -25,6 +25,7 @@ import static be.manabu.Utilities.*;
 public class FlashActivity extends ActionBarActivity {
 
     final Random rnd = new Random();
+    private final static int NBTOURS = 10;
     private int nbEssai;
     protected int compteur = 0;
     protected String strTmp;
@@ -94,7 +95,7 @@ public class FlashActivity extends ActionBarActivity {
 
     /** Démarrer le jeu flash*/
     public void startFlash(View view) {
-        if(compteur < 10){
+        if(compteur < NBTOURS){
             String str;
             int rand = rnd.nextInt(480);
             str = "str_" + rand;
