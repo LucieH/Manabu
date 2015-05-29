@@ -70,11 +70,12 @@ public class Utilities{
         toast.show();
     }
 
-    protected static void chargerRegles(final Activity act, View view, int id){
+    protected static int chargerRegles(final Activity act, View view, int id){
         view.invalidate();
         act.setContentView(R.layout.regles);
         TextView tv = (TextView) act.findViewById(R.id.TVregles);
         tv.setText(id);
+        return  R.layout.regles;
     }
 
     protected static void revenirDebut(final Activity act, View view){

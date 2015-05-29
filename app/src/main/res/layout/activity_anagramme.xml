@@ -1,25 +1,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/LayoutAna"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:background="@drawable/fondsimple"
-android:gravity="center"
-android:paddingBottom="25dp"
 tools:context="be.manabu.AnagrammeActivity" >
 
-
-    <Button
-        android:id="@+id/bReplay"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/listen"
-        android:layout_marginBottom="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="25dp"
+        android:text="@string/fondAna"/>
+
+    <RelativeLayout
+        android:id="@+id/LayoutAna"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:paddingBottom="25dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@color/Transparent"
-        android:onClick="jouerSon"/>
+        android:layout_alignParentStart="true">
 
+        <Button
+            android:id="@+id/bReplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/listen"
+            android:layout_marginBottom="25dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@color/Transparent"
+            android:onClick="jouerSon"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -43,6 +43,7 @@ import static be.manabu.Utilities.*;
 public class AnagrammeActivity extends ActionBarActivity {
 
     private final static int NBTOURS = 10;
+    private final static int NBMOTS = 481;
     private int compteur = 0;
     private int lvl = 1;
     private Niveaux niv = new Niveaux();
@@ -53,6 +54,7 @@ public class AnagrammeActivity extends ActionBarActivity {
     private int nbChar;
     private boolean isSetPos = false;
     int nbLettresOk = 0;
+    private int idLayout = 0;
 
     class structBouton {
         public float posX, posY;
@@ -77,6 +79,7 @@ public class AnagrammeActivity extends ActionBarActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
                                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_start);
+        idLayout = R.layout.activity_start;
 	}
 
     @Override
@@ -105,6 +108,17 @@ public class AnagrammeActivity extends ActionBarActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        // NOTE Trap the back key: when the CustomKeyboard is still visible hide it, only when it is invisible, finish activity
+        if (idLayout == R.layout.activity_anagramme || idLayout == R.layout.regles){
+            setContentView(R.layout.activity_start);
+            idLayout = R.layout.activity_start;
+            lvl = 1;
+        }
+        else  this.finish();
+    }
+
     public void start(View view) {
         if (compteur<NBTOURS) {
             nbLettresOk = 0;
@@ -112,12 +126,14 @@ public class AnagrammeActivity extends ActionBarActivity {
             isSetPos = false;
             view.invalidate();
             setContentView(R.layout.activity_anagramme);
+            idLayout = R.layout.activity_anagramme;
             //trouver un mot
+            int rand = 0;
             do {
-                int rand = rnd.nextInt(480);
+                rand = rnd.nextInt(NBMOTS);
                 strName = "str_" + rand;
                 strTmp = getStringResourceByName(strName, getApplicationContext());
-            } while (strTmp.length() > 5 || strTmp.length() < 3);
+            } while (strTmp.length() > getMaxLettres() || strTmp.length() < getMinLettres() || rand ==0);
             //jouer le son du mot
             Utilities.jouerSon(strName, getApplicationContext());
             //prendre la longueur et mettre en majuscule
@@ -170,7 +186,7 @@ public class AnagrammeActivity extends ActionBarActivity {
                     Drawable image = getResources().getDrawable( R.drawable.listen );
                     int h = b.getHeight();
                     int w = b.getWidth();
-                    image.setBounds( 0, 0, w, h );
+                    image.setBounds(0, 0, w, h);
                     replay.setCompoundDrawables(image, null, null, null);
                 }
             }, 50);
@@ -179,6 +195,7 @@ public class AnagrammeActivity extends ActionBarActivity {
         }
         else{
             setContentView(R.layout.activity_img_fin);
+            idLayout = R.layout.activity_img_fin;
         }
     }
 
@@ -324,10 +341,37 @@ public class AnagrammeActivity extends ActionBarActivity {
         });
     }
 
+    private int getMinLettres(){
+        switch (lvl){
+            case 1 :
+                return 3;
+            case 2 :
+                return 6;
+            case 3 :
+                return 8;
+            default: break;
+        }
+        return 0;
+    }
+
+    private int getMaxLettres(){
+        switch (lvl){
+            case 1 :
+                return 5;
+            case 2 :
+                return 8;
+            case 3 :
+                return 12;
+            default: break;
+        }
+        return 0;
+    }
+
     public void rejouer(View view) {
         view.invalidate();
         this.compteur=0;
         setContentView(R.layout.activity_anagramme);
+        idLayout = R.layout.activity_anagramme;
         start(view);
     }
 
@@ -341,7 +385,7 @@ public class AnagrammeActivity extends ActionBarActivity {
     }
 
     public void afficheRegles(View view){
-        chargerRegles(this, view, R.string.regleAna);
+        idLayout = chargerRegles(this, view, R.string.regleAna);
     }
     public void changeLvl1(View view){ lvl=niv.changeLvl1(this, lvl);}
     public void changeLvl2(View view){

@@ -26,6 +26,7 @@ public class FlashActivity extends ActionBarActivity {
 
     final Random rnd = new Random();
     private final static int NBTOURS = 10;
+    private final static int NBMOTS = 481;
     private int nbEssai;
     protected int compteur = 0;
     protected String strTmp;
@@ -80,9 +81,17 @@ public class FlashActivity extends ActionBarActivity {
     public void onBackPressed() {
         // NOTE Trap the back key: when the CustomKeyboard is still visible hide it, only when it is invisible, finish activity
         if (idLayout == R.layout.activity_flash_answer){
-        if( mCustomKeyboard.isCustomKeyboardVisible() ) mCustomKeyboard.hideCustomKeyboard(); else this.finish();
+            if( mCustomKeyboard.isCustomKeyboardVisible() ) mCustomKeyboard.hideCustomKeyboard();
+
         }
-        else this.finish();
+        else {
+            if (idLayout == R.layout.activity_flash_start || idLayout == R.layout.activity_flash_answer || idLayout == R.layout.regles) {
+                setContentView(R.layout.activity_start);
+                idLayout = R.layout.activity_start;
+                lvl = 1;
+            }
+            else this.finish();
+        }
     }
 
     public void start(View view) {
@@ -97,7 +106,10 @@ public class FlashActivity extends ActionBarActivity {
     public void startFlash(View view) {
         if(compteur < NBTOURS){
             String str;
-            int rand = rnd.nextInt(480);
+            int rand;
+            do {
+                rand = rnd.nextInt(NBMOTS);
+            }while (rand==0);
             str = "str_" + rand;
             strTmp=getStringResourceByName(str,getApplicationContext());
             showWord(view);
@@ -218,7 +230,7 @@ public class FlashActivity extends ActionBarActivity {
     }
 
     public void afficheRegles(View view){
-        chargerRegles(this, view, R.string.regleFlash);
+        idLayout = chargerRegles(this, view, R.string.regleFlash);
     }
 
     public void changeLvl1(View view){

@@ -1,20 +1,64 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="be.manabu.SonActivity"
-    android:background="@drawable/fondsimple">
+    android:background="@drawable/fondsimple"
+    >
 
-    <TextView
+    <ImageView
+        android:layout_width="128px"
+        android:layout_height="128px"
+        android:background="@drawable/listen"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:padding="25dp"/>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/son"
-        style="@style/texteSurFond"/>
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/TVSonIS"
+            android:text="coucou"
+            />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/son"
+            android:background="@drawable/button_menu"
+            android:textColor="#FFF"
+            android:padding="5dp"
+            android:layout_margin="10dp"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ana"
+            android:background="@drawable/button_menu"
+            android:textColor="#FFF"
+            android:padding="5dp"
+            android:layout_margin="10dp"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/son"
+            android:background="@drawable/button_menu"
+            android:textColor="#FFF"
+            android:padding="5dp"
+            android:layout_margin="10dp"/>
 
 
-</LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
+

@@ -34,6 +34,7 @@ public class ImgActivity extends ActionBarActivity {
     private int cmptImages = 0;
     public int lvl = 1;
     private Niveaux niv = new Niveaux();
+    private int idLayout;
 
     //Getters et setters
     public void setStrTmp(String s){
@@ -53,6 +54,7 @@ public class ImgActivity extends ActionBarActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_start);
+        idLayout = R.layout.activity_start;
 	}
 
 
@@ -82,6 +84,17 @@ public class ImgActivity extends ActionBarActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        // NOTE Trap the back key: when the CustomKeyboard is still visible hide it, only when it is invisible, finish activity
+        if (idLayout == R.layout.activity_img || idLayout == R.layout.activity_img_choix || idLayout == R.layout.regles){
+            setContentView(R.layout.activity_start);
+            idLayout = R.layout.activity_start;
+            lvl = 1;
+        }
+        else  this.finish();
+    }
+
 
     //Fonctions personnelles
 
@@ -90,10 +103,13 @@ public class ImgActivity extends ActionBarActivity {
         view.invalidate();
         if (cmptImages < NB_TOURS) {
             setContentView(R.layout.activity_img);
+            idLayout = R.layout.activity_img;
             randomImg();
         }
-        else
+        else {
             setContentView(R.layout.activity_img_fin);
+            idLayout = R.layout.activity_img_fin;
+        }
 
     }
 
@@ -101,6 +117,7 @@ public class ImgActivity extends ActionBarActivity {
     public void afficherChoix(View view) {
         view.invalidate();
         setContentView(R.layout.activity_img_choix);
+        idLayout =  R.layout.activity_img_choix;
         final ImageView img = (ImageView) findViewById(R.id.imgRandom);
         img.setImageDrawable
                 (
@@ -261,6 +278,7 @@ public class ImgActivity extends ActionBarActivity {
         view.invalidate();
         this.cmptImages=0;
         setContentView(R.layout.activity_start);
+        idLayout = R.layout.activity_start;
     }
 
     public void retournerMenu(View view){
@@ -269,7 +287,7 @@ public class ImgActivity extends ActionBarActivity {
     }
 
     public void afficheRegles(View view){
-        chargerRegles(this, view, R.string.regleImg);
+        idLayout = chargerRegles(this, view, R.string.regleImg);
     }
 
     public void changeLvl1(View view){

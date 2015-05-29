@@ -591,6 +591,7 @@
     <string name="regleAna">Remets les lettres dans l\'ordre pour former un mot.\n</string>
     Les voyelles sont rouges et les consonnes vertes.
     <string name="regleSon">Ecoute le son et touche la syllabe du mot qui sonne pareil.</string>
+    <string name="fondAna">Remets les lettres dans l\'ordre</string>
 
 
 </resources>

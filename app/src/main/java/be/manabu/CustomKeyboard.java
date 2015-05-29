@@ -43,8 +43,7 @@ import android.widget.EditText;
 /**
  * When an activity hosts a keyboardView, this class allows several EditText's to register for it.
  *
- * @author Maarten Pennings
- * @date   2012 December 23
+ * @author Maarten Pennings (adapted by Lucie Herrier for Manabu)
  */
 public class CustomKeyboard extends View{
 
