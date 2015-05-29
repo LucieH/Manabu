@@ -79,16 +79,15 @@ public class FlashActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        // NOTE Trap the back key: when the CustomKeyboard is still visible hide it, only when it is invisible, finish activity
         if (idLayout == R.layout.activity_flash_answer){
             if( mCustomKeyboard.isCustomKeyboardVisible() ) mCustomKeyboard.hideCustomKeyboard();
-
         }
         else {
             if (idLayout == R.layout.activity_flash_start || idLayout == R.layout.activity_flash_answer || idLayout == R.layout.regles) {
                 setContentView(R.layout.activity_start);
                 idLayout = R.layout.activity_start;
                 lvl = 1;
+                compteur = 0;
             }
             else this.finish();
         }

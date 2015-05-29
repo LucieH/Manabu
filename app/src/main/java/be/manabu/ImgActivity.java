@@ -86,11 +86,11 @@ public class ImgActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        // NOTE Trap the back key: when the CustomKeyboard is still visible hide it, only when it is invisible, finish activity
         if (idLayout == R.layout.activity_img || idLayout == R.layout.activity_img_choix || idLayout == R.layout.regles){
             setContentView(R.layout.activity_start);
             idLayout = R.layout.activity_start;
             lvl = 1;
+            cmptImages = 0;
         }
         else  this.finish();
     }

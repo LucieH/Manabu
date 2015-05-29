@@ -31,6 +31,7 @@
             />
 
         <Button
+            android:id="@+id/bSons1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/son"
@@ -40,6 +41,7 @@
             android:layout_margin="10dp"/>
 
         <Button
+            android:id="@+id/bSons2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/ana"
@@ -49,6 +51,7 @@
             android:layout_margin="10dp"/>
 
         <Button
+            android:id="@+id/bSons3"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/son"
