@@ -173,25 +173,6 @@ public class AnagrammeActivity extends ActionBarActivity {
                 lay.addView(tbBoutonLettres[i].b);
                 addMouvementBouton(tbBoutonLettres[i], this);
             }
-
-            final Button b = tbBoutonLettres[0].b;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Button replay = (Button) findViewById(R.id.bReplay);
-                    replay.setHeight(b.getHeight());
-                    replay.setWidth(b.getWidth());
-                    //replay.setBackgroundResource(R.drawable.button_replay);
-                    Drawable image = getResources().getDrawable( R.drawable.listen );
-                    int h = b.getHeight();
-                    int w = b.getWidth();
-                    image.setBounds(0, 0, w, h);
-                    replay.setCompoundDrawables(image, null, null, null);
-                }
-            }, 50);
-
-
         }
         else{
             setContentView(R.layout.activity_img_fin);
@@ -370,9 +351,8 @@ public class AnagrammeActivity extends ActionBarActivity {
     public void rejouer(View view) {
         view.invalidate();
         this.compteur=0;
-        setContentView(R.layout.activity_anagramme);
-        idLayout = R.layout.activity_anagramme;
-        start(view);
+        setContentView(R.layout.activity_start);
+        idLayout = R.layout.activity_start;
     }
 
     public void retournerMenu(View view){
@@ -382,6 +362,10 @@ public class AnagrammeActivity extends ActionBarActivity {
 
     public void jouerSon(View v){
         Utilities.jouerSon(strName, getApplicationContext());
+    }
+
+    public void jouerSonRegles(View v){
+        Utilities.jouerSon("ok",getApplicationContext());
     }
 
     public void afficheRegles(View view){

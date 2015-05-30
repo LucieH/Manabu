@@ -201,8 +201,8 @@ public class FlashActivity extends ActionBarActivity {
     public void rejouer(View view) {
         view.invalidate();
         this.compteur=0;
-        setContentView(R.layout.activity_flash_start);
-        idLayout = R.layout.activity_flash_start;
+        setContentView(R.layout.activity_start);
+        idLayout = R.layout.activity_start;
     }
 
     public void retournerMenu(View view){
@@ -228,6 +228,10 @@ public class FlashActivity extends ActionBarActivity {
 
     public void afficheRegles(View view){
         idLayout = chargerRegles(this, view, R.string.regleFlash);
+    }
+
+    public void jouerSonRegles(View v){
+        Utilities.jouerSon("ok",getApplicationContext());
     }
 
     public void changeLvl1(View view){

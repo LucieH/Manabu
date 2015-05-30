@@ -287,6 +287,9 @@ public class ImgActivity extends ActionBarActivity {
     public void afficheRegles(View view){
         idLayout = chargerRegles(this, view, R.string.regleImg);
     }
+    public void jouerSonRegles(View v){
+        Utilities.jouerSon("ok",getApplicationContext());
+    }
 
     public void changeLvl1(View view){
         lvl=niv.changeLvl1(this, lvl);

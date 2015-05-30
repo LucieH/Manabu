@@ -27,6 +27,8 @@ public class SonActivity extends ActionBarActivity {
     final Random rnd = new Random();
     final static private int NB_SONS = 33;
     final static private int NB_MOTS = 481;
+    private final static int NB_TOURS = 10;
+    private int compteur = 0;
     private int lvl = 1;
     private Niveaux niv = new Niveaux();
     private int idLayout = 0;
@@ -86,39 +88,44 @@ public class SonActivity extends ActionBarActivity {
     }
 
     public void start(View view) {
-        if (!fichierLu){
-            String code ="11";
-            int i = 0;
-            //Essai de lecture de fichier
-            try{
-                InputStream ips=getAssets().open("start_son.txt");//new FileInputStream(fichier);
-                InputStreamReader ipsr=new InputStreamReader(ips);
-                BufferedReader br=new BufferedReader(ipsr);
-                // br.
-                String ligne;
-                while ((ligne=br.readLine())!=null){
-                    listeSons.add(ligne.substring(2, ligne.length()).trim());
-                    if (! ligne.startsWith(code)){
-                        code = ligne.substring(0,2);
-                        indexSons[i] = listeSons.size()-1;
-                        i++;
+        if (compteur < NB_TOURS) {
+            if (!fichierLu) {
+                String code = "11";
+                int i = 0;
+                //Essai de lecture de fichier
+                try {
+                    InputStream ips = getAssets().open("start_son.txt");//new FileInputStream(fichier);
+                    InputStreamReader ipsr = new InputStreamReader(ips);
+                    BufferedReader br = new BufferedReader(ipsr);
+                    // br.
+                    String ligne;
+                    while ((ligne = br.readLine()) != null) {
+                        listeSons.add(ligne.substring(2, ligne.length()).trim());
+                        if (!ligne.startsWith(code)) {
+                            code = ligne.substring(0, 2);
+                            indexSons[i] = listeSons.size() - 1;
+                            i++;
+                        }
+                        //chaine+=ligne+"\n";
                     }
-                    //chaine+=ligne+"\n";
+                    br.close();
+                    ipsr.close();
+                    ips.close();
+                    fichierLu = true;
+                } catch (Exception e) {
+                    System.out.println(e.toString());
                 }
-                br.close();
-                ipsr.close();
-                ips.close();
-                fichierLu = true;
             }
-            catch (Exception e){
-                System.out.println(e.toString());
-            }
+            view.invalidate();
+            setContentView(R.layout.activity_son);
+            idLayout = R.layout.activity_son;
+            int rand = rnd.nextInt(NB_SONS);
+            setChoixLvl1(rand);
         }
-        view.invalidate();
-        setContentView(R.layout.activity_son);
-        idLayout = R.layout.activity_son;
-        int rand = rnd.nextInt(NB_SONS);
-        setChoixLvl1(rand);
+        else {
+            setContentView(R.layout.activity_img_fin);
+            idLayout = R.layout.activity_img_fin;
+        }
     }
 
     private void setChoixLvl1(int rand){
@@ -274,19 +281,20 @@ public class SonActivity extends ActionBarActivity {
         String ok = getStringResourceByName("str_"+ listeSons.get(randString)+"",getApplicationContext());
 
         do{
-            randString = rnd.nextInt(480);
+            randString = rnd.nextInt(NB_MOTS);
         } while (existeMot(indexSons[pos], indexSons[pos+1], randString));
         String ko1 = getStringResourceByName("str_"+randString+"",getApplicationContext());
 
         do{
-            randString = rnd.nextInt(480);
+            randString = rnd.nextInt(NB_MOTS);
         } while (existeMot(indexSons[pos], indexSons[pos+1], randString));
         String ko2 = getStringResourceByName("str_"+randString+"",getApplicationContext());
 
         final Button b1 = (Button) findViewById(R.id.bSons1);
         final Button b2 = (Button) findViewById(R.id.bSons2);
         final Button b3 = (Button) findViewById(R.id.bSons3);
-        creerBoutonRandom(b1,b2,b3,ok,ko1,ko2);
+        creerBoutonRandom(b1, b2, b3, ok, ko1, ko2);
+        compteur++;
     }
 
     private boolean existeMot(int start, int end, int nbr){
@@ -420,6 +428,22 @@ public class SonActivity extends ActionBarActivity {
     public void changeLvl1(View view){
         lvl=niv.changeLvl1(this, lvl);
 
+    }
+
+    public void jouerSonRegles(View v){
+        Utilities.jouerSon("ok",getApplicationContext());
+    }
+
+    public void rejouer(View view) {
+        view.invalidate();
+        compteur=0;
+        setContentView(R.layout.activity_start);
+        idLayout = R.layout.activity_start;
+    }
+
+    public void retournerMenu(View view){
+        view.invalidate();
+        this.finish();
     }
 
     public void changeLvl2(View view){

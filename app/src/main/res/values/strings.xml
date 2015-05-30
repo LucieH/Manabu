@@ -587,9 +587,8 @@
     <string name="regleImg">Mémorise le mot ou la phrase associé(e) à l\'image, puis appuie sur \"Mémorisé\".
         \nRetrouve ensuite le mot affiché parmi les propositions à l\'aide de l\'image.
         </string>
-    <string name="regleFlash">Choisis le temps d\'affichage du mot ou de la phrase.\n
-    Mémorise la phrase dans le temps imparti.\n
-    Tape ensuite le mot lu dans la zone blanche et vérifie ta réponse.</string>
+    <string name="regleFlash">Choisis le temps d\'affichage et mémorise le mot ou la phrase dans le temps imparti.\n
+    Tape ensuite ce que tu as lu dans la zone blanche et vérifie ta réponse.</string>
     <string name="regleAna">Remets les lettres dans l\'ordre pour former un mot.\n</string>
     Les voyelles sont rouges et les consonnes vertes.
     <string name="regleSon">Ecoute le son et touche la syllabe du mot qui sonne pareil.</string>

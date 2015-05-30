@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:background="@drawable/fondsimple">
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@drawable/fondsimple">
 
-    <ScrollView
+    <ImageView
+    android:layout_width="128px"
+    android:layout_height="128px"
+    android:background="@drawable/listen"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentRight="true"
+    android:layout_margin="20dp"
+    android:onClick="jouerSonRegles"    />
+
+    <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+        <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp">
-        <TextView
+            <TextView
             android:id="@+id/TVregles"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -18,17 +33,18 @@
             android:gravity="center"
             style="@style/texteSurFond"/>
         </ScrollView>
-    <LinearLayout
+
+        <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center">
 
-        <Space
+            <Space
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"/>
-        <Button
+            <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -38,12 +54,12 @@
             android:layout_margin="5dp"
             android:textColor="#FFF"
             android:onClick="back"/>
-        <Space
+            <Space
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"/>
 
-        <Button
+            <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -54,11 +70,12 @@
             android:textColor="#FFF"
             android:onClick="start"/>
 
-        <Space
+            <Space
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"/>
 
         </LinearLayout>
 
-</LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

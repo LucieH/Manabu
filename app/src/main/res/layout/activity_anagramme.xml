@@ -6,6 +6,15 @@ android:layout_height="match_parent"
 android:background="@drawable/fondsimple"
 tools:context="be.manabu.AnagrammeActivity" >
 
+    <ImageView
+        android:layout_width="128px"
+        android:layout_height="128px"
+        android:background="@drawable/listen"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20dp"
+        android:onClick="jouerSon"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,13 +37,12 @@ tools:context="be.manabu.AnagrammeActivity" >
             android:id="@+id/bReplay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/listen"
-            android:layout_marginBottom="25dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:background="@color/Transparent"
-            android:onClick="jouerSon"/>
+            android:visibility="invisible"
+            android:enabled="false"
+            />
 
     </RelativeLayout>
 

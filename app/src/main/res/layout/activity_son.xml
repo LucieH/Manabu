@@ -14,7 +14,7 @@
         android:background="@drawable/listen"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:padding="25dp"/>
+        android:layout_margin="20dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
