@@ -1,6 +1,8 @@
 package be.manabu;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -24,26 +26,28 @@ import static be.manabu.Utilities.*;
 public class SonActivity extends ActionBarActivity {
     final Random rnd = new Random();
     final static private int NB_SONS = 33;
+    final static private int NB_MOTS = 481;
     private int lvl = 1;
     private Niveaux niv = new Niveaux();
     private int idLayout = 0;
     private int[] indexSons = new int[NB_SONS];
     private ArrayList<String> listeSons = new ArrayList<String>();
+    private boolean fichierLu = false;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                         .setDefaultFontPath("fonts/opendyslexic.ttf")
                         .setFontAttrId(R.attr.fontPath)
                         .build()
         );
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
-                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.activity_start);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_start);
         idLayout = R.layout.activity_start;
-	}
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -82,35 +86,38 @@ public class SonActivity extends ActionBarActivity {
     }
 
     public void start(View view) {
+        if (!fichierLu){
+            String code ="11";
+            int i = 0;
+            //Essai de lecture de fichier
+            try{
+                InputStream ips=getAssets().open("start_son.txt");//new FileInputStream(fichier);
+                InputStreamReader ipsr=new InputStreamReader(ips);
+                BufferedReader br=new BufferedReader(ipsr);
+                // br.
+                String ligne;
+                while ((ligne=br.readLine())!=null){
+                    listeSons.add(ligne.substring(2, ligne.length()).trim());
+                    if (! ligne.startsWith(code)){
+                        code = ligne.substring(0,2);
+                        indexSons[i] = listeSons.size()-1;
+                        i++;
+                    }
+                    //chaine+=ligne+"\n";
+                }
+                br.close();
+                ipsr.close();
+                ips.close();
+                fichierLu = true;
+            }
+            catch (Exception e){
+                System.out.println(e.toString());
+            }
+        }
         view.invalidate();
         setContentView(R.layout.activity_son);
         idLayout = R.layout.activity_son;
         int rand = rnd.nextInt(NB_SONS);
-        String code ="11";
-        int i = 0;
-        //Essai de lecture de fichier
-        try{
-            InputStream ips=getAssets().open("start_son.txt");//new FileInputStream(fichier);
-            InputStreamReader ipsr=new InputStreamReader(ips);
-            BufferedReader br=new BufferedReader(ipsr);
-           // br.
-            String ligne;
-            while ((ligne=br.readLine())!=null){
-                listeSons.add(ligne.substring(2, ligne.length()).trim());
-                if (! ligne.startsWith(code)){
-                    code = ligne.substring(0,2);
-                    indexSons[i] = listeSons.size()-1;
-                    i++;
-                }
-                //chaine+=ligne+"\n";
-            }
-            br.close();
-            ipsr.close();
-            ips.close();
-        }
-        catch (Exception e){
-            System.out.println(e.toString());
-        }
         setChoixLvl1(rand);
     }
 
@@ -264,9 +271,146 @@ public class SonActivity extends ActionBarActivity {
             nbMots = indexSons[pos+1]-indexSons[pos];
         }
         int randString = rnd.nextInt(nbMots) + indexSons[pos];
-        String texte = getStringResourceByName("str_"+ listeSons.get(randString)+"",getApplicationContext());
-        Button b = (Button) findViewById(R.id.bSons1);
-        b.setText(texte);
+        String ok = getStringResourceByName("str_"+ listeSons.get(randString)+"",getApplicationContext());
+
+        do{
+            randString = rnd.nextInt(480);
+        } while (existeMot(indexSons[pos], indexSons[pos+1], randString));
+        String ko1 = getStringResourceByName("str_"+randString+"",getApplicationContext());
+
+        do{
+            randString = rnd.nextInt(480);
+        } while (existeMot(indexSons[pos], indexSons[pos+1], randString));
+        String ko2 = getStringResourceByName("str_"+randString+"",getApplicationContext());
+
+        final Button b1 = (Button) findViewById(R.id.bSons1);
+        final Button b2 = (Button) findViewById(R.id.bSons2);
+        final Button b3 = (Button) findViewById(R.id.bSons3);
+        creerBoutonRandom(b1,b2,b3,ok,ko1,ko2);
+    }
+
+    private boolean existeMot(int start, int end, int nbr){
+        String nbrS = ""+nbr+"";
+        for (int i = start; i< end; i++){
+            if (listeSons.get(start).equals(nbrS)) return true;
+        }
+        return false;
+    }
+
+    protected void creerBoutonRandom(Button b1, Button b2, Button b3, String ok, String ko1, String ko2){
+        int i = rnd.nextInt(3);
+        int j = rnd.nextInt(2);
+        Button a = null;
+        Button b = null;
+        switch(i){
+            case 0:
+                setBonneReponse(b1, ok);
+                switch(j){
+                    case 0:
+                        a=b3;
+                        b=b2;
+
+                        break;
+                    case 1:
+                        a=b2;
+                        b=b3;
+                        break;
+                }
+                setMauvaiseReponse(a, ko1, b, ko2);
+                break;
+            case 1:
+                setBonneReponse(b2, ok);
+                switch(j){
+                    case 0:
+                        a=b3;
+                        b=b1;
+                        break;
+                    case 1:
+                        a=b1;
+                        b=b3;
+                        break;
+                }
+                setMauvaiseReponse(a, ko1, b, ko2);
+                break;
+            case 2:
+                setBonneReponse(b3, ok);
+                switch(j){
+                    case 0:
+                        a=b1;
+                        b=b2;
+                        break;
+                    case 1:
+                        a=b2;
+                        b=b1;
+                        break;
+                }
+                setMauvaiseReponse(a, ko1, b, ko2);
+                break;
+        }
+    }
+
+    protected void setBonneReponse(Button b, String ok){
+        final Activity act = this;
+        b.setText(ok);
+        b.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+                afficherToast(act, true, getResources().getString(R.string.bienJoue), "#00A000", getApplicationContext());
+                disableButtons();
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        start(v);
+                    }
+                }, 2500);
+            }
+        });
+    }
+
+    protected void setMauvaiseReponse(final Button a, String ko1, final Button b, String ko2){
+        final Activity act = this;
+        a.setText(ko1);
+        b.setText(ko2);
+        a.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                afficherToast(act, false, getResources().getString(R.string.reessaye), "#FF0000", getApplicationContext());
+                disableButtons();
+                reEnableButtons();
+            }
+        });
+        b.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                afficherToast(act, false, getResources().getString(R.string.reessaye), "#FF0000", getApplicationContext());
+                disableButtons();
+                reEnableButtons();
+            }
+        });
+
+
+    }
+
+    private void disableButtons(){
+        Button a = (Button) findViewById(R.id.bSons1);
+        Button b = (Button) findViewById(R.id.bSons2);
+        Button c = (Button) findViewById(R.id.bSons3);
+        a.setEnabled(false);
+        b.setEnabled(false);
+        c.setEnabled(false);
+    }
+
+    private void reEnableButtons(){
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Button a = (Button) findViewById(R.id.bSons1);
+                Button b = (Button) findViewById(R.id.bSons2);
+                Button c = (Button) findViewById(R.id.bSons3);
+                a.setEnabled(true);
+                b.setEnabled(true);
+                c.setEnabled(true);
+            }
+        }, 2500);
     }
 
     public void afficheRegles(View view){

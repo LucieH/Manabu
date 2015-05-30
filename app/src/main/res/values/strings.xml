@@ -13,6 +13,8 @@
     <string name="title_activity_son">@string/son</string>
     <string name="title_activity_anagramme">@string/ana</string>
     <string name="demarrerjeu">Jouer !</string>
+    <string name="bienJoue">Bien joué !</string>
+    <string name="reessaye">Essaye encore !</string>
 
     <!-- Mots et phrases pour l'activité Imagerie-->
     <!-- Niveau facile -->

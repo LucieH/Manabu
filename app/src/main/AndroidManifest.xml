@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="be.manabu"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0">
 
     <application
         android:allowBackup="true"
@@ -22,8 +22,7 @@
         <activity
             android:name=".FlashActivity"
             android:label="@string/title_activity_flash"
-            android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustResize">
+            android:screenOrientation="landscape">
         </activity>
         <activity
             android:name=".ImgActivity"

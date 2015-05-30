@@ -82,15 +82,13 @@ public class FlashActivity extends ActionBarActivity {
         if (idLayout == R.layout.activity_flash_answer){
             if( mCustomKeyboard.isCustomKeyboardVisible() ) mCustomKeyboard.hideCustomKeyboard();
         }
-        else {
-            if (idLayout == R.layout.activity_flash_start || idLayout == R.layout.activity_flash_answer || idLayout == R.layout.regles) {
-                setContentView(R.layout.activity_start);
-                idLayout = R.layout.activity_start;
-                lvl = 1;
-                compteur = 0;
-            }
-            else this.finish();
+        if (idLayout == R.layout.activity_flash_start || idLayout == R.layout.activity_flash_answer || idLayout == R.layout.regles) {
+            setContentView(R.layout.activity_start);
+            idLayout = R.layout.activity_start;
+            lvl = 1;
+            compteur = 0;
         }
+        else this.finish();
     }
 
     public void start(View view) {
@@ -141,7 +139,7 @@ public class FlashActivity extends ActionBarActivity {
                 String tmp = text.getText().toString().trim();
                 final Handler handler = new Handler();
                 if (strTmp.equalsIgnoreCase(tmp)){
-                    afficherToast(act, true, "Bien joué !", "#00A000", getApplicationContext());
+                    afficherToast(act, true, getResources().getString(R.string.bienJoue), "#00A000", getApplicationContext());
                     b.setEnabled(false);
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -151,7 +149,7 @@ public class FlashActivity extends ActionBarActivity {
                     }, 2500);
                 }
                 else{
-                    afficherToast(act, false, "Essaye encore !", "#FF0000", getApplicationContext());
+                    afficherToast(act, false, getResources().getString(R.string.reessaye), "#FF0000", getApplicationContext());
                     b.setEnabled(false);
                     handler.postDelayed(new Runnable() {
                         @Override

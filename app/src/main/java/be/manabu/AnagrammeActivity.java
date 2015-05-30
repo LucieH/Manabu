@@ -217,7 +217,7 @@ public class AnagrammeActivity extends ActionBarActivity {
 
     private int setBoutonVerif(Button b, String temp, int i, int idBouton){
         b.setText(temp);
-        b.setTextAppearance(this, R.style.texteSurFond);
+        b.setTextColor(getResources().getColor(R.color.White));
         b.setTextSize(25);
         b.setId(i);
         b.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/opendyslexic.ttf"));
@@ -255,7 +255,7 @@ public class AnagrammeActivity extends ActionBarActivity {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        int height = (size.y)/2;
+        int height = (size.y)/3;
         if (verif) {
             if(i != 0) {
                 if (i == 1) params.setMargins(20, 0, 10, 0);
@@ -309,7 +309,7 @@ public class AnagrammeActivity extends ActionBarActivity {
                     nbLettresOk++;
                     if(nbLettresOk == nbChar){
                         compteur++;
-                        afficherToast(act, true, "Bien joué !", "#00A000", getApplicationContext());
+                        afficherToast(act, true, getResources().getString(R.string.bienJoue), "#00A000", getApplicationContext());
                         final Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             @Override
@@ -361,7 +361,7 @@ public class AnagrammeActivity extends ActionBarActivity {
             case 2 :
                 return 8;
             case 3 :
-                return 12;
+                return 11;
             default: break;
         }
         return 0;

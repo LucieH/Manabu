@@ -8,11 +8,9 @@ import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -210,7 +208,7 @@ public class ImgActivity extends ActionBarActivity {
         b.setText(getStringResourceByName(strTmp,getApplicationContext()));
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
-                afficherToast(act, true, "Bien joué !", "#00A000", getApplicationContext());
+                afficherToast(act, true, getResources().getString(R.string.bienJoue), "#00A000", getApplicationContext());
                 disableButtons();
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -229,14 +227,14 @@ public class ImgActivity extends ActionBarActivity {
         b.setText(getStringResourceByName(strTmp+"_2",getApplicationContext()));
         a.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                afficherToast(act, false, "Essaye encore !", "#FF0000", getApplicationContext());
+                afficherToast(act, false, getResources().getString(R.string.reessaye), "#FF0000", getApplicationContext());
                 disableButtons();
                 reEnableButtons();
             }
         });
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                afficherToast(act, false, "Essaye encore !", "#FF0000", getApplicationContext());
+                afficherToast(act, false, getResources().getString(R.string.reessaye), "#FF0000", getApplicationContext());
                 disableButtons();
                 reEnableButtons();
             }
