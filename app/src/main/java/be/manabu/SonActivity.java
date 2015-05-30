@@ -12,7 +12,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Random;
+import java.io.*;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -21,36 +23,12 @@ import static be.manabu.Utilities.*;
 
 public class SonActivity extends ActionBarActivity {
     final Random rnd = new Random();
-    final static private int START_ASCII_LETTRES = 97;
-    final static private int NB_SONS = 28;
-    // Constantes permettant de savoir la fin de chaque lettre du VOB dans strings.xml
-    final static private int END = 481;
-    final static private int START_A =0;
-    final static private int START_B =29;
-    final static private int START_C =57;
-    final static private int START_D =108;
-    final static private int START_E = 143;
-    final static private int START_F = 162 ;
-    final static private int START_G = 193;
-    final static private int START_H = 205;
-    final static private int START_I = 212;
-    final static private int START_J = 216;
-    final static private int START_K = 232;
-    final static private int START_L = 233;
-    final static private int START_M = 257;
-    final static private int START_N = 300;
-    final static private int START_O = 317;
-    final static private int START_P = 327;
-    final static private int START_Q = 378;
-    final static private int START_R = 383;
-    final static private int START_S = 404;
-    final static private int START_T = 431;
-    final static private int START_U = 458;
-    final static private int START_V = 461;
-    final static private int START_Z = 480;
+    final static private int NB_SONS = 33;
     private int lvl = 1;
     private Niveaux niv = new Niveaux();
     private int idLayout = 0;
+    private int[] indexSons = new int[NB_SONS];
+    private ArrayList<String> listeSons = new ArrayList<String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -108,132 +86,187 @@ public class SonActivity extends ActionBarActivity {
         setContentView(R.layout.activity_son);
         idLayout = R.layout.activity_son;
         int rand = rnd.nextInt(NB_SONS);
+        String code ="11";
+        int i = 0;
+        //Essai de lecture de fichier
+        try{
+            InputStream ips=getAssets().open("start_son.txt");//new FileInputStream(fichier);
+            InputStreamReader ipsr=new InputStreamReader(ips);
+            BufferedReader br=new BufferedReader(ipsr);
+           // br.
+            String ligne;
+            while ((ligne=br.readLine())!=null){
+                listeSons.add(ligne.substring(2, ligne.length()).trim());
+                if (! ligne.startsWith(code)){
+                    code = ligne.substring(0,2);
+                    indexSons[i] = listeSons.size()-1;
+                    i++;
+                }
+                //chaine+=ligne+"\n";
+            }
+            br.close();
+            ipsr.close();
+            ips.close();
+        }
+        catch (Exception e){
+            System.out.println(e.toString());
+        }
         setChoixLvl1(rand);
     }
 
     private void setChoixLvl1(int rand){
         TextView tvSon = (TextView) findViewById(R.id.TVSonIS);
-        int nbAscii = rand+START_ASCII_LETTRES;
+        String code = "";
         switch (rand){
             case 0 :
-                // son a
+                // son AA
+                code = "AA";
                 break;
             case 1 :
-                // son b
-                findLettreSimple(START_B, START_C);
+                // son AU
+                code = "AU";
                 break;
             case 2 :
-                // son ch
-                nbAscii = 2;
+                // son BB
+                code = "BB";
                 break;
             case 3 :
-                // son d
-                findLettreSimple(START_D, START_E);
+                // son CH
+                code = "CH";
                 break;
             case 4 :
-                // son e
+                // son DD
+                code = "DD";
                 break;
             case 5 :
-                // son f
-                findLettreSimple(START_F,START_G);
+                // son EA
+                code = "EA";
                 break;
             case 6 :
-                // son g
+                // son EE
+                code = "EE";
                 break;
             case 7 :
-                // y'a pas de son h... A REMPLACER
+                // son EG
+                code = "EG";
                 break;
             case 8 :
-                // son i
+                // son EN
+                code = "EN";
                 break;
             case 9 :
-                // son j
+                // son EU
+                code = "EU";
                 break;
             case 10 :
-                // son k
+                code = "FF";
+                // son FF
                 break;
             case 11 :
-                // son l
-                findLettreSimple(START_L, START_M);
+                // son GG
+                code = "GG";
                 break;
             case 12 :
-                // son m
-                findLettreSimple(START_M, START_N);
+                // son GR
+                code = "GR";
                 break;
             case 13 :
-                // son n
-                findLettreSimple(START_N, START_O);
+                // son II
+                code = "II";
                 break;
             case 14 :
-                // son o
+                code = "JJ";
+                // son JJ
                 break;
             case 15 :
-                // son p
-                findLettreSimple(START_P, START_Q);
+                code = "KK";
+                // son KK
                 break;
             case 16 :
-                // son q = k, A REMPLACER
+                // son KR
+                code = "KR";
                 break;
             case 17 :
-                // son r
-                findLettreSimple(START_R, START_S);
+                // son LL
+                code = "LL";
                 break;
             case 18 :
-                // son s
+                // son MM
+                code = "MM";
                 break;
             case 19 :
-                // son t
-                findLettreSimple(START_T, START_U);
+                // son NN
+                code = "NN";
                 break;
             case 20 :
-                // son u
-                findLettreSimple(START_U, START_V);
+                // son OI
+                code = "OI";
                 break;
             case 21 :
-                // son v
-                findLettreSimple(START_V, START_Z);
+                // son ON
+                code = "ON";
                 break;
             case 22 :
-                // son w A PAS, A REMPLACER
+                // son OO
+                code = "OO";
                 break;
             case 23 :
-                // son x A PAS, A REMPLACER
+                // son OU
+                code = "OU";
                 break;
             case 24 :
-                // son y A PAS, A REMPLACER
+                // son PP
+                code = "PP";
                 break;
             case 25 :
-                // son z
-                Button b = (Button) findViewById(R.id.bSons1);
-                String texte = getStringResourceByName("str_480",getApplicationContext());
-                b.setText(texte);
+                // son PR
+                code = "PR";
                 break;
             case 26 :
-                //le son est e accent aigu
-                nbAscii = 233;
+                //le son RR
+                code = "RR";
                 break;
             case 27 :
-                //le son est e accent grave
-                nbAscii = 232;
+                //le son SS
+                code = "SS";
+                break;
+            case 28:
+                // le son TT
+                code = "TT";
+                break;
+            case 29:
+                // le son UN
+                code = "UN";
+                break;
+            case 30:
+                // le son UU
+                code = "UU";
+                break;
+            case 31:
+                // le son VV
+                code = "VV";
+                break;
+            case 32:
+                // le son ZZ
+                code = "ZZ";
                 break;
             default:
                 break;
-                //les lettres de l'alphabet
-                //je considere que le son ch est represente par la lettre c.
         }
-        if (nbAscii == 2)  tvSon.setText("Le son est : ch");
-        else tvSon.setText("Le son est : " + String.valueOf(Character.toChars(nbAscii)));
+        findMotSon(rand);
+        tvSon.setText("Le son est : " + code);
     }
 
-    private void findSonA(){
-
-    }
-
-    private void findLettreSimple(int min, int max){
-        int r = rnd.nextInt(max-min)+min;
+    private void findMotSon(int pos){
+        int nbMots = -1;
+        if (pos == NB_SONS-1) nbMots = listeSons.size()-indexSons[pos];
+        else{
+            nbMots = indexSons[pos+1]-indexSons[pos];
+        }
+        int randString = rnd.nextInt(nbMots) + indexSons[pos];
+        String texte = getStringResourceByName("str_"+ listeSons.get(randString)+"",getApplicationContext());
         Button b = (Button) findViewById(R.id.bSons1);
-        String texte = "str_"+r+"";
-        b.setText(getStringResourceByName(texte, getApplicationContext()));
+        b.setText(texte);
     }
 
     public void afficheRegles(View view){
