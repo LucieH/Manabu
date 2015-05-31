@@ -287,6 +287,13 @@ public class ImgActivity extends ActionBarActivity {
     public void afficheRegles(View view){
         idLayout = chargerRegles(this, view, R.string.regleImg);
     }
+
+    public void afficheDialog(View v){
+        ReglesDialog dia = new ReglesDialog();
+        dia.setIdString(R.string.regleImg);
+        dia.show(getFragmentManager(),"Regles");
+    }
+
     public void jouerSonRegles(View v){
         Utilities.jouerSon("ok",getApplicationContext());
     }

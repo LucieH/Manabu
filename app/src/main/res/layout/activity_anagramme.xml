@@ -9,19 +9,20 @@ tools:context="be.manabu.AnagrammeActivity" >
     <ImageView
         android:layout_width="128px"
         android:layout_height="128px"
+        android:background="@drawable/help"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="20dp"
+        android:onClick="afficheDialog"/>
+
+    <ImageView
+        android:layout_width="128px"
+        android:layout_height="128px"
         android:background="@drawable/listen"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_margin="20dp"
         android:onClick="jouerSon"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:paddingTop="25dp"
-        android:text="@string/fondAna"/>
 
     <RelativeLayout
         android:id="@+id/LayoutAna"

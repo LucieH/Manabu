@@ -129,7 +129,7 @@ public class SonActivity extends ActionBarActivity {
     }
 
     private void setChoixLvl1(int rand){
-        TextView tvSon = (TextView) findViewById(R.id.TVSonIS);
+        /*TextView tvSon = (TextView) findViewById(R.id.TVSonIS);
         String code = "";
         switch (rand){
             case 0 :
@@ -266,9 +266,9 @@ public class SonActivity extends ActionBarActivity {
                 break;
             default:
                 break;
-        }
+        }*/
         findMotSon(rand);
-        tvSon.setText("Le son est : " + code);
+        //tvSon.setText("Le son est : " + code);
     }
 
     private void findMotSon(int pos){
@@ -423,6 +423,12 @@ public class SonActivity extends ActionBarActivity {
 
     public void afficheRegles(View view){
         idLayout = chargerRegles(this, view, R.string.regleSon);
+    }
+
+    public void afficheDialog(View v){
+        ReglesDialog dia = new ReglesDialog();
+        dia.setIdString(R.string.regleSon);
+        dia.show(getFragmentManager(),"Regles");
     }
 
     public void changeLvl1(View view){

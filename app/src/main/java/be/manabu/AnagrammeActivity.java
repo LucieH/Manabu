@@ -371,6 +371,13 @@ public class AnagrammeActivity extends ActionBarActivity {
     public void afficheRegles(View view){
         idLayout = chargerRegles(this, view, R.string.regleAna);
     }
+
+    public void afficheDialog(View v){
+        ReglesDialog dia = new ReglesDialog();
+        dia.setIdString(R.string.regleAna);
+        dia.show(getFragmentManager(),"Regles");
+    }
+
     public void changeLvl1(View view){ lvl=niv.changeLvl1(this, lvl);}
     public void changeLvl2(View view){
         lvl=niv.changeLvl2(this, lvl);

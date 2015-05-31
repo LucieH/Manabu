@@ -230,6 +230,12 @@ public class FlashActivity extends ActionBarActivity {
         idLayout = chargerRegles(this, view, R.string.regleFlash);
     }
 
+    public void afficheDialog(View v){
+        ReglesDialog dia = new ReglesDialog();
+        dia.setIdString(R.string.regleFlash);
+        dia.show(getFragmentManager(),"Regles");
+    }
+
     public void jouerSonRegles(View v){
         Utilities.jouerSon("ok",getApplicationContext());
     }

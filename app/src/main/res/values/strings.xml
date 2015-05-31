@@ -15,6 +15,7 @@
     <string name="demarrerjeu">Jouer !</string>
     <string name="bienJoue">Bien joué !</string>
     <string name="reessaye">Essaye encore !</string>
+    <string name="fermer">Fermer</string>
 
     <!-- Mots et phrases pour l'activité Imagerie-->
     <!-- Niveau facile -->
@@ -587,12 +588,14 @@
     <string name="regleImg">Mémorise le mot ou la phrase associé(e) à l\'image, puis appuie sur \"Mémorisé\".
         \nRetrouve ensuite le mot affiché parmi les propositions à l\'aide de l\'image.
         </string>
-    <string name="regleFlash">Choisis le temps d\'affichage et mémorise le mot ou la phrase dans le temps imparti.\n
-    Tape ensuite ce que tu as lu dans la zone blanche et vérifie ta réponse.</string>
+    <string name="regleFlash">Choisis le temps d\'affichage et mémorise le mot ou la phrase dans le temps imparti.
+        \nTape ensuite ce que tu as lu dans la zone blanche et vérifie ta réponse.</string>
     <string name="regleAna">Remets les lettres dans l\'ordre pour former un mot.\n</string>
-    Les voyelles sont rouges et les consonnes vertes.
-    <string name="regleSon">Ecoute le son et touche la syllabe du mot qui sonne pareil.</string>
-    <string name="fondAna">Remets les lettres dans l\'ordre</string>
+    Les voyelles sont oranges et les consonnes vertes.
+    <string name="regleSon">Ecoute le son. Selon le niveau touche le mot contenant le son à l\'endroit suivant :
+    \nNiveau 1 : début
+    \nNiveau 2 : milieu
+    \nNiveau 3 : n\'importe où</string>
 
 
 </resources>

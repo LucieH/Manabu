@@ -11,6 +11,15 @@
     <ImageView
         android:layout_width="128px"
         android:layout_height="128px"
+        android:background="@drawable/help"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="20dp"
+        android:onClick="afficheDialog"/>
+
+    <ImageView
+        android:layout_width="128px"
+        android:layout_height="128px"
         android:background="@drawable/listen"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -23,13 +32,6 @@
         android:gravity="center"
         android:orientation="vertical"
         >
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/TVSonIS"
-            android:text="coucou"
-            />
 
         <Button
             android:id="@+id/bSons1"
