@@ -25,16 +25,17 @@ import static be.manabu.Utilities.*;
 
 public class SonActivity extends ActionBarActivity {
     final Random rnd = new Random();
-    final static private int NB_SONS = 33;
+    final static private int NB_SONS = 34;
     final static private int NB_MOTS = 481;
     private final static int NB_TOURS = 10;
     private int compteur = 0;
     private int lvl = 1;
     private Niveaux niv = new Niveaux();
     private int idLayout = 0;
-    private int[] indexSons = new int[NB_SONS];
-    private ArrayList<String> listeSons = new ArrayList<String>();
-    private boolean fichierLu = false;
+    private int[] indexSons;
+    private int[] tabSonPre;
+    private ArrayList<String> listeSons;
+    private String son;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,39 +89,25 @@ public class SonActivity extends ActionBarActivity {
     }
 
     public void start(View view) {
+        indexSons = new int[NB_SONS];
+        tabSonPre = new int[NB_TOURS+1];
+        listeSons = new ArrayList<String>();
+        lireFichier();
+        startSon(view);
+    }
+
+    private void startSon(View view){
+        view.invalidate();
         if (compteur < NB_TOURS) {
-            if (!fichierLu) {
-                String code = "11";
-                int i = 0;
-                //Essai de lecture de fichier
-                try {
-                    InputStream ips = getAssets().open("start_son.txt");//new FileInputStream(fichier);
-                    InputStreamReader ipsr = new InputStreamReader(ips);
-                    BufferedReader br = new BufferedReader(ipsr);
-                    // br.
-                    String ligne;
-                    while ((ligne = br.readLine()) != null) {
-                        listeSons.add(ligne.substring(2, ligne.length()).trim());
-                        if (!ligne.startsWith(code)) {
-                            code = ligne.substring(0, 2);
-                            indexSons[i] = listeSons.size() - 1;
-                            i++;
-                        }
-                        //chaine+=ligne+"\n";
-                    }
-                    br.close();
-                    ipsr.close();
-                    ips.close();
-                    fichierLu = true;
-                } catch (Exception e) {
-                    System.out.println(e.toString());
-                }
-            }
-            view.invalidate();
             setContentView(R.layout.activity_son);
             idLayout = R.layout.activity_son;
-            int rand = rnd.nextInt(NB_SONS);
-            setChoixLvl1(rand);
+            int rand;
+            do {
+                rand = rnd.nextInt(NB_SONS);
+            } while (existeSonPre(rand) || findMotSon(rand));
+            son = "son_"+rand+"";
+            jouerSon(son, getApplicationContext());
+            tabSonPre[compteur] = rand;
         }
         else {
             setContentView(R.layout.activity_img_fin);
@@ -128,179 +115,87 @@ public class SonActivity extends ActionBarActivity {
         }
     }
 
-    private void setChoixLvl1(int rand){
-        /*TextView tvSon = (TextView) findViewById(R.id.TVSonIS);
-        String code = "";
-        switch (rand){
-            case 0 :
-                // son AA
-                code = "AA";
-                break;
+    private void lireFichier(){
+        String fich = "";
+        switch (lvl){
             case 1 :
-                // son AU
-                code = "AU";
+                fich = "start_son.txt";
                 break;
             case 2 :
-                // son BB
-                code = "BB";
+                fich = "mid_son.txt";
                 break;
             case 3 :
-                // son CH
-                code = "CH";
-                break;
-            case 4 :
-                // son DD
-                code = "DD";
-                break;
-            case 5 :
-                // son EA
-                code = "EA";
-                break;
-            case 6 :
-                // son EE
-                code = "EE";
-                break;
-            case 7 :
-                // son EG
-                code = "EG";
-                break;
-            case 8 :
-                // son EN
-                code = "EN";
-                break;
-            case 9 :
-                // son EU
-                code = "EU";
-                break;
-            case 10 :
-                code = "FF";
-                // son FF
-                break;
-            case 11 :
-                // son GG
-                code = "GG";
-                break;
-            case 12 :
-                // son GR
-                code = "GR";
-                break;
-            case 13 :
-                // son II
-                code = "II";
-                break;
-            case 14 :
-                code = "JJ";
-                // son JJ
-                break;
-            case 15 :
-                code = "KK";
-                // son KK
-                break;
-            case 16 :
-                // son KR
-                code = "KR";
-                break;
-            case 17 :
-                // son LL
-                code = "LL";
-                break;
-            case 18 :
-                // son MM
-                code = "MM";
-                break;
-            case 19 :
-                // son NN
-                code = "NN";
-                break;
-            case 20 :
-                // son OI
-                code = "OI";
-                break;
-            case 21 :
-                // son ON
-                code = "ON";
-                break;
-            case 22 :
-                // son OO
-                code = "OO";
-                break;
-            case 23 :
-                // son OU
-                code = "OU";
-                break;
-            case 24 :
-                // son PP
-                code = "PP";
-                break;
-            case 25 :
-                // son PR
-                code = "PR";
-                break;
-            case 26 :
-                //le son RR
-                code = "RR";
-                break;
-            case 27 :
-                //le son SS
-                code = "SS";
-                break;
-            case 28:
-                // le son TT
-                code = "TT";
-                break;
-            case 29:
-                // le son UN
-                code = "UN";
-                break;
-            case 30:
-                // le son UU
-                code = "UU";
-                break;
-            case 31:
-                // le son VV
-                code = "VV";
-                break;
-            case 32:
-                // le son ZZ
-                code = "ZZ";
+                fich = "all_son.txt";
                 break;
             default:
                 break;
-        }*/
-        findMotSon(rand);
-        //tvSon.setText("Le son est : " + code);
+        }
+        String code = "11";
+        int i = 0;
+        //Essai de lecture de fichier
+        try {
+            InputStream ips = getAssets().open(fich);//new FileInputStream(fichier);
+            InputStreamReader ipsr = new InputStreamReader(ips);
+            BufferedReader br = new BufferedReader(ipsr);
+            String ligne;
+            while ((ligne = br.readLine()) != null) {
+                listeSons.add(ligne.substring(2, ligne.length()).trim());
+                if (!ligne.startsWith(code)) {
+                    code = ligne.substring(0, 2);
+                    indexSons[i] = listeSons.size() - 1;
+                    i++;
+                }
+            }
+            br.close();
+            ipsr.close();
+            ips.close();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
-    private void findMotSon(int pos){
+    private boolean findMotSon(int pos){
         int nbMots = -1;
         if (pos == NB_SONS-1) nbMots = listeSons.size()-indexSons[pos];
         else{
             nbMots = indexSons[pos+1]-indexSons[pos];
         }
-        int randString = rnd.nextInt(nbMots) + indexSons[pos];
-        String ok = getStringResourceByName("str_"+ listeSons.get(randString)+"",getApplicationContext());
+        if(nbMots == 1 && listeSons.get(indexSons[pos]).equals("0")) return true;
+        else {
+            int randString = rnd.nextInt(nbMots) + indexSons[pos];
+            String ok = getStringResourceByName("str_" + listeSons.get(randString) + "", getApplicationContext());
 
-        do{
-            randString = rnd.nextInt(NB_MOTS);
-        } while (existeMot(indexSons[pos], indexSons[pos+1], randString));
-        String ko1 = getStringResourceByName("str_"+randString+"",getApplicationContext());
+            do {
+                randString = rnd.nextInt(NB_MOTS);
+            } while (existeMot(indexSons[pos], indexSons[pos]+nbMots, randString));
+            String ko1 = getStringResourceByName("str_" + randString + "", getApplicationContext());
 
-        do{
-            randString = rnd.nextInt(NB_MOTS);
-        } while (existeMot(indexSons[pos], indexSons[pos+1], randString));
-        String ko2 = getStringResourceByName("str_"+randString+"",getApplicationContext());
+            do {
+                randString = rnd.nextInt(NB_MOTS);
+            } while (existeMot(indexSons[pos], indexSons[pos]+nbMots, randString));
+            String ko2 = getStringResourceByName("str_" + randString + "", getApplicationContext());
 
-        final Button b1 = (Button) findViewById(R.id.bSons1);
-        final Button b2 = (Button) findViewById(R.id.bSons2);
-        final Button b3 = (Button) findViewById(R.id.bSons3);
-        creerBoutonRandom(b1, b2, b3, ok, ko1, ko2);
-        compteur++;
+            final Button b1 = (Button) findViewById(R.id.bSons1);
+            final Button b2 = (Button) findViewById(R.id.bSons2);
+            final Button b3 = (Button) findViewById(R.id.bSons3);
+            creerBoutonRandom(b1, b2, b3, ok, ko1, ko2);
+            compteur++;
+        }
+        return false;
     }
 
     private boolean existeMot(int start, int end, int nbr){
         String nbrS = ""+nbr+"";
         for (int i = start; i< end; i++){
-            if (listeSons.get(start).equals(nbrS)) return true;
+            if (listeSons.get(i).equals(nbrS)) return true;
+        }
+        return false;
+    }
+
+    /* Cette fonction verifie si le son a deja ete joue pendant la serie de 10 */
+    private boolean existeSonPre(int rand){
+        for(int i=0; i<compteur; i++){
+            if (tabSonPre[i] == rand) return true;
         }
         return false;
     }
@@ -368,7 +263,7 @@ public class SonActivity extends ActionBarActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        start(v);
+                        startSon(v);
                     }
                 }, 2500);
             }
@@ -440,9 +335,14 @@ public class SonActivity extends ActionBarActivity {
         Utilities.jouerSon("ok",getApplicationContext());
     }
 
+    public void rejouerSon(View v){
+        Utilities.jouerSon(son, getApplicationContext());
+    }
+
     public void rejouer(View view) {
         view.invalidate();
         compteur=0;
+        lvl = 1;
         setContentView(R.layout.activity_start);
         idLayout = R.layout.activity_start;
     }

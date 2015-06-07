@@ -593,8 +593,8 @@
     <string name="regleAna">Remets les lettres dans l\'ordre pour former un mot.\n</string>
     Les voyelles sont oranges et les consonnes vertes.
     <string name="regleSon">Ecoute le son. Selon le niveau touche le mot contenant le son à l\'endroit suivant :
-    \nNiveau 1 : début
-    \nNiveau 2 : milieu
+    \nNiveau 1 : au début
+    \nNiveau 2 : au milieu
     \nNiveau 3 : n\'importe où</string>
 
 

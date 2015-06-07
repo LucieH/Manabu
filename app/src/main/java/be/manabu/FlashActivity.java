@@ -33,6 +33,7 @@ public class FlashActivity extends ActionBarActivity {
     private int secondes=5;
     private int lvl = 1;
     private int idLayout = 0;
+    private int[] tabMotPre;
     private Niveaux niv = new Niveaux();
     CustomKeyboard mCustomKeyboard;
 
@@ -92,6 +93,7 @@ public class FlashActivity extends ActionBarActivity {
     }
 
     public void start(View view) {
+        tabMotPre = new int[NBTOURS+1];
         view.invalidate();
         setContentView(R.layout.activity_flash_start);
         idLayout = R.layout.activity_flash_start;
@@ -106,9 +108,10 @@ public class FlashActivity extends ActionBarActivity {
             int rand;
             do {
                 rand = rnd.nextInt(NBMOTS);
-            }while (rand==0);
+            }while (rand==0 || existeMotPre(rand));
             str = "str_" + rand;
             strTmp=getStringResourceByName(str,getApplicationContext());
+            tabMotPre[compteur] = rand;
             showWord(view);
             final Handler handler = new Handler();
             int temps = secondes * 1000;
@@ -128,6 +131,13 @@ public class FlashActivity extends ActionBarActivity {
 
     }
 
+    /* Cette fonction verifie si le mot a deja ete joue pendant la serie de 10 */
+    private boolean existeMotPre(int rand){
+        for(int i=0; i<compteur; i++){
+            if (tabMotPre[i] == rand) return true;
+        }
+        return false;
+    }
 
     protected void verifierReponse(final Button b){
         this.nbEssai = 0;
@@ -200,7 +210,8 @@ public class FlashActivity extends ActionBarActivity {
 
     public void rejouer(View view) {
         view.invalidate();
-        this.compteur=0;
+        compteur=0;
+        lvl = 1;
         setContentView(R.layout.activity_start);
         idLayout = R.layout.activity_start;
     }

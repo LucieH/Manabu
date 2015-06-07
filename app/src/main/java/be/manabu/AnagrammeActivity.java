@@ -53,7 +53,8 @@ public class AnagrammeActivity extends ActionBarActivity {
     private structBouton[] tbStructBouton;
     private int nbChar;
     private boolean isSetPos = false;
-    int nbLettresOk = 0;
+    private int nbLettresOk = 0;
+    private int[] tabMotPre = new int[NBTOURS+1];
     private int idLayout = 0;
 
     class structBouton {
@@ -133,10 +134,11 @@ public class AnagrammeActivity extends ActionBarActivity {
                 rand = rnd.nextInt(NBMOTS);
                 strName = "str_" + rand;
                 strTmp = getStringResourceByName(strName, getApplicationContext());
-            } while (strTmp.length() > getMaxLettres() || strTmp.length() < getMinLettres() || rand ==0);
+            } while (strTmp.length() > getMaxLettres() || strTmp.length() < getMinLettres() || rand ==0 || existeMotPre(rand));
+            tabMotPre[compteur] = rand;
             //jouer le son du mot
             Utilities.jouerSon(strName, getApplicationContext());
-            //prendre la longueur et mettre en majuscule
+            //prendre la longueur et mettre  le mot en majuscule
             nbChar = strTmp.length();
             strTmp = strTmp.toUpperCase();
             // créer un tableau de boutons de la longueur du mot
@@ -151,28 +153,7 @@ public class AnagrammeActivity extends ActionBarActivity {
             }
             Collections.shuffle(tbStr);
 
-            RelativeLayout lay = (RelativeLayout) findViewById(R.id.LayoutAna);
-
-            int idBouton = R.id.bReplay;
-            for (int i = 0; i < nbChar; i++) {
-                tbBoutonLettres[i] = new boutonLettre();
-                tbBoutonLettres[i].b = new Button(this);
-                String temp = String.valueOf(arStr[i]);
-                idBouton = setBoutonVerif(tbBoutonLettres[i].b, temp, i,idBouton);
-                //A continuer
-                lay.addView(tbBoutonLettres[i].b);
-            }
-
-
-            for (int i = 0; i < nbChar; i++) {
-                tbBoutonLettres[i] = new boutonLettre();
-                tbBoutonLettres[i].b = new Button(this);
-                String temp = "" + tbStr.get(i) + "";
-                idBouton = setBoutonLettre(tbBoutonLettres[i].b, temp, i, idBouton);
-                //A continuer
-                lay.addView(tbBoutonLettres[i].b);
-                addMouvementBouton(tbBoutonLettres[i], this);
-            }
+            placerBoutons(tbBoutonLettres, arStr, tbStr);
         }
         else{
             setContentView(R.layout.activity_img_fin);
@@ -180,6 +161,37 @@ public class AnagrammeActivity extends ActionBarActivity {
         }
     }
 
+    private void placerBoutons(boutonLettre[] tbBoutonLettres, char[] arStr, ArrayList<Character> tbStr ){
+        RelativeLayout lay = (RelativeLayout) findViewById(R.id.LayoutAna);
+        int idBouton = R.id.bReplay;
+        //Placer les cases blanches
+        for (int i = 0; i < nbChar; i++) {
+            tbBoutonLettres[i] = new boutonLettre();
+            tbBoutonLettres[i].b = new Button(this);
+            String temp = String.valueOf(arStr[i]);
+            idBouton = setBoutonVerif(tbBoutonLettres[i].b, temp, i,idBouton);
+            lay.addView(tbBoutonLettres[i].b);
+        }
+        //Placer les lettres a remettre dans l'ordre
+        for (int i = 0; i < nbChar; i++) {
+            tbBoutonLettres[i] = new boutonLettre();
+            tbBoutonLettres[i].b = new Button(this);
+            String temp = "" + tbStr.get(i) + "";
+            idBouton = setBoutonLettre(tbBoutonLettres[i].b, temp, i, idBouton);
+            lay.addView(tbBoutonLettres[i].b);
+            addMouvementBouton(tbBoutonLettres[i], this);
+        }
+    }
+
+    /* Verifie si le mot est deja sorti dans la serie de 10*/
+    private boolean existeMotPre(int rand){
+        for(int i=0; i<compteur; i++){
+            if (tabMotPre[i] == rand) return true;
+        }
+        return false;
+    }
+
+    /* Met en place l'affichage des boutons de type lettre */
     private int setBoutonLettre(Button b, String temp, int i, int idBouton){
         b.setText(temp);
         b.setTextAppearance(this, R.style.texteSurFond);
@@ -196,19 +208,20 @@ public class AnagrammeActivity extends ActionBarActivity {
         return i+10;
     }
 
+    /* Met en place l'affichage des boutons de type cases blanches */
     private int setBoutonVerif(Button b, String temp, int i, int idBouton){
         b.setText(temp);
         b.setTextColor(getResources().getColor(R.color.White));
         b.setTextSize(25);
         b.setId(i);
         b.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/opendyslexic.ttf"));
-        temp = Normalizer.normalize(temp, Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", "");
         b.setBackgroundResource(R.drawable.anagramme_validate);
         b.setLayoutParams(setParams(i, R.id.bReplay, idBouton, true));
         return i;
 
     }
 
+    /* Definit les parametres a mettre en place pour les objets sur le relative layout*/
     private RelativeLayout.LayoutParams setParams(int i, int buttonTop, int idButton, boolean verif ){
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -247,6 +260,7 @@ public class AnagrammeActivity extends ActionBarActivity {
         return params;
     }
 
+    /* Implemente le mouvement des boutons avec les lettres et leur immobilisme si elles sont sur la bonne case blanche*/
     private void addMouvementBouton(final boutonLettre bL, final Activity act){
         bL.b.setOnTouchListener(new View.OnTouchListener() {
             private float x,
@@ -255,21 +269,12 @@ public class AnagrammeActivity extends ActionBarActivity {
                     my;
             public boolean onTouch(final View v, MotionEvent event) {
                 if (!isSetPos) {
-                    for (int i = 0; i < nbChar; i++) {
-                        Button b = (Button) findViewById(i);
-                        tbStructBouton[i] = new structBouton();
-                        tbStructBouton[i].posX = b.getX();
-                        tbStructBouton[i].posY = b.getY();
-                        tbStructBouton[i].lettre = b.getText().toString();
-                    }
-                    isSetPos = true;
-
+                    setPositionBoutons();
                 }
                 int pos = -1;
                 float minX, maxX, minY, maxY;
                 for (int i = 0; i < nbChar; i++) {
                     if (!tbStructBouton[i].ok) {
-
                         if (bL.b.getText().toString().equals(tbStructBouton[i].lettre)) {
                             pos = i;
                             break;
@@ -282,23 +287,7 @@ public class AnagrammeActivity extends ActionBarActivity {
                 minY = (tbStructBouton[pos].posY) - 10;
                 maxY = (tbStructBouton[pos].posY) + 10;
                 if (bL.b.getX() < maxX && bL.b.getX() > minX && bL.b.getY() < maxY && bL.b.getY() > minY) {
-                    bL.b.setX(tbStructBouton[pos].posX);
-                    bL.b.setY(tbStructBouton[pos].posY);
-                    tbStructBouton[pos].ok = true;
-                    bL.ok = true;
-                    Utilities.jouerSon("ok_lettre", getApplicationContext());
-                    nbLettresOk++;
-                    if(nbLettresOk == nbChar){
-                        compteur++;
-                        afficherToast(act, true, getResources().getString(R.string.bienJoue), "#00A000", getApplicationContext());
-                        final Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                start(v);
-                            }
-                        }, 2500);
-                    }
+                    validerLettre(bL, pos, act, v);
                     return true;
 
                 } else {
@@ -320,6 +309,37 @@ public class AnagrammeActivity extends ActionBarActivity {
                 }
             }
         });
+    }
+
+    private void setPositionBoutons(){
+        for (int i = 0; i < nbChar; i++) {
+            Button b = (Button) findViewById(i);
+            tbStructBouton[i] = new structBouton();
+            tbStructBouton[i].posX = b.getX();
+            tbStructBouton[i].posY = b.getY();
+            tbStructBouton[i].lettre = b.getText().toString();
+        }
+        isSetPos = true;
+    }
+
+    private void validerLettre(final boutonLettre bL, int pos, final Activity act, final View v){
+        bL.b.setX(tbStructBouton[pos].posX);
+        bL.b.setY(tbStructBouton[pos].posY);
+        tbStructBouton[pos].ok = true;
+        bL.ok = true;
+        Utilities.jouerSon("ok_lettre", getApplicationContext());
+        nbLettresOk++;
+        if(nbLettresOk == nbChar) {
+            compteur++;
+            afficherToast(act, true, getResources().getString(R.string.bienJoue), "#00A000", getApplicationContext());
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    start(v);
+                }
+            }, 2500);
+        }
     }
 
     private int getMinLettres(){
@@ -351,6 +371,7 @@ public class AnagrammeActivity extends ActionBarActivity {
     public void rejouer(View view) {
         view.invalidate();
         this.compteur=0;
+        lvl=1;
         setContentView(R.layout.activity_start);
         idLayout = R.layout.activity_start;
     }

@@ -28,7 +28,7 @@ public class ImgActivity extends ActionBarActivity {
     private final static int NB_IMAGES = 21;
     private final static int NB_TOURS = 10;
     private String strTmp = "start";
-    private int tabNbImages[] = new int[NB_IMAGES];
+    private int tabNbImages[] = new int[NB_TOURS+1];
     private int cmptImages = 0;
     public int lvl = 1;
     private Niveaux niv = new Niveaux();
@@ -274,7 +274,8 @@ public class ImgActivity extends ActionBarActivity {
 
     public void rejouer(View view) {
         view.invalidate();
-        this.cmptImages=0;
+        cmptImages=0;
+        lvl = 1;
         setContentView(R.layout.activity_start);
         idLayout = R.layout.activity_start;
     }

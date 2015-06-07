@@ -23,7 +23,8 @@
         android:background="@drawable/listen"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="20dp"/>
+        android:layout_margin="20dp"
+        android:onClick="rejouerSon"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
