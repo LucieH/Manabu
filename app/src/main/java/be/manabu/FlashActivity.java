@@ -93,7 +93,7 @@ public class FlashActivity extends ActionBarActivity {
     }
 
     public void start(View view) {
-        tabMotPre = new int[NBTOURS+1];
+        tabMotPre = new int[NBTOURS];
         view.invalidate();
         setContentView(R.layout.activity_flash_start);
         idLayout = R.layout.activity_flash_start;

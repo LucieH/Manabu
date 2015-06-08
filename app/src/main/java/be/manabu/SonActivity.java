@@ -84,13 +84,14 @@ public class SonActivity extends ActionBarActivity {
             setContentView(R.layout.activity_start);
             idLayout = R.layout.activity_start;
             lvl = 1;
+            compteur = 0;
         }
         else  this.finish();
     }
 
     public void start(View view) {
         indexSons = new int[NB_SONS];
-        tabSonPre = new int[NB_TOURS+1];
+        tabSonPre = new int[NB_TOURS];
         listeSons = new ArrayList<String>();
         lireFichier();
         startSon(view);
@@ -108,6 +109,7 @@ public class SonActivity extends ActionBarActivity {
             son = "son_"+rand+"";
             jouerSon(son, getApplicationContext());
             tabSonPre[compteur] = rand;
+            compteur++;
         }
         else {
             setContentView(R.layout.activity_img_fin);
@@ -179,7 +181,6 @@ public class SonActivity extends ActionBarActivity {
             final Button b2 = (Button) findViewById(R.id.bSons2);
             final Button b3 = (Button) findViewById(R.id.bSons3);
             creerBoutonRandom(b1, b2, b3, ok, ko1, ko2);
-            compteur++;
         }
         return false;
     }

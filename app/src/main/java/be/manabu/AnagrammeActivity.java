@@ -54,7 +54,7 @@ public class AnagrammeActivity extends ActionBarActivity {
     private int nbChar;
     private boolean isSetPos = false;
     private int nbLettresOk = 0;
-    private int[] tabMotPre = new int[NBTOURS+1];
+    private int[] tabMotPre = new int[NBTOURS];
     private int idLayout = 0;
 
     class structBouton {

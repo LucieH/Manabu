@@ -28,7 +28,7 @@ public class ImgActivity extends ActionBarActivity {
     private final static int NB_IMAGES = 21;
     private final static int NB_TOURS = 10;
     private String strTmp = "start";
-    private int tabNbImages[] = new int[NB_TOURS+1];
+    private int tabNbImages[] = new int[NB_TOURS];
     private int cmptImages = 0;
     public int lvl = 1;
     private Niveaux niv = new Niveaux();
