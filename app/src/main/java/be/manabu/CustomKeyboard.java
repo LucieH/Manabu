@@ -204,7 +204,7 @@ public class CustomKeyboard extends View{
                 edittext.setInputType(InputType.TYPE_NULL); // Disable standard keyboard
                 edittext.onTouchEvent(event);               // Call native handler
                 edittext.setInputType(inType);              // Restore input type
-                edittext.moveCursorToVisibleOffset();
+                //edittext.moveCursorToVisibleOffset();
                 return true; // Consume touch event
             }
         });

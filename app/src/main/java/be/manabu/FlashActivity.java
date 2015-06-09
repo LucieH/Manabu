@@ -27,6 +27,8 @@ public class FlashActivity extends ActionBarActivity {
     final Random rnd = new Random();
     private final static int NBTOURS = 10;
     private final static int NBMOTS = 481;
+    private final static int NBMOTS_2 = 501;
+    private final static int NBMOTS_3 = 501;
     private int nbEssai;
     protected int compteur = 0;
     protected String strTmp;
@@ -106,8 +108,25 @@ public class FlashActivity extends ActionBarActivity {
         if(compteur < NBTOURS){
             String str;
             int rand;
+            int nbmots = NBMOTS;
+            int depart = 0;
+            switch (lvl){
+                case 1 :
+                   // nbmots = NBMOTS;
+                    break;
+                case 2 :
+                    nbmots = NBMOTS_2 - NBMOTS;
+                    depart = NBMOTS;
+                    break;
+                case 3 :
+                    nbmots = NBMOTS_3 - NBMOTS_2;
+                    depart = NBMOTS_2;
+                    break;
+                default:
+                    break;
+            }
             do {
-                rand = rnd.nextInt(NBMOTS);
+                rand = rnd.nextInt(nbmots)+depart;
             }while (rand==0 || existeMotPre(rand));
             str = "str_" + rand;
             strTmp=getStringResourceByName(str,getApplicationContext());
@@ -142,6 +161,7 @@ public class FlashActivity extends ActionBarActivity {
     protected void verifierReponse(final Button b){
         this.nbEssai = 0;
         final Activity act = this;
+        final Button aide = (Button) findViewById(R.id.AideFlash);
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
                 if( mCustomKeyboard.isCustomKeyboardVisible() ) mCustomKeyboard.hideCustomKeyboard();
@@ -151,6 +171,7 @@ public class FlashActivity extends ActionBarActivity {
                 if (strTmp.equalsIgnoreCase(tmp)){
                     afficherToast(act, true, getResources().getString(R.string.bienJoue), "#00A000", getApplicationContext());
                     b.setEnabled(false);
+                    aide.setEnabled(false);
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -161,16 +182,17 @@ public class FlashActivity extends ActionBarActivity {
                 else{
                     afficherToast(act, false, getResources().getString(R.string.reessaye), "#FF0000", getApplicationContext());
                     b.setEnabled(false);
+                    aide.setEnabled(false);
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             b.setEnabled(true);
+                            aide.setEnabled(true);
                         }
                     }, 2500);
                 }
                 nbEssai++;
-                if (nbEssai >= 3) {
-                    Button aide = (Button) findViewById(R.id.AideFlash);
+                if (nbEssai >= 1) {
                     aide.setVisibility(View.VISIBLE);
                 }
             }

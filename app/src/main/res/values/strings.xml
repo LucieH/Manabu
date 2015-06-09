@@ -565,6 +565,28 @@
     <string name="str_478">vous</string>
     <string name="str_479">voyage</string>
     <string name="str_480">zéro</string>
+    <!--Niveau 2 Lecture Flash-->
+    <string name="str_481">les vacances à la mer</string>
+    <string name="str_482">les vacances à la montagne</string>
+    <string name="str_483">un voyage à vélo</string>
+    <string name="str_484">une voiture bleue</string>
+    <string name="str_485">une usine à télévisions</string>
+    <string name="str_486">du lundi au vendredi</string>
+    <string name="str_487">une ville au soleil</string>
+    <string name="str_488">la sapin de Noël</string>
+    <string name="str_489">le ciel étoilé</string>
+    <string name="str_490">il y a un garçon</string>
+    <string name="str_491">il y a une fille</string>
+    <string name="str_492">la dame en rouge</string>
+    <string name="str_493">des yeux verts</string>
+    <string name="str_494">le nez du grand-père</string>
+    <string name="str_495">une grand-mère riche</string>
+    <string name="str_496">un lapin en chocolat</string>
+    <string name="str_497">la musique du piano</string>
+    <string name="str_498">la lune blanche</string>
+    <string name="str_499">quatre pommes mûres</string>
+    <string name="str_500">l\'hiver à la ferme</string>
+    <!--Niveau 2 Lecture Flash-->
 
 
 
