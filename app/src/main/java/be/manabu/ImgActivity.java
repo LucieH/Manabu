@@ -11,10 +11,12 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -125,7 +127,16 @@ public class ImgActivity extends ActionBarActivity {
         final Button b1 = (Button) findViewById(R.id.choix1);
         final Button b2 = (Button) findViewById(R.id.choix2);
         final Button b3 = (Button) findViewById(R.id.choix3);
-
+        if (lvl == 2) {
+            LinearLayout ll = (LinearLayout) findViewById(R.id.imgChBtns);
+            ll.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(0,0,0,10);
+            b1.setLayoutParams(lp);
+            b2.setLayoutParams(lp);
+            b3.setLayoutParams(lp);
+            b1.setPadding(0,0,0,0);
+        }
         //texte ramdom dans les boutons
         creerBoutonRandom(b1, b2, b3);
     }

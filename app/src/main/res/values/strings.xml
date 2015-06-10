@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<resources>
+    <resources>
 
+    <!--Phrases diverses -->
     <string name="app_name">Manabu</string>
-    <string name="hello_world">Salut tout le monde, ceci sera l\'application Manabu, pour apprendre à lire aux enfants.</string>
     <string name="action_settings">Settings</string>
     <string name="flash">Lecture flash</string>
     <string name="img">Imagerie</string>
@@ -12,13 +12,37 @@
     <string name="title_activity_img">@string/img</string>
     <string name="title_activity_son">@string/son</string>
     <string name="title_activity_anagramme">@string/ana</string>
-    <string name="demarrerjeu">Jouer !</string>
+    <string name="demarrerjeu">Jouer</string>
     <string name="bienJoue">Bien joué !</string>
-    <string name="reessaye">Essaye encore !</string>
+    <string name="reessaye">Essaye encore...</string>
     <string name="fermer">Fermer</string>
+    <string name="refresh">Recharger</string>
+    <string name="memo">Mémorisé</string>
+    <string name="menu">Menu</string>
+    <string name="rejouer">Rejouer</string>
+    <string name="retour">Revenir</string>
+    <string name="spr">Super, tu es arrivé à la fin.\nQue veux-tu faire ?</string>
+    <string name="verifier">Vérifier</string>
+    <string name="revoir">Relire</string>
+    <string name="moins">-</string>
+    <string name="plus">+</string>
+    <string name="duree">Secondes d\'affichage</string>
+    <string name="niveau">Niveau</string>
+    <string name="regles">Règles du jeu</string>
+    <string name="regleImg">Mémorise le mot ou la phrase associé(e) à l\'image, puis appuie sur \"Mémorisé\".
+        \nRetrouve ensuite le mot affiché parmi les propositions à l\'aide de l\'image.
+        </string>
+    <string name="regleFlash">Choisis le temps d\'affichage et mémorise le mot ou la phrase dans le temps imparti.
+        \nTape ensuite ce que tu as lu dans la zone blanche et vérifie ta réponse.</string>
+    <string name="regleAna">Remets les lettres dans l\'ordre pour former un mot.\n</string>
+    Les voyelles sont oranges et les consonnes vertes.
+    <string name="regleSon">Ecoute le son. Selon le niveau touche le mot contenant le son à l\'endroit suivant :
+    \nNiveau 1 : au début
+    \nNiveau 2 : au milieu
+    \nNiveau 3 : n\'importe où</string>
 
     <!-- Mots et phrases pour l'activité Imagerie-->
-    <!-- Niveau facile -->
+    <!-- Niveau 1 -->
     <string name="img_0">Une plume</string>
     <string name="img_0_1">Une dune</string>
     <string name="img_0_2">Une prune</string>
@@ -83,7 +107,43 @@
     <string name="img_20_1">Une balade</string>
     <string name="img_20_2">Une panade</string>
 
+    <!-- Niveau 2 -->
+    <string name="img2_0">L\'oiseau a des plumes</string>
+    <string name="img2_0_1">L\'oiseau a des poils</string>
+    <string name="img2_0_2">L\'oignon a des plumes</string>
+    <string name="img2_1">La singe mange une banane</string>
+    <string name="img2_1_1">La banane mange le singe</string>
+    <string name="img2_1_2">Le singe ronge une banane</string>
+    <string name="img2_2">Un chat dans un arbre</string>
+    <string name="img2_2_1">Un chien dans un arbre</string>
+    <string name="img2_2_2">Un chat dans un chien</string>
+    <string name="img2_3">Une voiture roule en ville</string>
+    <string name="img2_3_1">Une moto roule en ville</string>
+    <string name="img2_3_2">Un voiture roule en vrille</string>
+    <string name="img2_4">Un parterre de tulipes</string>
+    <string name="img2_4_1">Un jardin de tulipes</string>
+    <string name="img2_4_2">Un parterre de roses</string>
+    <string name="img2_5">Le soleil dit bonjour</string>
+    <string name="img2_5_1">Le soleil te salue</string>
+    <string name="img2_5_2">Le sommeil dit bonjour</string>
+    <string name="img2_6">Le poisson nage dans l\'eau</string>
+    <string name="img2_6_1">Le poison nage dans l\'eau</string>
+    <string name="img2_6_2">Le poisson naît dans l\'eau</string>
+    <string name="img2_7">L\'homme pêche à la ligne</string>
+    <string name="img2_7_1">L\'homme pêche dans l\'eau</string>
+    <string name="img2_7_2">L\'humain pêche dans l\'eau</string>
+    <string name="img2_8">Un puzzle sur une table</string>
+    <string name="img2_8_1">Un jeu sur une table</string>
+    <string name="img2_8_2">Un puzzle à compléter</string>
+    <string name="img2_9">Un arc-en-ciel après la pluie</string>
+    <string name="img2_9_1">Une arche-en-ciel après la pluie</string>
+    <string name="img2_9_2">Un arc-en-ciel dans les nuages</string>
+    <string name="img2_10">Un biscuit sur une assiette</string>
+    <string name="img2_10_1">Un fruit sur une assiette</string>
+    <string name="img2_10_2">Un gâteau sur un plat</string>
+    <!-- Niveau 3 -->
 
+    <!-- Mots et phrases pour les activités Lecture flash, Anagramme, et Ecouter le son-->
     <!-- VOB -->
     <string name="str_1">à</string>
     <string name="str_2">acheter</string>
@@ -565,59 +625,110 @@
     <string name="str_478">vous</string>
     <string name="str_479">voyage</string>
     <string name="str_480">zéro</string>
+
     <!--Niveau 2 Lecture Flash-->
-    <string name="str_481">les vacances à la mer</string>
-    <string name="str_482">les vacances à la montagne</string>
-    <string name="str_483">un voyage à vélo</string>
-    <string name="str_484">une voiture bleue</string>
-    <string name="str_485">une usine à télévisions</string>
-    <string name="str_486">du lundi au vendredi</string>
-    <string name="str_487">une ville au soleil</string>
-    <string name="str_488">la sapin de Noël</string>
-    <string name="str_489">le ciel étoilé</string>
-    <string name="str_490">il y a un garçon</string>
-    <string name="str_491">il y a une fille</string>
-    <string name="str_492">la dame en rouge</string>
-    <string name="str_493">des yeux verts</string>
-    <string name="str_494">le nez du grand-père</string>
-    <string name="str_495">une grand-mère riche</string>
-    <string name="str_496">un lapin en chocolat</string>
-    <string name="str_497">la musique du piano</string>
-    <string name="str_498">la lune blanche</string>
-    <string name="str_499">quatre pommes mûres</string>
-    <string name="str_500">l\'hiver à la ferme</string>
-    <!--Niveau 2 Lecture Flash-->
+    <string name="str2_1">les vacances à la mer</string>
+    <string name="str2_2">les vacances à la montagne</string>
+    <string name="str2_3">un voyage à vélo</string>
+    <string name="str2_4">une voiture bleue</string>
+    <string name="str2_5">une usine à télévisions</string>
+    <string name="str2_6">du lundi au vendredi</string>
+    <string name="str2_7">une ville au soleil</string>
+    <string name="str2_8">la sapin de Noël</string>
+    <string name="str2_9">le ciel étoilé</string>
+    <string name="str2_10">il y a un garçon</string>
+    <string name="str2_11">il y a une fille</string>
+    <string name="str2_12">la dame en rouge</string>
+    <string name="str2_13">des yeux verts</string>
+    <string name="str2_14">le nez du grand-père</string>
+    <string name="str2_15">une grand-mère riche</string>
+    <string name="str2_16">un lapin en chocolat</string>
+    <string name="str2_17">la musique du piano</string>
+    <string name="str2_18">la lune blanche</string>
+    <string name="str2_19">quatre pommes mûres</string>
+    <string name="str2_20">l\'hiver à la ferme</string>
+    <string name="str2_21">les plumes de l\'oiseau</string>
+    <string name="str2_22">un ballon de cinéma</string>
+    <string name="str2_23">la chemise du monsieur</string>
+    <string name="str2_24">cinq cahiers jaunes</string>
+    <string name="str2_25">la dictée du mercredi</string>
+    <string name="str2_26">depuis dimanche dernier</string>
+    <string name="str2_27">l\'école des docteurs</string>
+    <string name="str2_28">un arbre en fleurs</string>
+    <string name="str2_29">une jolie fille</string>
+    <string name="str2_30">huit grand enfants</string>
+    <string name="str2_31">un pull en laine</string>
+    <string name="str2_32">le mois de janvier</string>
+    <string name="str2_33">un homme à moto</string>
+    <string name="str2_34">une orange et une poire</string>
+    <string name="str2_35">six triangles roses</string>
+    <string name="str2_36">la route du village</string>
+    <string name="str2_37">le roi et la reine</string>
+    <string name="str2_38">la robe de ma soeur</string>
+    <string name="str2_39">un samedi de septembre</string>
+    <string name="str2_40">un pays en pierre</string>
+    <string name="str2_41">un poisson de la rivière</string>
+    <string name="str2_42">la fenêtre de sa maison</string>
+    <string name="str2_43">ton premier chat</string>
+    <string name="str2_44">la cuisine de maman</string>
+    <string name="str2_45">un chien sans poils</string>
+    <string name="str2_46">le carnaval en février</string>
+    <string name="str2_47">un cadeau pour son frère</string>
+    <string name="str2_48">un camion de pompiers</string>
+    <string name="str2_49">le bruit de l\'eau</string>
+    <string name="str2_50">un bouquet de bonbons</string>
 
-
-
-
-
-
-
-    <string name="refresh">Recharger</string>
-    <string name="memo">Mémorisé !</string>
-    <string name="menu">Menu</string>
-    <string name="rejouer">Rejouer</string>
-    <string name="retour">Revenir</string>
-    <string name="spr">Super, tu es arrivé à la fin.\nQue veux-tu faire ?</string>
-    <string name="verifier">Vérifier</string>
-    <string name="revoir">Relire</string>
-    <string name="moins">-</string>
-    <string name="plus">+</string>
-    <string name="duree">Secondes d\'affichage</string>
-    <string name="niveau">Niveau</string>
-    <string name="regles">Règles du jeu</string>
-    <string name="regleImg">Mémorise le mot ou la phrase associé(e) à l\'image, puis appuie sur \"Mémorisé\".
-        \nRetrouve ensuite le mot affiché parmi les propositions à l\'aide de l\'image.
-        </string>
-    <string name="regleFlash">Choisis le temps d\'affichage et mémorise le mot ou la phrase dans le temps imparti.
-        \nTape ensuite ce que tu as lu dans la zone blanche et vérifie ta réponse.</string>
-    <string name="regleAna">Remets les lettres dans l\'ordre pour former un mot.\n</string>
-    Les voyelles sont oranges et les consonnes vertes.
-    <string name="regleSon">Ecoute le son. Selon le niveau touche le mot contenant le son à l\'endroit suivant :
-    \nNiveau 1 : au début
-    \nNiveau 2 : au milieu
-    \nNiveau 3 : n\'importe où</string>
+    <!--Niveau 3 Lecture Flash-->
+    <string name="str3_1">les poissons nagent dans la rivière</string>
+    <string name="str3_2">le chien se promène avec son maître</string>
+    <string name="str3_3">j\'offre un cadeau à mon frère</string>
+    <string name="str3_4">le chat joue avec une pelote de laine</string>
+    <string name="str3_5">un oiseau vole dans le ciel</string>
+    <string name="str3_6">il y a une voiture dans le garage</string>
+    <string name="str3_7">le café dans la tasse rouge est chaud</string>
+    <string name="str3_8">ma soeur chante dans sa chambre</string>
+    <string name="str3_9">ce cheval porte un pantalon bleu</string>
+    <string name="str3_10">en hiver, il fait froid dehors</string>
+    <string name="str3_11">la famille est en vacances au soleil</string>
+    <string name="str3_12">maintenant, il neige sur la montagne</string>
+    <string name="str3_13">le garçon écoute de la musique à la radio</string>
+    <string name="str3_14">ma tante revient en septembre</string>
+    <string name="str3_15">il y a quatre semaines en février</string>
+    <string name="str3_16">le rectangle et le triangle sont roses</string>
+    <string name="str3_17">les oiseaux se préparent au printemps</string>
+    <string name="str3_18">l\'histoire du roi et de la reine finit bien</string>
+    <string name="str3_19">mon grand-père aime ma grand-mère</string>
+    <string name="str3_20">le feu est de couleur jaune et rouge</string>
+    <string name="str3_21">tu as quelques kilos de pommes</string>
+    <string name="str3_22">un marchand de rue vend le journal</string>
+    <string name="str3_23">l\'enfant mesure plus d\'un mètre</string>
+    <string name="str3_24">ce ballon jaune et bleu est neuf</string>
+    <string name="str3_25">papa ouvre la boîte à pain</string>
+    <string name="str3_26">ce bonhomme est très amusant</string>
+    <string name="str3_27">il y a des feuilles sur la branche</string>
+    <string name="str3_28">le cinéma est ouvert la nuit</string>
+    <string name="str3_29">mon grand frère n\'a jamais froid</string>
+    <string name="str3_30">il fait toujours chaud en juillet</string>
+    <string name="str3_31">ce drôle de chien fait de la moto</string>
+    <string name="str3_32">les yeux se trouvent sur la figure</string>
+    <string name="str3_33">il a parfois peur pendant la nuit</string>
+    <string name="str3_34">au déjeuner, elle mange du pain</string>
+    <string name="str3_35">j\'ai perdu une dent à six ans</string>
+    <string name="str3_36">le Français est une langue</string>
+    <string name="str3_37">le premier jour de la semaine est lundi</string>
+    <string name="str3_38">sa pauvre tante a mal à la jambe</string>
+    <string name="str3_39">un papa écoute son enfant rire</string>
+    <string name="str3_40">cette poupée porte une jolie robe</string>
+    <string name="str3_41">la petite fille à l\'air heureuse</string>
+    <string name="str3_42">Les chats ne mangent pas de pommes</string>
+    <string name="str3_43">il marche le long de la rivière</string>
+    <string name="str3_44">les légumes et les fruits sont cousins</string>
+    <string name="str3_45">le cahier où les leçons sont notées</string>
+    <string name="str3_46">c\'est un jardin joliment fleuri</string>
+    <string name="str3_47">cet animal porte des lunettes</string>
+    <string name="str3_48">le lit est fait pour dormir</string>
+    <string name="str3_49">il y a un cheval heureux à la ferme</string>
+    <string name="str3_50">c\'est amusant d\'apprendre à lire</string>
 
 
 </resources>

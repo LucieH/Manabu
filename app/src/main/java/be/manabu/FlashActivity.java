@@ -26,9 +26,9 @@ public class FlashActivity extends ActionBarActivity {
 
     final Random rnd = new Random();
     private final static int NBTOURS = 10;
-    private final static int NBMOTS = 481;
-    private final static int NBMOTS_2 = 501;
-    private final static int NBMOTS_3 = 501;
+    private final static int NBMOTS = 480;
+    private final static int NBMOTS_2 = 50;
+    private final static int NBMOTS_3 = 50;
     private int nbEssai;
     protected int compteur = 0;
     protected String strTmp;
@@ -106,7 +106,7 @@ public class FlashActivity extends ActionBarActivity {
     /** Démarrer le jeu flash*/
     public void startFlash(View view) {
         if(compteur < NBTOURS){
-            String str;
+            String str = "str_";
             int rand;
             int nbmots = NBMOTS;
             int depart = 0;
@@ -115,20 +115,22 @@ public class FlashActivity extends ActionBarActivity {
                    // nbmots = NBMOTS;
                     break;
                 case 2 :
-                    nbmots = NBMOTS_2 - NBMOTS;
-                    depart = NBMOTS;
+                    str = "str2_";
+                    nbmots = NBMOTS_2;
+                   // depart = NBMOTS;
                     break;
                 case 3 :
-                    nbmots = NBMOTS_3 - NBMOTS_2;
-                    depart = NBMOTS_2;
+                    str = "str3_";
+                    nbmots = NBMOTS_3;
+                    //depart = NBMOTS_2;
                     break;
                 default:
                     break;
             }
             do {
-                rand = rnd.nextInt(nbmots)+depart;
-            }while (rand==0 || existeMotPre(rand));
-            str = "str_" + rand;
+                rand = rnd.nextInt(nbmots)+1;
+            }while (existeMotPre(rand));
+            str = str + rand + "";
             strTmp=getStringResourceByName(str,getApplicationContext());
             tabMotPre[compteur] = rand;
             showWord(view);
