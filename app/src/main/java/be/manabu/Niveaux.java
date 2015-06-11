@@ -4,10 +4,18 @@ import android.app.Activity;
 import android.widget.ImageView;
 
 /**
- * Created by Lucie on 02-04-15.
+ * Cette classe permet de créer un objet de type niveau pour un exercice
+ * @author Lucie Herrier - 3TL1
  */
+
 public class Niveaux extends Activity{
 
+    /**
+     * Cette fonction permet de définir le niveau comme étant le niveau 1.
+     * @param act l'activité en cours
+     * @param lvl le niveau actuel défini pour l'exercice
+     * @return le nouveau niveau pour l'exercice, dans le cas présent 1.
+     */
     public static int changeLvl1(final Activity act, int lvl){
         ImageView lvl2 = (ImageView) act.findViewById(R.id.EtoileLvl2);
         ImageView lvl3 = (ImageView) act.findViewById(R.id.EtoileLvl3);
@@ -16,6 +24,12 @@ public class Niveaux extends Activity{
         return 1;
     }
 
+    /**
+     * Cette fonction permet de définir le niveau comme étant le niveau 2 ou de désactiver celui-ci.
+     * @param act l'activité en cours
+     * @param lvl le niveau actuel défini pour l'exercice
+     * @return le nouveau niveau pour l'exercice : soit 2, soit 1.
+     */
     public static int changeLvl2(final Activity act, int lvl){
         ImageView lvl2 = (ImageView) act.findViewById(R.id.EtoileLvl2);
         ImageView lvl3 = (ImageView) act.findViewById(R.id.EtoileLvl3);
@@ -34,6 +48,13 @@ public class Niveaux extends Activity{
             }
         }
     }
+
+    /**
+     * Cette fonction permet de définir le niveau comme étant le niveau 3 ou de désactiver celui-ci.
+     * @param act l'activité en cours
+     * @param lvl le niveau actuel défini pour l'exercice
+     * @return le nouveau niveau pour l'exercice : soit 3, soit 2.
+     */
     public static int changeLvl3(final Activity act,int lvl){
         ImageView lvl2 = (ImageView) act.findViewById(R.id.EtoileLvl2);
         ImageView lvl3 = (ImageView) act.findViewById(R.id.EtoileLvl3);

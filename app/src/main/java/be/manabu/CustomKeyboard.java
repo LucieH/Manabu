@@ -58,10 +58,11 @@ public class CustomKeyboard extends View{
     /** The key (code) handler. */
     private OnKeyboardActionListener mOnKeyboardActionListener = new OnKeyboardActionListener() {
 
-        public final static int CodeDelete   = -5; // Keyboard.KEYCODE_DELETE
-        public final static int CodeShift    = -1;
-        public final static int CodeAccents  = -2;
-        public final static int CodeHide    = 55001;
+        // Ces codes ont été définis par Lucie Herrier pour les besoins du clavier Manabu
+        public final static int CodeDelete   = -5; // Code de la touche delete
+        public final static int CodeShift    = -1; // Code de la touche majuscule
+        public final static int CodeAccents  = -2; // Code de la touche pour les accents
+        public final static int CodeHide    = 55001; // Code de la touche pour cacher le clavier
 
         @Override public void onKey(int primaryCode, int[] keyCodes) {
             // NOTE We can say '<Key android:codes="49,50" ... >' in the xml file; all codes come in keyCodes, the first in this list in primaryCode

@@ -1,5 +1,11 @@
 package be.manabu;
 
+/**
+ * Cette classe est l'activité principal de l'application Manabu. Elle représente le menu où est
+ * affiché le choix de jouer à l'un au l'autre exercice.
+ * @author Lucie Herrier - 3TL1
+ */
+
 import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
@@ -62,28 +68,40 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    /** Called when the user clicks the Lecture flash button */
+    /**
+     *  Cette fonction est appelée quand l'utilisateur clique sur le bouton "Lecture flash"
+     * @param view
+     */
     public void startFlash(View view) {
         // Do something in response to button
     	Intent intent = new Intent(this, FlashActivity.class);
     	startActivity(intent);
     }
-    
-    /** Called when the user clicks the Imagerie button */
+
+    /**
+     * Cette fonction est appelée quand l'utilisateur clique sur le bouton "Imagerie"
+     * @param view
+     */
     public void startImagerie(View view) {
         // Do something in response to button
     	Intent intent = new Intent(this, ImgActivity.class);
     	startActivity(intent);
     }
-    
-    /** Called when the user clicks the Anagrammes button */
+
+    /**
+     * Cette fonction est appelée quand l'utilisateur clique sur le bouton "Anagrammes"
+     * @param view
+     */
     public void startAnagrammes(View view) {
         // Do something in response to button
     	Intent intent = new Intent(this, AnagrammeActivity.class);
     	startActivity(intent);
     }
-    
-    /** Called when the user clicks the Sons button */
+
+    /**
+     * Cette fonction est appelée quand l'utilisateur clique sur le bouton "Ecouter le son"
+     * @param view
+     */
     public void startSon(View view) {
         // Do something in response to button
     	Intent intent = new Intent(this, SonActivity.class);

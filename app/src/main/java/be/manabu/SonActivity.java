@@ -1,5 +1,9 @@
 package be.manabu;
 
+/**
+ * @author Lucie Herrier - 3TL1
+ */
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
@@ -12,7 +16,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -89,6 +92,10 @@ public class SonActivity extends ActionBarActivity {
         else  this.finish();
     }
 
+    /**
+     *
+     * @param view
+     */
     public void start(View view) {
         indexSons = new int[NB_SONS];
         tabSonPre = new int[NB_TOURS];
@@ -97,6 +104,10 @@ public class SonActivity extends ActionBarActivity {
         startSon(view);
     }
 
+    /**
+     *
+     * @param view
+     */
     private void startSon(View view){
         view.invalidate();
         if (compteur < NB_TOURS) {
@@ -117,6 +128,9 @@ public class SonActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     *
+     */
     private void lireFichier(){
         String fich = "";
         switch (lvl){
@@ -156,6 +170,11 @@ public class SonActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     *
+     * @param pos
+     * @return
+     */
     private boolean findMotSon(int pos){
         int nbMots = -1;
         if (pos == NB_SONS-1) nbMots = listeSons.size()-indexSons[pos];
@@ -185,6 +204,13 @@ public class SonActivity extends ActionBarActivity {
         return false;
     }
 
+    /**
+     *
+     * @param start
+     * @param end
+     * @param nbr
+     * @return
+     */
     private boolean existeMot(int start, int end, int nbr){
         String nbrS = ""+nbr+"";
         for (int i = start; i< end; i++){
@@ -193,7 +219,11 @@ public class SonActivity extends ActionBarActivity {
         return false;
     }
 
-    /* Cette fonction verifie si le son a deja ete joue pendant la serie de 10 */
+    /**
+     * Cette fonction verifie si le son a deja ete joue pendant la serie de 10
+     * @param rand
+     * @return
+     */
     private boolean existeSonPre(int rand){
         for(int i=0; i<compteur; i++){
             if (tabSonPre[i] == rand) return true;
@@ -201,6 +231,15 @@ public class SonActivity extends ActionBarActivity {
         return false;
     }
 
+    /**
+     *
+     * @param b1
+     * @param b2
+     * @param b3
+     * @param ok
+     * @param ko1
+     * @param ko2
+     */
     protected void creerBoutonRandom(Button b1, Button b2, Button b3, String ok, String ko1, String ko2){
         int i = rnd.nextInt(3);
         int j = rnd.nextInt(2);
@@ -253,12 +292,17 @@ public class SonActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     *
+     * @param b
+     * @param ok
+     */
     protected void setBonneReponse(Button b, String ok){
         final Activity act = this;
         b.setText(ok);
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
-                afficherToast(act, true, getResources().getString(R.string.bienJoue), "#00A000", getApplicationContext());
+                afficherToastRep(act, true, getApplicationContext());
                 disableButtons();
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -271,20 +315,27 @@ public class SonActivity extends ActionBarActivity {
         });
     }
 
+    /**
+     *
+     * @param a
+     * @param ko1
+     * @param b
+     * @param ko2
+     */
     protected void setMauvaiseReponse(final Button a, String ko1, final Button b, String ko2){
         final Activity act = this;
         a.setText(ko1);
         b.setText(ko2);
         a.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                afficherToast(act, false, getResources().getString(R.string.reessaye), "#FF0000", getApplicationContext());
+                afficherToastRep(act, false, getApplicationContext());
                 disableButtons();
                 reEnableButtons();
             }
         });
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                afficherToast(act, false, getResources().getString(R.string.reessaye), "#FF0000", getApplicationContext());
+                afficherToastRep(act, false, getApplicationContext());
                 disableButtons();
                 reEnableButtons();
             }
@@ -293,6 +344,9 @@ public class SonActivity extends ActionBarActivity {
 
     }
 
+    /**
+     *
+     */
     private void disableButtons(){
         Button a = (Button) findViewById(R.id.bSons1);
         Button b = (Button) findViewById(R.id.bSons2);
@@ -302,6 +356,9 @@ public class SonActivity extends ActionBarActivity {
         c.setEnabled(false);
     }
 
+    /**
+     *
+     */
     private void reEnableButtons(){
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -317,29 +374,53 @@ public class SonActivity extends ActionBarActivity {
         }, 2500);
     }
 
+    /**
+     *
+     * @param view
+     */
     public void afficheRegles(View view){
         idLayout = chargerRegles(this, view, R.string.regleSon);
     }
 
+    /**
+     *
+     * @param v
+     */
     public void afficheDialog(View v){
         ReglesDialog dia = new ReglesDialog();
         dia.setIdString(R.string.regleSon);
         dia.show(getFragmentManager(),"Regles");
     }
 
+    /**
+     *
+     * @param view
+     */
     public void changeLvl1(View view){
         lvl=niv.changeLvl1(this, lvl);
 
     }
 
+    /**
+     *
+     * @param v
+     */
     public void jouerSonRegles(View v){
         Utilities.jouerSon("ok",getApplicationContext());
     }
 
+    /**
+     *
+     * @param v
+     */
     public void rejouerSon(View v){
         Utilities.jouerSon(son, getApplicationContext());
     }
 
+    /**
+     *
+     * @param view
+     */
     public void rejouer(View view) {
         view.invalidate();
         compteur=0;
@@ -348,16 +429,34 @@ public class SonActivity extends ActionBarActivity {
         idLayout = R.layout.activity_start;
     }
 
+    /**
+     *
+     * @param view
+     */
     public void retournerMenu(View view){
         view.invalidate();
         this.finish();
     }
 
+    /**
+     *
+     * @param view
+     */
     public void changeLvl2(View view){
         lvl=niv.changeLvl2(this, lvl);
     }
+
+    /**
+     *
+     * @param view
+     */
     public void changeLvl3(View view){
         lvl=niv.changeLvl3(this, lvl);
     }
+
+    /**
+     *
+     * @param view
+     */
     public void back(View view){ revenirDebut(this, view);}
 }

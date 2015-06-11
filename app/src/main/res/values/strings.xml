@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-    <resources>
 
+    <resources>
     <!--Phrases diverses -->
     <string name="app_name">Manabu</string>
     <string name="action_settings">Settings</string>
@@ -111,7 +111,7 @@
     <string name="img2_0">L\'oiseau a des plumes</string>
     <string name="img2_0_1">L\'oiseau a des poils</string>
     <string name="img2_0_2">L\'oignon a des plumes</string>
-    <string name="img2_1">La singe mange une banane</string>
+    <string name="img2_1">Le singe mange une banane</string>
     <string name="img2_1_1">La banane mange le singe</string>
     <string name="img2_1_2">Le singe ronge une banane</string>
     <string name="img2_2">Un chat dans un arbre</string>
@@ -120,28 +120,55 @@
     <string name="img2_3">Une voiture roule en ville</string>
     <string name="img2_3_1">Une moto roule en ville</string>
     <string name="img2_3_2">Un voiture roule en vrille</string>
-    <string name="img2_4">Un parterre de tulipes</string>
-    <string name="img2_4_1">Un jardin de tulipes</string>
-    <string name="img2_4_2">Un parterre de roses</string>
+    <string name="img2_4">C\'est un parterre de tulipes</string>
+    <string name="img2_4_1">C\'est un jardin de tulipes</string>
+    <string name="img2_4_2">C\'est un parterre de roses</string>
     <string name="img2_5">Le soleil dit bonjour</string>
     <string name="img2_5_1">Le soleil te salue</string>
     <string name="img2_5_2">Le sommeil dit bonjour</string>
     <string name="img2_6">Le poisson nage dans l\'eau</string>
     <string name="img2_6_1">Le poison nage dans l\'eau</string>
     <string name="img2_6_2">Le poisson naît dans l\'eau</string>
-    <string name="img2_7">L\'homme pêche à la ligne</string>
-    <string name="img2_7_1">L\'homme pêche dans l\'eau</string>
-    <string name="img2_7_2">L\'humain pêche dans l\'eau</string>
-    <string name="img2_8">Un puzzle sur une table</string>
-    <string name="img2_8_1">Un jeu sur une table</string>
-    <string name="img2_8_2">Un puzzle à compléter</string>
-    <string name="img2_9">Un arc-en-ciel après la pluie</string>
-    <string name="img2_9_1">Une arche-en-ciel après la pluie</string>
-    <string name="img2_9_2">Un arc-en-ciel dans les nuages</string>
-    <string name="img2_10">Un biscuit sur une assiette</string>
-    <string name="img2_10_1">Un fruit sur une assiette</string>
-    <string name="img2_10_2">Un gâteau sur un plat</string>
+    <string name="img2_7">Il y a un cube, une sphère et une pyramide</string>
+    <string name="img2_7_1">Il y a un carré, un rond et un triangle</string>
+    <string name="img2_7_2">Il y a un cube, un rond, et une pyramide</string>
+    <string name="img2_8">Un arc-en-ciel après la pluie</string>
+    <string name="img2_8_1">Une arche-en-ciel après la pluie</string>
+    <string name="img2_8_2">Un arc-en-ciel dans les nuages</string>
+    <string name="img2_9">Des biscuits sur une assiette</string>
+    <string name="img2_9_1">Des fruits sur une assiette</string>
+    <string name="img2_9_2">Des gâteaux sur un plat</string>
     <!-- Niveau 3 -->
+    <string name="img3_0">Un couteau</string>
+    <string name="img3_0_1">@string/img_9</string>
+    <string name="img3_0_2">@string/img_9_2</string>
+    <string name="img3_1">Un cheval</string>
+    <string name="img3_1_1">@string/img_19</string>
+    <string name="img3_1_2">@string/img_12</string>
+    <string name="img3_2">La lune</string>
+    <string name="img3_2_1">@string/img_5</string>
+    <string name="img3_2_2">@string/img_5_1</string>
+    <string name="img3_3">@string/img_4_2</string>
+    <string name="img3_3_1">@string/img_4</string>
+    <string name="img3_3_2">Une marguerite</string>
+    <string name="img3_4">@string/img_8_1</string>
+    <string name="img3_4_1">@string/img_8</string>
+    <string name="img3_4_2">Un banc</string>
+    <string name="img3_5">Des frites</string>
+    <string name="img3_5_1">Du poulet</string>
+    <string name="img3_5_2">De la compote</string>
+    <string name="img3_6">Des graviers</string>
+    <string name="img3_6_1">De l\'herbe</string>
+    <string name="img3_6_2">De la terre</string>
+    <string name="img3_7">De l\'eau</string>
+    <string name="img3_7_1">Du café</string>
+    <string name="img3_7_2">Du jus</string>
+    <string name="img3_8">L\'automne</string>
+    <string name="img3_8_1">L\'hiver</string>
+    <string name="img3_8_2">L\'été</string>
+    <string name="img3_9">Un rond rouge</string>
+    <string name="img3_9_1">Un carré jaune</string>
+    <string name="img3_9_2">Un triangle vert</string>
 
     <!-- Mots et phrases pour les activités Lecture flash, Anagramme, et Ecouter le son-->
     <!-- VOB -->
@@ -729,6 +756,4 @@
     <string name="str3_48">le lit est fait pour dormir</string>
     <string name="str3_49">il y a un cheval heureux à la ferme</string>
     <string name="str3_50">c\'est amusant d\'apprendre à lire</string>
-
-
 </resources>

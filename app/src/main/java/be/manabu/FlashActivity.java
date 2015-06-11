@@ -22,6 +22,10 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static be.manabu.Utilities.*;
 
+/**
+ * @author Lucie Herrier - 3TL1
+ */
+
 public class FlashActivity extends ActionBarActivity {
 
     final Random rnd = new Random();
@@ -64,12 +68,17 @@ public class FlashActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /** Permet d'utiliser la police choisie */
+    /**
+     *  Cette fonction permet d'utiliser la police choisie (by chrisjenx : https://github.com/chrisjenx/Calligraphy)
+     */
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
+    /**
+     *
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
@@ -80,6 +89,10 @@ public class FlashActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * Cette fonction définit le comportement de l'activité lorsque la touche "back" a été pressée,
+     * dépendemment du layout en cours d'affichage.
+     */
     @Override
     public void onBackPressed() {
         if (idLayout == R.layout.activity_flash_answer){
@@ -94,6 +107,11 @@ public class FlashActivity extends ActionBarActivity {
         else this.finish();
     }
 
+    /**
+     * Cette fonction permet de démarrer l'exercice de lecture flash en affichant le layout permettant
+     * de choisir le nombre de secondes.
+     * @param view la vue en cours
+     */
     public void start(View view) {
         tabMotPre = new int[NBTOURS];
         view.invalidate();
@@ -103,26 +121,24 @@ public class FlashActivity extends ActionBarActivity {
         nbSec.setText(""+secondes+"");
     }
 
-    /** Démarrer le jeu flash*/
+    /**
+     * Démarrer le jeu flash
+     */
     public void startFlash(View view) {
         if(compteur < NBTOURS){
             String str = "str_";
             int rand;
             int nbmots = NBMOTS;
-            int depart = 0;
             switch (lvl){
                 case 1 :
-                   // nbmots = NBMOTS;
                     break;
                 case 2 :
                     str = "str2_";
                     nbmots = NBMOTS_2;
-                   // depart = NBMOTS;
                     break;
                 case 3 :
                     str = "str3_";
                     nbmots = NBMOTS_3;
-                    //depart = NBMOTS_2;
                     break;
                 default:
                     break;
@@ -130,8 +146,7 @@ public class FlashActivity extends ActionBarActivity {
             do {
                 rand = rnd.nextInt(nbmots)+1;
             }while (existeMotPre(rand));
-            str = str + rand + "";
-            strTmp=getStringResourceByName(str,getApplicationContext());
+            strTmp=getStringResourceByName(str + rand + "",getApplicationContext());
             tabMotPre[compteur] = rand;
             showWord(view);
             final Handler handler = new Handler();
@@ -140,7 +155,6 @@ public class FlashActivity extends ActionBarActivity {
                 @Override
                 public void run() {
                     setViewAnswer();
-                    //setNp(5, 10);
                     compteur ++;
                 }
             }, temps);
@@ -152,7 +166,11 @@ public class FlashActivity extends ActionBarActivity {
 
     }
 
-    /* Cette fonction verifie si le mot a deja ete joue pendant la serie de 10 */
+    /**
+     * Cette fonction vérifie si le mot a déjà été joué pendant la série de 10 actuelle.
+     * @param rand le nombre généré aléatoirement ce tour-ci
+     * @return true si le nombre est déjà sorti, false dans le cas contraire
+     */
     private boolean existeMotPre(int rand){
         for(int i=0; i<compteur; i++){
             if (tabMotPre[i] == rand) return true;
@@ -160,6 +178,10 @@ public class FlashActivity extends ActionBarActivity {
         return false;
     }
 
+    /**
+     *
+     * @param b
+     */
     protected void verifierReponse(final Button b){
         this.nbEssai = 0;
         final Activity act = this;
@@ -171,7 +193,7 @@ public class FlashActivity extends ActionBarActivity {
                 String tmp = text.getText().toString().trim();
                 final Handler handler = new Handler();
                 if (strTmp.equalsIgnoreCase(tmp)){
-                    afficherToast(act, true, getResources().getString(R.string.bienJoue), "#00A000", getApplicationContext());
+                    afficherToastRep(act, true, getApplicationContext());
                     b.setEnabled(false);
                     aide.setEnabled(false);
                     handler.postDelayed(new Runnable() {
@@ -182,7 +204,7 @@ public class FlashActivity extends ActionBarActivity {
                     }, 2500);
                 }
                 else{
-                    afficherToast(act, false, getResources().getString(R.string.reessaye), "#FF0000", getApplicationContext());
+                    afficherToastRep(act, false, getApplicationContext());
                     b.setEnabled(false);
                     aide.setEnabled(false);
                     handler.postDelayed(new Runnable() {
@@ -201,6 +223,10 @@ public class FlashActivity extends ActionBarActivity {
         });
     }
 
+    /**
+     *
+     * @param v
+     */
     public void revoirMot(View v){
         showWord(v);
         final Handler handler = new Handler();
@@ -214,6 +240,9 @@ public class FlashActivity extends ActionBarActivity {
 
     }
 
+    /**
+     *
+     */
     private void setViewAnswer(){
         setContentView(R.layout.activity_flash_answer);
         idLayout = R.layout.activity_flash_answer;
@@ -223,6 +252,10 @@ public class FlashActivity extends ActionBarActivity {
         verifierReponse(b);
     }
 
+    /**
+     *
+     * @param view
+     */
     private void showWord(View view){
         view.invalidate();
         setContentView(R.layout.activity_flash);
@@ -232,6 +265,10 @@ public class FlashActivity extends ActionBarActivity {
         view.invalidate();
     }
 
+    /**
+     *
+     * @param view
+     */
     public void rejouer(View view) {
         view.invalidate();
         compteur=0;
@@ -240,11 +277,19 @@ public class FlashActivity extends ActionBarActivity {
         idLayout = R.layout.activity_start;
     }
 
+    /**
+     *
+     * @param view
+     */
     public void retournerMenu(View view){
         view.invalidate();
         this.finish();
     }
 
+    /**
+     *
+     * @param view
+     */
     public void decrementer(View view){
         if (secondes >1) {
             this.secondes--;
@@ -253,6 +298,11 @@ public class FlashActivity extends ActionBarActivity {
         }
 
     }
+
+    /**
+     *
+     * @param view
+     */
     public void incrementer(View view){
         if (secondes <20) {
             this.secondes++;
@@ -261,31 +311,61 @@ public class FlashActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     *
+     * @param view
+     */
     public void afficheRegles(View view){
         idLayout = chargerRegles(this, view, R.string.regleFlash);
     }
 
+    /**
+     *
+     * @param v
+     */
     public void afficheDialog(View v){
         ReglesDialog dia = new ReglesDialog();
         dia.setIdString(R.string.regleFlash);
         dia.show(getFragmentManager(),"Regles");
     }
 
+    /**
+     *
+     * @param v
+     */
     public void jouerSonRegles(View v){
         Utilities.jouerSon("ok",getApplicationContext());
     }
 
+    /**
+     *
+     * @param view
+     */
     public void changeLvl1(View view){
         lvl=niv.changeLvl1(this, lvl);
 
     }
 
+    /**
+     *
+     * @param view
+     */
     public void changeLvl2(View view){
         lvl=niv.changeLvl2(this, lvl);
     }
+
+    /**
+     *
+     * @param view
+     */
     public void changeLvl3(View view){
         lvl=niv.changeLvl3(this, lvl);
     }
+
+    /**
+     *
+     * @param view
+     */
     public void back(View view){ revenirDebut(this, view);}
 
 

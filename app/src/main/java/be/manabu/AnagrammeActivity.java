@@ -2,18 +2,13 @@ package be.manabu;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.media.MediaPlayer;
 import android.os.Handler;
-import android.provider.SyncStateContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,13 +17,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.GridLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Space;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
@@ -39,6 +28,10 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static be.manabu.Utilities.*;
+
+/**
+ * @author Lucie Herrier - 3TL1
+ */
 
 public class AnagrammeActivity extends ActionBarActivity {
 
@@ -57,12 +50,18 @@ public class AnagrammeActivity extends ActionBarActivity {
     private int[] tabMotPre = new int[NBTOURS];
     private int idLayout = 0;
 
+    /**
+     *
+     */
     class structBouton {
         public float posX, posY;
         public String lettre;
         public boolean ok = false;
     }
 
+    /**
+     *
+     */
     class boutonLettre{
         public Button b;
         public boolean ok = false;
@@ -120,6 +119,10 @@ public class AnagrammeActivity extends ActionBarActivity {
         else  this.finish();
     }
 
+    /**
+     *
+     * @param view
+     */
     public void start(View view) {
         if (compteur<NBTOURS) {
             nbLettresOk = 0;
@@ -161,6 +164,12 @@ public class AnagrammeActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     *
+     * @param tbBoutonLettres
+     * @param arStr
+     * @param tbStr
+     */
     private void placerBoutons(boutonLettre[] tbBoutonLettres, char[] arStr, ArrayList<Character> tbStr ){
         RelativeLayout lay = (RelativeLayout) findViewById(R.id.LayoutAna);
         int idBouton = R.id.bReplay;
@@ -183,7 +192,11 @@ public class AnagrammeActivity extends ActionBarActivity {
         }
     }
 
-    /* Verifie si le mot est deja sorti dans la serie de 10*/
+    /**
+     * Verifie si le mot est deja sorti dans la serie de 10.
+     * @param rand
+     * @return
+     */
     private boolean existeMotPre(int rand){
         for(int i=0; i<compteur; i++){
             if (tabMotPre[i] == rand) return true;
@@ -191,7 +204,14 @@ public class AnagrammeActivity extends ActionBarActivity {
         return false;
     }
 
-    /* Met en place l'affichage des boutons de type lettre */
+    /**
+     * Met en place l'affichage des boutons de type lettre
+     * @param b
+     * @param temp
+     * @param i
+     * @param idBouton
+     * @return
+     */
     private int setBoutonLettre(Button b, String temp, int i, int idBouton){
         b.setText(temp);
         b.setTextAppearance(this, R.style.texteSurFond);
@@ -208,8 +228,15 @@ public class AnagrammeActivity extends ActionBarActivity {
         return i+10;
     }
 
-    /* Met en place l'affichage des boutons de type cases blanches */
-    private int setBoutonVerif(Button b, String temp, int i, int idBouton){
+    /**
+     * Met en place l'affichage des boutons de type cases blanches
+     * @param b
+     * @param temp
+     * @param i
+     * @param idBouton
+     * @return
+     */
+    private int setBoutonVerif(Button b, String temp, int i, int idBouton) {
         b.setText(temp);
         b.setTextColor(getResources().getColor(R.color.White));
         b.setTextSize(25);
@@ -221,7 +248,14 @@ public class AnagrammeActivity extends ActionBarActivity {
 
     }
 
-    /* Definit les parametres a mettre en place pour les objets sur le relative layout*/
+    /**
+     * Définit les paramètres à mettre en place pour les objets sur le relative layout
+     * @param i
+     * @param buttonTop
+     * @param idButton
+     * @param verif
+     * @return
+     */
     private RelativeLayout.LayoutParams setParams(int i, int buttonTop, int idButton, boolean verif ){
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -260,7 +294,11 @@ public class AnagrammeActivity extends ActionBarActivity {
         return params;
     }
 
-    /* Implemente le mouvement des boutons avec les lettres et leur immobilisme si elles sont sur la bonne case blanche*/
+    /**
+     * Implémente le mouvement des boutons avec les lettres et leur immobilisme si elles sont sur la bonne case blanche
+     * @param bL
+     * @param act
+     */
     private void addMouvementBouton(final boutonLettre bL, final Activity act){
         bL.b.setOnTouchListener(new View.OnTouchListener() {
             private float x,
@@ -311,6 +349,9 @@ public class AnagrammeActivity extends ActionBarActivity {
         });
     }
 
+    /**
+     *
+     */
     private void setPositionBoutons(){
         for (int i = 0; i < nbChar; i++) {
             Button b = (Button) findViewById(i);
@@ -322,6 +363,13 @@ public class AnagrammeActivity extends ActionBarActivity {
         isSetPos = true;
     }
 
+    /**
+     *
+     * @param bL
+     * @param pos
+     * @param act
+     * @param v
+     */
     private void validerLettre(final boutonLettre bL, int pos, final Activity act, final View v){
         bL.b.setX(tbStructBouton[pos].posX);
         bL.b.setY(tbStructBouton[pos].posY);
@@ -331,7 +379,7 @@ public class AnagrammeActivity extends ActionBarActivity {
         nbLettresOk++;
         if(nbLettresOk == nbChar) {
             compteur++;
-            afficherToast(act, true, getResources().getString(R.string.bienJoue), "#00A000", getApplicationContext());
+            afficherToastRep(act, true, getApplicationContext());
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -342,6 +390,10 @@ public class AnagrammeActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     private int getMinLettres(){
         switch (lvl){
             case 1 :
@@ -355,6 +407,10 @@ public class AnagrammeActivity extends ActionBarActivity {
         return 0;
     }
 
+    /**
+     *
+     * @return
+     */
     private int getMaxLettres(){
         switch (lvl){
             case 1 :
@@ -368,6 +424,10 @@ public class AnagrammeActivity extends ActionBarActivity {
         return 0;
     }
 
+    /**
+     *
+     * @param view
+     */
     public void rejouer(View view) {
         view.invalidate();
         this.compteur=0;
@@ -376,35 +436,74 @@ public class AnagrammeActivity extends ActionBarActivity {
         idLayout = R.layout.activity_start;
     }
 
+    /**
+     *
+     * @param view
+     */
     public void retournerMenu(View view){
         view.invalidate();
         this.finish();
     }
 
+    /**
+     *
+     * @param v
+     */
     public void jouerSon(View v){
         Utilities.jouerSon(strName, getApplicationContext());
     }
 
+    /**
+     *
+     * @param v
+     */
     public void jouerSonRegles(View v){
         Utilities.jouerSon("ok",getApplicationContext());
     }
 
+    /**
+     *
+     * @param view
+     */
     public void afficheRegles(View view){
         idLayout = chargerRegles(this, view, R.string.regleAna);
     }
 
+    /**
+     *
+     * @param v
+     */
     public void afficheDialog(View v){
         ReglesDialog dia = new ReglesDialog();
         dia.setIdString(R.string.regleAna);
         dia.show(getFragmentManager(),"Regles");
     }
 
+    /**
+     *
+     * @param view
+     */
     public void changeLvl1(View view){ lvl=niv.changeLvl1(this, lvl);}
+
+    /**
+     *
+     * @param view
+     */
     public void changeLvl2(View view){
         lvl=niv.changeLvl2(this, lvl);
     }
+
+    /**
+     *
+     * @param view
+     */
     public void changeLvl3(View view){
         lvl=niv.changeLvl3(this, lvl);
     }
+
+    /**
+     *
+     * @param view
+     */
     public void back(View view){ revenirDebut(this, view);}
 }

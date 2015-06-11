@@ -1,5 +1,9 @@
 package be.manabu;
 
+/**
+ * @author Lucie Herrier - 3TL1
+ */
+
 import java.util.Random;
 
 import android.app.Activity;
@@ -11,7 +15,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -28,18 +31,15 @@ public class ImgActivity extends ActionBarActivity {
 
     private final Random rnd = new Random();
     private final static int NB_IMAGES = 21;
+    private final static int NB_IMAGES2 = 10;
     private final static int NB_TOURS = 10;
-    private String strTmp = "start";
+    protected String strTmp;
     private int tabNbImages[] = new int[NB_TOURS];
     private int cmptImages = 0;
     public int lvl = 1;
     private Niveaux niv = new Niveaux();
     private int idLayout;
 
-    //Getters et setters
-    public void setStrTmp(String s){
-        this.strTmp = s;
-    }
 
     //Fonctions override
 	@Override
@@ -52,8 +52,11 @@ public class ImgActivity extends ActionBarActivity {
         );
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_start);
+        // Les deux lignes ci-dessous permettent de bloquer l'acces au niveau 3
+        ImageView lvl3 = (ImageView) findViewById(R.id.EtoileLvl3);
+        lvl3.setVisibility(View.GONE);
         idLayout = R.layout.activity_start;
 	}
 
@@ -84,11 +87,17 @@ public class ImgActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     *
+     */
     @Override
     public void onBackPressed() {
         if (idLayout == R.layout.activity_img || idLayout == R.layout.activity_img_choix || idLayout == R.layout.regles){
             setContentView(R.layout.activity_start);
             idLayout = R.layout.activity_start;
+            // Les deux lignes ci-dessous permettent de bloquer l'acces au niveau 3
+            ImageView lvl3 = (ImageView) findViewById(R.id.EtoileLvl3);
+            lvl3.setVisibility(View.GONE);
             lvl = 1;
             cmptImages = 0;
         }
@@ -98,7 +107,10 @@ public class ImgActivity extends ActionBarActivity {
 
     //Fonctions personnelles
 
-    /** Démarrer le jeu imagerie ave les fiches Freinet*/
+    /**
+     * Démarrer le jeu imagerie ave les fiches Freinet
+     * @param view
+     */
     public void start(View view) {
         view.invalidate();
         if (cmptImages < NB_TOURS) {
@@ -113,7 +125,10 @@ public class ImgActivity extends ActionBarActivity {
 
     }
 
-    /** Afficher les choix pour l'image*/
+    /**
+     *  Afficher les choix pour l'image
+     * @param view
+     */
     public void afficherChoix(View view) {
         view.invalidate();
         setContentView(R.layout.activity_img_choix);
@@ -141,27 +156,47 @@ public class ImgActivity extends ActionBarActivity {
         creerBoutonRandom(b1, b2, b3);
     }
 
-     /**  Permet d'avoir les images prises au hasard avec le mot correspondant  */
+    /**
+     * Permet d'avoir les images prises au hasard avec le mot correspondant
+     */
     protected void randomImg(){
         final ImageView img = (ImageView) findViewById(R.id.imgRandom);
-        String str;
+        String str = "";
         int rand;
+        int nbimg = 0;
+        switch (lvl){
+            case 1 :
+                str = "img_";
+                nbimg = NB_IMAGES;
+                break;
+            case 2 :
+                str = "img2_";
+                nbimg = NB_IMAGES2;
+                break;
+            default:
+                break;
+        }
         do {
-            rand = rnd.nextInt(NB_IMAGES);
-            str = "img_" + rand;
+            rand = rnd.nextInt(nbimg);
+            strTmp = str + rand+ "";
         }while (existeImageAffichee(rand));
         img.setImageDrawable
                 (
-                        getResources().getDrawable(getResourceID(str, "drawable",
+                        getResources().getDrawable(getResourceID(strTmp, "drawable",
                                 getApplicationContext()))
                 );
         final TextView tv = (TextView) findViewById(R.id.tv1);
-        tv.setText(getStringResourceByName(str, getApplicationContext()));
-        setStrTmp(str);
+        tv.setText(getStringResourceByName(strTmp, getApplicationContext()));
         this.tabNbImages[cmptImages]=rand;
         this.cmptImages++;
     }
 
+    /**
+     *
+     * @param b1
+     * @param b2
+     * @param b3
+     */
     protected void creerBoutonRandom(Button b1, Button b2, Button b3){
         int i = rnd.nextInt(3);
         int j = rnd.nextInt(2);
@@ -214,12 +249,16 @@ public class ImgActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     *
+     * @param b
+     */
     protected void setBonneReponse(Button b){
         final Activity act = this;
         b.setText(getStringResourceByName(strTmp,getApplicationContext()));
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View v) {
-                afficherToast(act, true, getResources().getString(R.string.bienJoue), "#00A000", getApplicationContext());
+                afficherToastRep(act, true, getApplicationContext());
                 disableButtons();
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -232,26 +271,34 @@ public class ImgActivity extends ActionBarActivity {
         });
     }
 
+    /**
+     *
+     * @param a
+     * @param b
+     */
     protected void setMauvaiseReponse(final Button a, final Button b){
         final Activity act = this;
         a.setText(getStringResourceByName(strTmp+"_1",getApplicationContext()));
         b.setText(getStringResourceByName(strTmp+"_2",getApplicationContext()));
         a.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                afficherToast(act, false, getResources().getString(R.string.reessaye), "#FF0000", getApplicationContext());
+                afficherToastRep(act, false, getApplicationContext());
                 disableButtons();
                 reEnableButtons();
             }
         });
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                afficherToast(act, false, getResources().getString(R.string.reessaye), "#FF0000", getApplicationContext());
+                afficherToastRep(act, false, getApplicationContext());
                 disableButtons();
                 reEnableButtons();
             }
         });
     }
 
+    /**
+     *
+     */
     private void disableButtons(){
         Button a = (Button) findViewById(R.id.choix1);
         Button b = (Button) findViewById(R.id.choix2);
@@ -261,6 +308,9 @@ public class ImgActivity extends ActionBarActivity {
         c.setEnabled(false);
     }
 
+    /**
+     *
+     */
     private void reEnableButtons(){
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -276,6 +326,11 @@ public class ImgActivity extends ActionBarActivity {
         }, 2500);
     }
 
+    /**
+     *
+     * @param rand
+     * @return
+     */
     private boolean existeImageAffichee(int rand){
         for(int i=0; i<cmptImages; i++){
             if (tabNbImages[i] == rand) return true;
@@ -283,44 +338,85 @@ public class ImgActivity extends ActionBarActivity {
         return false;
     }
 
+    /**
+     *
+     * @param view
+     */
     public void rejouer(View view) {
         view.invalidate();
         cmptImages=0;
         lvl = 1;
         setContentView(R.layout.activity_start);
         idLayout = R.layout.activity_start;
+        // Les deux lignes ci-dessous permettent de bloquer l'acces au niveau 3
+        ImageView lvl3 = (ImageView) findViewById(R.id.EtoileLvl3);
+        lvl3.setVisibility(View.GONE);
     }
 
+    /**
+     *
+     * @param view
+     */
     public void retournerMenu(View view){
         view.invalidate();
         this.finish();
     }
 
+    /**
+     *
+     * @param view
+     */
     public void afficheRegles(View view){
         idLayout = chargerRegles(this, view, R.string.regleImg);
     }
 
+    /**
+     *
+     * @param v
+     */
     public void afficheDialog(View v){
         ReglesDialog dia = new ReglesDialog();
         dia.setIdString(R.string.regleImg);
         dia.show(getFragmentManager(),"Regles");
     }
 
+    /**
+     *
+     * @param v
+     */
     public void jouerSonRegles(View v){
         Utilities.jouerSon("ok",getApplicationContext());
     }
 
+    /**
+     *
+     * @param view
+     */
     public void changeLvl1(View view){
         lvl=niv.changeLvl1(this, lvl);
 
     }
 
+    /**
+     *
+     * @param view
+     */
     public void changeLvl2(View view){
         lvl=niv.changeLvl2(this, lvl);
     }
+
+    /**
+     *
+     * @param view
+     */
     public void changeLvl3(View view){
         lvl=niv.changeLvl3(this, lvl);
     }
+
+    /**
+     *
+     * @param view
+     */
     public void back(View view){ revenirDebut(this, view);}
 }
 
