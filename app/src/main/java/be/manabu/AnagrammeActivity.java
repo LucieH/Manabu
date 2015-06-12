@@ -51,7 +51,8 @@ public class AnagrammeActivity extends ActionBarActivity {
     private int idLayout = 0;
 
     /**
-     *
+     * Cette classe définit les attributs propres à un bouton : sa position, la lettre qu'il contient
+     * et s'il est validé dans l'anagramme. Elle est utilisée pour les cases blanches.
      */
     class structBouton {
         public float posX, posY;
@@ -60,13 +61,17 @@ public class AnagrammeActivity extends ActionBarActivity {
     }
 
     /**
-     *
+     * Cette classe représente un bouton de type lettre à placer sur les cases blanches. Il contient
+     * en plus un booléen indiquant si sa position est correcte.
      */
     class boutonLettre{
         public Button b;
         public boolean ok = false;
     }
 
+    /**
+     * Cette fonction est exécutée par défaut lors du démarrage de l'activité.
+     */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,39 +80,54 @@ public class AnagrammeActivity extends ActionBarActivity {
                         .setFontAttrId(R.attr.fontPath)
                         .build()
         );
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
                                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_start);
         idLayout = R.layout.activity_start;
 	}
 
+    /**
+     * Fonction utilisée lors de la création de l'activité.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         return true;
     }
 
+    /**
+     * Fonction utilisée lors de la création de l'activité.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         return super.onOptionsItemSelected(item);
     }
 
-    /** Permet d'utiliser la police choisie */
+    /**
+     *  Cette fonction permet d'utiliser la police choisie (by chrisjenx : https://github.com/chrisjenx/Calligraphy)
+     */
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
+    /**
+     * Cette fonction permet d'éviter une erreur plantant l'application lors du touch d'un bouton de
+     * menu sur un smartphone ou une tablette.
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
             // ...
             return true;
-        } else {
-            return super.onKeyDown(keyCode, event);
         }
+        return super.onKeyDown(keyCode, event);
     }
 
+    /**
+     * Cette fonction redéfinit le comportement de l'activité lorsque la touche "back" a été pressée,
+     * dépendemment du layout en cours d'affichage.
+     */
     @Override
     public void onBackPressed() {
         if (idLayout == R.layout.activity_anagramme || idLayout == R.layout.regles){
@@ -120,8 +140,9 @@ public class AnagrammeActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param view
+     * Cette fonction démarre un nouvel anagramme tant que la série de 10 n'est pas complétée. Si elle
+     * l'est, le layout de fin est affiché.
+     * @param view la vue en cours
      */
     public void start(View view) {
         if (compteur<NBTOURS) {
@@ -131,13 +152,15 @@ public class AnagrammeActivity extends ActionBarActivity {
             view.invalidate();
             setContentView(R.layout.activity_anagramme);
             idLayout = R.layout.activity_anagramme;
-            //trouver un mot
-            int rand = 0;
+            //trouver un mot à partir d'un nombre aléatoire
+            int rand;
             do {
-                rand = rnd.nextInt(NBMOTS);
+                rand = rnd.nextInt(NBMOTS)+1;
                 strName = "str_" + rand;
                 strTmp = getStringResourceByName(strName, getApplicationContext());
-            } while (strTmp.length() > getMaxLettres() || strTmp.length() < getMinLettres() || rand ==0 || existeMotPre(rand));
+                // vérifier que le mot répond aux différents critères de sélection
+            } while (strTmp.length() > getMaxLettres() || strTmp.length() < getMinLettres() || existeMotPre(rand));
+            // rajouter le nombre correspondant au mot à la liste de ce qui est déjà sorti
             tabMotPre[compteur] = rand;
             //jouer le son du mot
             Utilities.jouerSon(strName, getApplicationContext());
@@ -165,10 +188,10 @@ public class AnagrammeActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param tbBoutonLettres
-     * @param arStr
-     * @param tbStr
+     * Cette fonction met en place les différents boutons de l'exercice sur le layout.
+     * @param tbBoutonLettres le tableau qui va contenir les boutons avec les lettres du mot
+     * @param arStr le tableau avec les caractères dans l'ordre
+     * @param tbStr le tableau avec les caractères mélangés
      */
     private void placerBoutons(boutonLettre[] tbBoutonLettres, char[] arStr, ArrayList<Character> tbStr ){
         RelativeLayout lay = (RelativeLayout) findViewById(R.id.LayoutAna);
@@ -193,9 +216,9 @@ public class AnagrammeActivity extends ActionBarActivity {
     }
 
     /**
-     * Verifie si le mot est deja sorti dans la serie de 10.
-     * @param rand
-     * @return
+     * Cette fonction vérifie si le mot a déjà été joué pendant la série de 10 actuelle.
+     * @param rand le nombre généré aléatoirement ce tour-ci
+     * @return true si le nombre est déjà sorti, false dans le cas contraire
      */
     private boolean existeMotPre(int rand){
         for(int i=0; i<compteur; i++){
@@ -205,12 +228,12 @@ public class AnagrammeActivity extends ActionBarActivity {
     }
 
     /**
-     * Met en place l'affichage des boutons de type lettre
-     * @param b
-     * @param temp
-     * @param i
-     * @param idBouton
-     * @return
+     * Cette fonction met en place le design des boutons de type lettre
+     * @param b le bouton à mettre en forme
+     * @param temp le texte contenu par le bouton
+     * @param i la position du bouton, qui servira d'identifiant
+     * @param idBouton l'identifiant du bouton par rapport auquel il se positionne
+     * @return l'identifiant attribué au bouton b
      */
     private int setBoutonLettre(Button b, String temp, int i, int idBouton){
         b.setText(temp);
@@ -229,12 +252,12 @@ public class AnagrammeActivity extends ActionBarActivity {
     }
 
     /**
-     * Met en place l'affichage des boutons de type cases blanches
-     * @param b
-     * @param temp
-     * @param i
-     * @param idBouton
-     * @return
+     * Cette fonction met en place le design des boutons de type cases blanches
+     * @param b le bouton à  mettre en forme
+     * @param temp le texte contenu par le bouton
+     * @param i la position du bouton, qui servira d'identifiant
+     * @param idBouton l'identifiant du bouton par rapport auquel il se positionne
+     * @return l'identifiant attribué au bouton b
      */
     private int setBoutonVerif(Button b, String temp, int i, int idBouton) {
         b.setText(temp);
@@ -249,12 +272,12 @@ public class AnagrammeActivity extends ActionBarActivity {
     }
 
     /**
-     * Définit les paramètres à mettre en place pour les objets sur le relative layout
-     * @param i
-     * @param buttonTop
-     * @param idButton
-     * @param verif
-     * @return
+     * Cette fonction définit les paramètres à mettre en place pour les objets sur le relative layout
+     * @param i la position de l'objet
+     * @param buttonTop le bouton se trouvant au dessus de l'objet, s'il a lieu d'être
+     * @param idButton le bouton de trouvant à côté de l'objet
+     * @param verif vrai s'il s'agit d'un case blanche, faux s'il s'agit d'une lettre
+     * @return les paramètres du layout
      */
     private RelativeLayout.LayoutParams setParams(int i, int buttonTop, int idButton, boolean verif ){
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
@@ -264,19 +287,19 @@ public class AnagrammeActivity extends ActionBarActivity {
         if (i==0) {
             params.addRule(RelativeLayout.BELOW, buttonTop);
             params.addRule(RelativeLayout.ALIGN_LEFT, buttonTop);
-            params.addRule(RelativeLayout.ALIGN_START, buttonTop);
+            //params.addRule(RelativeLayout.ALIGN_START, buttonTop);
         }
         else{
                 if (i==1 && verif){
                     params.addRule(RelativeLayout.BELOW,buttonTop);
                     params.addRule(RelativeLayout.RIGHT_OF, buttonTop);
-                    params.addRule(RelativeLayout.END_OF, buttonTop);
+                   // params.addRule(RelativeLayout.END_OF, buttonTop);
                 }
             else {
                     if (verif) params.addRule(RelativeLayout.ALIGN_TOP, idButton);
                     else params.addRule(RelativeLayout.ALIGN_BOTTOM,idButton);
                     params.addRule(RelativeLayout.RIGHT_OF, idButton);
-                    params.addRule(RelativeLayout.END_OF, idButton);
+                   // params.addRule(RelativeLayout.END_OF, idButton);
                 }
 
         }
@@ -295,9 +318,9 @@ public class AnagrammeActivity extends ActionBarActivity {
     }
 
     /**
-     * Implémente le mouvement des boutons avec les lettres et leur immobilisme si elles sont sur la bonne case blanche
-     * @param bL
-     * @param act
+     * Implémente le mouvement des boutons avec les lettres et leur immobilisme si elles sont sur la bonne case blanche.
+     * @param bL le bouton pour lequel le mouvement est mis en place
+     * @param act l'activité en cours
      */
     private void addMouvementBouton(final boutonLettre bL, final Activity act){
         bL.b.setOnTouchListener(new View.OnTouchListener() {
@@ -350,7 +373,7 @@ public class AnagrammeActivity extends ActionBarActivity {
     }
 
     /**
-     *
+     * Cette fonction permet de définir la position des boutons lettres validés sur les cases blanches.
      */
     private void setPositionBoutons(){
         for (int i = 0; i < nbChar; i++) {
@@ -364,11 +387,11 @@ public class AnagrammeActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param bL
-     * @param pos
-     * @param act
-     * @param v
+     * Cette fonction permet de valider qu'une lettre bien se trouve sur le case lui correspondant
+     * @param bL le bouton contenant la lettre
+     * @param pos la position de la lettre dans le tableau de boutons
+     * @param act l'activité en cours
+     * @param v la vue en cours
      */
     private void validerLettre(final boutonLettre bL, int pos, final Activity act, final View v){
         bL.b.setX(tbStructBouton[pos].posX);
@@ -391,8 +414,8 @@ public class AnagrammeActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @return
+     * Cette fonction permet de d'obtenir le nombre minimum de lettres dont est composé le mot selon le niveau.
+     * @return le nombre minimum de lettres dans le mot
      */
     private int getMinLettres(){
         switch (lvl){
@@ -408,8 +431,8 @@ public class AnagrammeActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @return
+     * Cette fonction permet de d'obtenir le nombre maximum de lettres dont est composé le mot selon le niveau.
+     * @return le nombre maximum de lettres dans le mot
      */
     private int getMaxLettres(){
         switch (lvl){
@@ -425,8 +448,8 @@ public class AnagrammeActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param view
+     * Cette fonction permet de rejouer à l'exercice des anagrammes une fois la série finie.
+     * @param view la vue en cours
      */
     public void rejouer(View view) {
         view.invalidate();
@@ -437,8 +460,8 @@ public class AnagrammeActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param view
+     * Cette fonction permet de revenir au menu principal une fois la série finie.
+     * @param view la vue en cours
      */
     public void retournerMenu(View view){
         view.invalidate();
@@ -446,32 +469,32 @@ public class AnagrammeActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param v
+     * Cette fonction permet de jouer le son du mot à reconstituer pendant l'exercice.
+     * @param v la vue en cours
      */
     public void jouerSon(View v){
         Utilities.jouerSon(strName, getApplicationContext());
     }
 
     /**
-     *
-     * @param v
+     * Cette fonction permet d'écouter les règles du jeu des anagrammes
+     * @param v la vue en cours
      */
     public void jouerSonRegles(View v){
         Utilities.jouerSon("ok",getApplicationContext());
     }
 
     /**
-     *
-     * @param view
+     * Cette fonction permet d'afficher les règles du jeu des anagrammes.
+     * @param view la vue en cours
      */
     public void afficheRegles(View view){
         idLayout = chargerRegles(this, view, R.string.regleAna);
     }
 
     /**
-     *
-     * @param v
+     * Cette fonction permet d'afficher un dialog en cours d'exercice pour rappeler les règles du jeu.
+     * @param v la vue en cours
      */
     public void afficheDialog(View v){
         ReglesDialog dia = new ReglesDialog();
@@ -480,30 +503,30 @@ public class AnagrammeActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param view
+     * Cette fonction permet de définir le niveau lors du touch sur la première étoile comme étant le 1.
+     * @param view la vue en cours
      */
-    public void changeLvl1(View view){ lvl=niv.changeLvl1(this, lvl);}
+    public void changeLvl1(View view){ lvl=niv.changeLvl1(this);}
 
     /**
-     *
-     * @param view
+     * Cette fonction permet de définir le niveau lors du clic sur la seconde étoile. Celui-ci deviendra 2 ou 1.
+     * @param view la vue en cours
      */
     public void changeLvl2(View view){
         lvl=niv.changeLvl2(this, lvl);
     }
 
     /**
-     *
-     * @param view
+     * Cette fonction permet de définir le niveau lors du clic sur la troisième étoile. Celui-ci deviendra 3 ou 2.
+     * @param view la vue en cours
      */
     public void changeLvl3(View view){
         lvl=niv.changeLvl3(this, lvl);
     }
 
     /**
-     *
-     * @param view
+     * Cette fonction s'exécute lors du clic sur le bouton "revenir" de l'affichage des règles.
+     * @param view la vue en cours
      */
     public void back(View view){ revenirDebut(this, view);}
 }

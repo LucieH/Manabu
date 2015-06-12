@@ -58,7 +58,7 @@ public class CustomKeyboard extends View{
     /** The key (code) handler. */
     private OnKeyboardActionListener mOnKeyboardActionListener = new OnKeyboardActionListener() {
 
-        // Ces codes ont été définis par Lucie Herrier pour les besoins du clavier Manabu
+        // Ces codes ont Ã©tÃ© dÃ©finis par Lucie Herrier pour les besoins du clavier Manabu
         public final static int CodeDelete   = -5; // Code de la touche delete
         public final static int CodeShift    = -1; // Code de la touche majuscule
         public final static int CodeAccents  = -2; // Code de la touche pour les accents

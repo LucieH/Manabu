@@ -4,19 +4,18 @@ import android.app.Activity;
 import android.widget.ImageView;
 
 /**
- * Cette classe permet de créer un objet de type niveau pour un exercice
+ * Cette classe permet de crÃ©er un objet de type niveau pour un exercice
  * @author Lucie Herrier - 3TL1
  */
 
 public class Niveaux extends Activity{
 
     /**
-     * Cette fonction permet de définir le niveau comme étant le niveau 1.
-     * @param act l'activité en cours
-     * @param lvl le niveau actuel défini pour l'exercice
-     * @return le nouveau niveau pour l'exercice, dans le cas présent 1.
+     * Cette fonction permet de dÃ©finir le niveau comme Ã©tant le niveau 1.
+     * @param act l'activitÃ© en cours
+     * @return le nouveau niveau pour l'exercice, dans le cas prÃ©sent 1.
      */
-    public static int changeLvl1(final Activity act, int lvl){
+    protected int changeLvl1(final Activity act){
         ImageView lvl2 = (ImageView) act.findViewById(R.id.EtoileLvl2);
         ImageView lvl3 = (ImageView) act.findViewById(R.id.EtoileLvl3);
         lvl2.setImageResource(R.drawable.etoile_non);
@@ -25,12 +24,12 @@ public class Niveaux extends Activity{
     }
 
     /**
-     * Cette fonction permet de définir le niveau comme étant le niveau 2 ou de désactiver celui-ci.
-     * @param act l'activité en cours
-     * @param lvl le niveau actuel défini pour l'exercice
+     * Cette fonction permet de dÃ©finir le niveau comme Ã©tant le niveau 2 ou de dÃ©sactiver celui-ci.
+     * @param act l'activitÃ© en cours
+     * @param lvl le niveau actuel dÃ©fini pour l'exercice
      * @return le nouveau niveau pour l'exercice : soit 2, soit 1.
      */
-    public static int changeLvl2(final Activity act, int lvl){
+    protected int changeLvl2(final Activity act, int lvl){
         ImageView lvl2 = (ImageView) act.findViewById(R.id.EtoileLvl2);
         ImageView lvl3 = (ImageView) act.findViewById(R.id.EtoileLvl3);
         if (lvl==3){
@@ -50,12 +49,12 @@ public class Niveaux extends Activity{
     }
 
     /**
-     * Cette fonction permet de définir le niveau comme étant le niveau 3 ou de désactiver celui-ci.
-     * @param act l'activité en cours
-     * @param lvl le niveau actuel défini pour l'exercice
+     * Cette fonction permet de dÃ©finir le niveau comme Ã©tant le niveau 3 ou de dÃ©sactiver celui-ci.
+     * @param act l'activitÃ© en cours
+     * @param lvl le niveau actuel dÃ©fini pour l'exercice
      * @return le nouveau niveau pour l'exercice : soit 3, soit 2.
      */
-    public static int changeLvl3(final Activity act,int lvl){
+    protected int changeLvl3(final Activity act,int lvl){
         ImageView lvl2 = (ImageView) act.findViewById(R.id.EtoileLvl2);
         ImageView lvl3 = (ImageView) act.findViewById(R.id.EtoileLvl3);
         if (lvl==2){

@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
-    <resources>
+<resources>
     <!--Phrases diverses -->
     <string name="app_name">Manabu</string>
     <string name="action_settings">Settings</string>
@@ -757,3 +756,4 @@
     <string name="str3_49">il y a un cheval heureux à la ferme</string>
     <string name="str3_50">c\'est amusant d\'apprendre à lire</string>
 </resources>
+

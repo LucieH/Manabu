@@ -1,8 +1,8 @@
 package be.manabu;
 
 /**
- * Cette classe est l'activit� principal de l'application Manabu. Elle repr�sente le menu o� est
- * affich� le choix de jouer � l'un au l'autre exercice.
+ * Cette classe est l'activité principal de l'application Manabu. Elle représente le menu où est
+ * affiché le choix de jouer à l'un au l'autre exercice.
  * @author Lucie Herrier - 3TL1
  */
 
@@ -24,6 +24,9 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends ActionBarActivity {
 
+    /**
+     * Cette fonction est exécutée par défaut lors du démarrage de l'activité.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +41,9 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
     }
 
-
+    /**
+     * Fonction utilisée lors de la création de l'activité.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater mi = getMenuInflater();
@@ -46,30 +51,38 @@ public class MainActivity extends ActionBarActivity {
         return true;
     }
 
+    /**
+     * Fonction utilisée lors de la création de l'activité.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         return super.onOptionsItemSelected(item);
     }
 
-    /** Permet d'utiliser la police choisie */
+    /**
+     *  Cette fonction permet d'utiliser la police choisie (by chrisjenx : https://github.com/chrisjenx/Calligraphy)
+     */
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
+    /**
+     * Cette fonction permet d'éviter une erreur plantant l'application lors du touch d'un bouton de
+     * menu sur un smartphone ou une tablette.
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
             // ...
             return true;
-        } else {
-            return super.onKeyDown(keyCode, event);
         }
+        return super.onKeyDown(keyCode, event);
     }
 
 
     /**
-     *  Cette fonction est appel�e quand l'utilisateur clique sur le bouton "Lecture flash"
+     *  Cette fonction est appelée quand l'utilisateur clique sur le bouton "Lecture flash"
      * @param view
      */
     public void startFlash(View view) {
@@ -79,7 +92,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     /**
-     * Cette fonction est appel�e quand l'utilisateur clique sur le bouton "Imagerie"
+     * Cette fonction est appelée quand l'utilisateur clique sur le bouton "Imagerie"
      * @param view
      */
     public void startImagerie(View view) {
@@ -89,7 +102,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     /**
-     * Cette fonction est appel�e quand l'utilisateur clique sur le bouton "Anagrammes"
+     * Cette fonction est appelée quand l'utilisateur clique sur le bouton "Anagrammes"
      * @param view
      */
     public void startAnagrammes(View view) {
@@ -99,7 +112,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     /**
-     * Cette fonction est appel�e quand l'utilisateur clique sur le bouton "Ecouter le son"
+     * Cette fonction est appelée quand l'utilisateur clique sur le bouton "Ecouter le son"
      * @param view
      */
     public void startSon(View view) {

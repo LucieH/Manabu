@@ -40,6 +40,9 @@ public class SonActivity extends ActionBarActivity {
     private ArrayList<String> listeSons;
     private String son;
 
+    /**
+     * Cette fonction est exécutée par défaut lors du démarrage de l'activité.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,39 +51,54 @@ public class SonActivity extends ActionBarActivity {
                         .setFontAttrId(R.attr.fontPath)
                         .build()
         );
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_start);
         idLayout = R.layout.activity_start;
     }
 
+    /**
+     * Fonction utilisée lors de la création de l'activité.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         return true;
     }
 
+    /**
+     * Fonction utilisée lors de la création de l'activité.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         return super.onOptionsItemSelected(item);
     }
 
-    /** Permet d'utiliser la police choisie */
+    /**
+     *  Cette fonction permet d'utiliser la police choisie (by chrisjenx : https://github.com/chrisjenx/Calligraphy)
+     */
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
+    /**
+     * Cette fonction permet d'éviter une erreur plantant l'application lors du touch d'un bouton de
+     * menu sur un smartphone ou une tablette.
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
             // ...
             return true;
-        } else {
-            return super.onKeyDown(keyCode, event);
         }
+        return super.onKeyDown(keyCode, event);
     }
 
+    /**
+     * Cette fonction redéfinit le comportement de l'activité lorsque la touche "back" a été pressée,
+     * dépendemment du layout en cours d'affichage.
+     */
     @Override
     public void onBackPressed() {
         if (idLayout == R.layout.activity_son || idLayout == R.layout.regles){
@@ -375,16 +393,16 @@ public class SonActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param view
+     * Cette fonction permet d'afficher les règles du jeu d'écoute du son.
+     * @param view la vue en cours
      */
     public void afficheRegles(View view){
         idLayout = chargerRegles(this, view, R.string.regleSon);
     }
 
     /**
-     *
-     * @param v
+     * Cette fonction permet d'afficher un dialog en cours d'exercice pour rappeler les règles du jeu.
+     * @param v la vue en cours
      */
     public void afficheDialog(View v){
         ReglesDialog dia = new ReglesDialog();
@@ -393,33 +411,24 @@ public class SonActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param view
-     */
-    public void changeLvl1(View view){
-        lvl=niv.changeLvl1(this, lvl);
-
-    }
-
-    /**
-     *
-     * @param v
+     * Cette fonction permet d'écouter les règles du jeu d'écoute du son
+     * @param v la vue en cours
      */
     public void jouerSonRegles(View v){
-        Utilities.jouerSon("ok",getApplicationContext());
+        Utilities.jouerSon("ok", getApplicationContext());
     }
 
     /**
-     *
-     * @param v
+     * Cette fonction permet de rejouer le son à retrouver dans le mot.
+     * @param v la vue en cours
      */
     public void rejouerSon(View v){
         Utilities.jouerSon(son, getApplicationContext());
     }
 
     /**
-     *
-     * @param view
+     * Cette fonction permet de rejouer à l'exercice d'écoute du son une fois la série finie.
+     * @param view la vue en cours
      */
     public void rejouer(View view) {
         view.invalidate();
@@ -430,8 +439,8 @@ public class SonActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param view
+     * Cette fonction permet de revenir au menu principal une fois la série finie.
+     * @param view la vue en cours
      */
     public void retournerMenu(View view){
         view.invalidate();
@@ -439,24 +448,33 @@ public class SonActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param view
+     * Cette fonction permet de définir le niveau lors du touch sur la première étoile comme étant le 1.
+     * @param view la vue en cours
+     */
+    public void changeLvl1(View view){
+        lvl=niv.changeLvl1(this);
+
+    }
+
+    /**
+     * Cette fonction permet de définir le niveau lors du clic sur la seconde étoile. Celui-ci deviendra 2 ou 1.
+     * @param view la vue en cours
      */
     public void changeLvl2(View view){
         lvl=niv.changeLvl2(this, lvl);
     }
 
     /**
-     *
-     * @param view
+     * Cette fonction permet de définir le niveau lors du clic sur la troisième étoile. Celui-ci deviendra 3 ou 2.
+     * @param view la vue en cours
      */
     public void changeLvl3(View view){
         lvl=niv.changeLvl3(this, lvl);
     }
 
     /**
-     *
-     * @param view
+     * Cette fonction s'exécute lors du clic sur le bouton "revenir" de l'affichage des règles.
+     * @param view la vue en cours
      */
     public void back(View view){ revenirDebut(this, view);}
 }

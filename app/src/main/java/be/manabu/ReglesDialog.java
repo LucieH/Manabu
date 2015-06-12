@@ -19,7 +19,7 @@ public class ReglesDialog extends DialogFragment {
     private int idString;
 
     /**
-     * Cette fonction permet de définir l'id de la resource string qui sera utilisée.
+     * Cette fonction permet de dÃ©finir l'id de la resource string qui sera utilisÃ©e.
      * @param id l'identifiant de la resource.
      */
     protected void setIdString(int id){
@@ -27,8 +27,8 @@ public class ReglesDialog extends DialogFragment {
     }
 
     /**
-     * Cette fonction crée le dialog par dessus l'activité en cours.
-     * @return la création du dialog
+     * Cette fonction crÃ©e le dialog par dessus l'activitÃ© en cours.
+     * @return la crÃ©ation du dialog
      */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class ReglesDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                     }
                 });
-        // Crée l'objet et le retourne
+        // CrÃ©e l'objet et le retourne
         return builder.create();
     }
 }
