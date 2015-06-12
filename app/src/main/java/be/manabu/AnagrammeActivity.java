@@ -180,7 +180,9 @@ public class AnagrammeActivity extends ActionBarActivity {
             for (int i = 0; i < nbChar; i++) {
                 tbStr.add(arStr[i]);
             }
-            Collections.shuffle(tbStr);
+            do {
+                Collections.shuffle(tbStr);
+            }while (!estShuffle(tbStr, arStr));
 
             placerBoutons(tbBoutonLettres, arStr, tbStr);
         }
@@ -188,6 +190,20 @@ public class AnagrammeActivity extends ActionBarActivity {
             setContentView(R.layout.activity_img_fin);
             idLayout = R.layout.activity_img_fin;
         }
+    }
+
+    /**
+     * Cette fonction permet de vérifier que les lettres ont bien été mélangées de manière à ne pas
+     * former un mot identique à celui de base.
+     * @param tbStr La liste des caractères mélangés
+     * @param arStr Le tableau de caractères du mot de base
+     * @return vrai si les lettres sont mélangées, faux dans le cas contraire
+     */
+    private boolean estShuffle(ArrayList<Character> tbStr, char[] arStr ){
+        for (int j = 0; j< nbChar; j++){
+            if (! (tbStr.get(j) == arStr[j])) return true;
+        }
+        return false;
     }
 
     /**
@@ -346,15 +362,18 @@ public class AnagrammeActivity extends ActionBarActivity {
                     }
                 }
                 if (pos == -1 || bL.ok) return true;
+                // Définition des positions de l'emplacement de la lettre pour qu'elle soit validée
                 minX = (tbStructBouton[pos].posX) - 10;
                 maxX = (tbStructBouton[pos].posX) + 10;
                 minY = (tbStructBouton[pos].posY) - 10;
                 maxY = (tbStructBouton[pos].posY) + 10;
                 if (bL.b.getX() < maxX && bL.b.getX() > minX && bL.b.getY() < maxY && bL.b.getY() > minY) {
+                    //Si la lettre se trouve sur la bonne case, la valider
                     validerLettre(bL, pos, act, v);
                     return true;
 
                 } else {
+                    // Dans le cas contraire, continuer le mouvement
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
                             x = event.getX();
