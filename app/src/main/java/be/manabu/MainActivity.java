@@ -1,7 +1,7 @@
 package be.manabu;
 
 /**
- * Cette classe est l'activité principal de l'application Manabu. Elle représente le menu où est
+ * Cette classe est l'activité principale de l'application Manabu. Elle représente le menu où est
  * affiché le choix de jouer à l'un au l'autre exercice.
  * @author Lucie Herrier - 3TL1
  */
@@ -20,7 +20,6 @@ import android.view.WindowManager;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
 
 public class MainActivity extends ActionBarActivity {
 
@@ -82,41 +81,37 @@ public class MainActivity extends ActionBarActivity {
 
 
     /**
-     *  Cette fonction est appelée quand l'utilisateur clique sur le bouton "Lecture flash"
-     * @param view
+     *  Cette fonction démarre l'activité "Lecture flash"
+     * @param view la vue en cours
      */
     public void startFlash(View view) {
-        // Do something in response to button
     	Intent intent = new Intent(this, FlashActivity.class);
     	startActivity(intent);
     }
 
     /**
-     * Cette fonction est appelée quand l'utilisateur clique sur le bouton "Imagerie"
-     * @param view
+     *  Cette fonction démarre l'activité "Imagerie"
+     * @param view la vue en cours
      */
     public void startImagerie(View view) {
-        // Do something in response to button
     	Intent intent = new Intent(this, ImgActivity.class);
     	startActivity(intent);
     }
 
     /**
-     * Cette fonction est appelée quand l'utilisateur clique sur le bouton "Anagrammes"
-     * @param view
+     *  Cette fonction démarre l'activité "Anagrammes"
+     * @param view la vue en cours
      */
     public void startAnagrammes(View view) {
-        // Do something in response to button
     	Intent intent = new Intent(this, AnagrammeActivity.class);
     	startActivity(intent);
     }
 
     /**
-     * Cette fonction est appelée quand l'utilisateur clique sur le bouton "Ecouter le son"
-     * @param view
+     *  Cette fonction démarre l'activité "Ecouter le son"
+     * @param view la vue en cours
      */
     public void startSon(View view) {
-        // Do something in response to button
     	Intent intent = new Intent(this, SonActivity.class);
     	startActivity(intent);
     }

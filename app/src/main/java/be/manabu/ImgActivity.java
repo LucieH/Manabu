@@ -1,9 +1,5 @@
 package be.manabu;
 
-/**
- * @author Lucie Herrier - 3TL1
- */
-
 import java.util.Random;
 
 import android.app.Activity;
@@ -27,18 +23,25 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static be.manabu.Utilities.*;
 
+/**
+ * Cette classe contient toutes les fonctions nécessaires au déroulement de l'exercice d'imagerie.
+ * @author Lucie Herrier - 3TL1
+ */
+
 public class ImgActivity extends ActionBarActivity {
 
-    private final Random rnd = new Random();
-    private final static int NB_IMAGES = 21;
-    private final static int NB_IMAGES2 = 10;
+    // Constantes spécifiant le nombre d'images par niveau et le nombre d'exercices dans une série
+    private final static int NB_IMAGES = 21;        // LVL 1
+    private final static int NB_IMAGES2 = 10;       // LVL 2
     private final static int NB_TOURS = 10;
-    protected String strTmp;
-    private int tabNbImages[] = new int[NB_TOURS];
-    private int cmptImages = 0;
-    public int lvl = 1;
-    private Niveaux niv = new Niveaux();
-    private int idLayout;
+
+    private final Random rnd = new Random();        // Seed pour le random
+    protected String strTmp;                        // Stocke à chaque tour le nom de l'image
+    private int tabNbImages[] = new int[NB_TOURS];  // Tableau de stockage des nombres déjà sortis
+    private int cmptImages = 0;                     // Compteur de tours de la série
+    private int lvl = 1;                            // Niveau de l'exercice
+    private int idLayout;                           // Stockage de l'identifiant du layout en cours d'affichage
+    private Niveaux niv = new Niveaux();            // Objet permettant de changer de niveau
 
 
     /**
@@ -117,12 +120,10 @@ public class ImgActivity extends ActionBarActivity {
         else  this.finish();
     }
 
-
-    //Fonctions personnelles
-
     /**
-     * Démarrer le jeu imagerie ave les fiches Freinet
-     * @param view
+     * Cette fonction permet de démarrer le jeu imagerie. Si la série est toujours en cours, un exercice
+     * est lancé, dans le cas contraire, l'écran de fin est affiché.
+     * @param view la vue en cours
      */
     public void start(View view) {
         view.invalidate();
@@ -139,44 +140,15 @@ public class ImgActivity extends ActionBarActivity {
     }
 
     /**
-     *  Afficher les choix pour l'image
-     * @param view
-     */
-    public void afficherChoix(View view) {
-        view.invalidate();
-        setContentView(R.layout.activity_img_choix);
-        idLayout =  R.layout.activity_img_choix;
-        final ImageView img = (ImageView) findViewById(R.id.imgRandom);
-        img.setImageDrawable
-                (
-                        getResources().getDrawable(getResourceID(strTmp, "drawable",
-                                getApplicationContext()))
-                );
-        final Button b1 = (Button) findViewById(R.id.choix1);
-        final Button b2 = (Button) findViewById(R.id.choix2);
-        final Button b3 = (Button) findViewById(R.id.choix3);
-        if (lvl == 2) {
-            LinearLayout ll = (LinearLayout) findViewById(R.id.imgChBtns);
-            ll.setOrientation(LinearLayout.VERTICAL);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            lp.setMargins(0,0,0,10);
-            b1.setLayoutParams(lp);
-            b2.setLayoutParams(lp);
-            b3.setLayoutParams(lp);
-            b1.setPadding(0,0,0,0);
-        }
-        //texte ramdom dans les boutons
-        creerBoutonRandom(b1, b2, b3);
-    }
-
-    /**
-     * Permet d'avoir les images prises au hasard avec le mot correspondant
+     * Cette fonction génère un nombre au hasard parmi le nombre d'images du niveau et prend l'image
+     * correspondante pour l'afficher pour l'exercice.
      */
     protected void randomImg(){
         final ImageView img = (ImageView) findViewById(R.id.imgRandom);
         String str = "";
         int rand;
         int nbimg = 0;
+        // Définir les variables selon le niveau
         switch (lvl){
             case 1 :
                 str = "img_";
@@ -189,23 +161,61 @@ public class ImgActivity extends ActionBarActivity {
             default:
                 break;
         }
+        // Générer le nombre au hasard.
         do {
             rand = rnd.nextInt(nbimg);
-            strTmp = str + rand+ "";
         }while (existeImageAffichee(rand));
+        strTmp = str + rand+ "";
+        // Afficher l'image
         img.setImageDrawable
                 (
                         getResources().getDrawable(getResourceID(strTmp, "drawable",
                                 getApplicationContext()))
                 );
+        // Afficher la chaîne de caractères correspondant à l'image
         final TextView tv = (TextView) findViewById(R.id.tv1);
         tv.setText(getStringResourceByName(strTmp, getApplicationContext()));
+        // Mémoriser que cette image est déjà sortie
         this.tabNbImages[cmptImages]=rand;
         this.cmptImages++;
     }
 
     /**
-     * Cette fonction vérifie si le mot a déjà été joué pendant la série de 10 actuelle.
+     *  Cette fonction afficher les différents choix de réponse pour un exercice (un correct et deux faux).
+     * @param view la vue en cours
+     */
+    public void afficherChoix(View view) {
+        view.invalidate();
+        setContentView(R.layout.activity_img_choix);
+        idLayout =  R.layout.activity_img_choix;
+        // Afficher l'image
+        final ImageView img = (ImageView) findViewById(R.id.imgRandom);
+        img.setImageDrawable
+                (
+                        getResources().getDrawable(getResourceID(strTmp, "drawable",
+                                getApplicationContext()))
+                );
+        // Récupérer les boutons depuis le layout
+        final Button b1 = (Button) findViewById(R.id.choix1);
+        final Button b2 = (Button) findViewById(R.id.choix2);
+        final Button b3 = (Button) findViewById(R.id.choix3);
+        // Changer l'orientation des boutons pour le niveau 2
+        if (lvl == 2) {
+            LinearLayout ll = (LinearLayout) findViewById(R.id.imgChBtns);
+            ll.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(0,0,0,10);
+            b1.setLayoutParams(lp);
+            b2.setLayoutParams(lp);
+            b3.setLayoutParams(lp);
+            b1.setPadding(0,0,0,0);
+        }
+        // Définir l'ordre des boutons au hasard
+        creerBoutonRandom(b1, b2, b3);
+    }
+
+    /**
+     * Cette fonction vérifie si l'image a déjà été jouée pendant la série de 10 actuelle.
      * @param rand le nombre généré aléatoirement ce tour-ci
      * @return true si le nombre est déjà sorti, false dans le cas contraire
      */
@@ -217,10 +227,11 @@ public class ImgActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param b1
-     * @param b2
-     * @param b3
+     * Cette fonction permet de placer le bouton correct et les deux boutons incorrects dans un ordre
+     * aléatoire sur le layout.
+     * @param b1 le premier bouton
+     * @param b2 le deuxième bouton
+     * @param b3 le troisième bouton
      */
     protected void creerBoutonRandom(Button b1, Button b2, Button b3){
         int i = rnd.nextInt(3);
@@ -275,8 +286,8 @@ public class ImgActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param b
+     * Cette fonction permet de définir un bouton comme étant celui qui contient la bonne réponse.
+     * @param b un bouton
      */
     protected void setBonneReponse(Button b){
         final Activity act = this;
@@ -297,9 +308,9 @@ public class ImgActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param a
-     * @param b
+     * Cette fonction permet de définir deux boutons comme étant ceux qui contiennent les mauvaises réponses.
+     * @param a un premier bouton
+     * @param b un second bouton
      */
     protected void setMauvaiseReponse(final Button a, final Button b){
         final Activity act = this;
@@ -322,7 +333,7 @@ public class ImgActivity extends ActionBarActivity {
     }
 
     /**
-     *
+     * Cette fonction permet de désactiver tous les boutons du layout de réponse d'imagerie
      */
     private void disableButtons(){
         Button a = (Button) findViewById(R.id.choix1);
@@ -334,7 +345,7 @@ public class ImgActivity extends ActionBarActivity {
     }
 
     /**
-     *
+     * Cette fonction permet de ré-activer tous les boutons du layout de réponse d'imagerie
      */
     private void reEnableButtons(){
         final Handler handler = new Handler();
@@ -398,7 +409,7 @@ public class ImgActivity extends ActionBarActivity {
      * @param v la vue en cours
      */
     public void jouerSonRegles(View v){
-        Utilities.jouerSon("ok",getApplicationContext());
+        Utilities.jouerSon("r_img",getApplicationContext());
     }
 
     /**

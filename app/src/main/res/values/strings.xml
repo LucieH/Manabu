@@ -29,13 +29,12 @@
     <string name="niveau">Niveau</string>
     <string name="regles">Règles du jeu</string>
     <string name="regleImg">Mémorise le mot ou la phrase associé(e) à l\'image, puis appuie sur \"Mémorisé\".
-        \nRetrouve ensuite le mot affiché parmi les propositions à l\'aide de l\'image.
+        \nÀ l\'aide de l\'image, retrouve ensuite la proposition correcte parmi celles affichées.
         </string>
     <string name="regleFlash">Choisis le temps d\'affichage et mémorise le mot ou la phrase dans le temps imparti.
         \nTape ensuite ce que tu as lu dans la zone blanche et vérifie ta réponse.</string>
-    <string name="regleAna">Remets les lettres dans l\'ordre pour former un mot.\n</string>
-    Les voyelles sont oranges et les consonnes vertes.
-    <string name="regleSon">Ecoute le son. Selon le niveau touche le mot contenant le son à l\'endroit suivant :
+    <string name="regleAna">Remets les lettres dans l\'ordre pour former un mot.\nLes voyelles sont oranges et les consonnes sont vertes.</string>    
+    <string name="regleSon">Écoute le son. Selon le niveau choisi, touche le mot contenant le son à l\'endroit suivant :
     \nNiveau 1 : au début
     \nNiveau 2 : au milieu
     \nNiveau 3 : n\'importe où</string>

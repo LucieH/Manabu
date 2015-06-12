@@ -30,25 +30,28 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import static be.manabu.Utilities.*;
 
 /**
+ * Cette classe contient toutes les fonctions nécessaires au déroulement de l'exercice d'anagrammes.
  * @author Lucie Herrier - 3TL1
  */
 
 public class AnagrammeActivity extends ActionBarActivity {
 
+    // Constantes spécifiant le nombre d'exercices dans une série et le nombre de mots
     private final static int NBTOURS = 10;
-    private final static int NBMOTS = 481;
-    private int compteur = 0;
-    private int lvl = 1;
-    private Niveaux niv = new Niveaux();
-    final Random rnd = new Random();
-    protected String strTmp;
-    private String strName;
-    private structBouton[] tbStructBouton;
-    private int nbChar;
-    private boolean isSetPos = false;
-    private int nbLettresOk = 0;
-    private int[] tabMotPre = new int[NBTOURS];
-    private int idLayout = 0;
+    private final static int NBMOTS = 480;
+
+    final Random rnd = new Random();            // Seed pour le random
+    protected String strTmp;                    // Stocke à chaque tour la chaîne de caractère
+    private String strName;                     // Stocke à chaque tour le nom de la chaîne
+    private structBouton[] tbStructBouton;      // Tableau utilisé pour les cases blanches
+    private boolean isSetPos = false;           // Permet de savoir si la position des boutons est définie
+    private int nbChar;                         // Le nombre de caractères du mot à reconstituer
+    private int nbLettresOk = 0;                // Le nombre de lettres placées sur les bonnes cases
+    private int[] tabMotPre = new int[NBTOURS]; // Tableau de stockage des nombres déjà sortis
+    private int compteur = 0;                   // Compteur de tours de la série
+    private int lvl = 1;                        // Niveau de l'exercice
+    private int idLayout;                       // Stockage de l'identifiant du layout en cours d'affichage
+    private Niveaux niv = new Niveaux();        // Objet permettant de changer de niveau
 
     /**
      * Cette classe définit les attributs propres à un bouton : sa position, la lettre qu'il contient
@@ -481,7 +484,7 @@ public class AnagrammeActivity extends ActionBarActivity {
      * @param v la vue en cours
      */
     public void jouerSonRegles(View v){
-        Utilities.jouerSon("ok",getApplicationContext());
+        Utilities.jouerSon("r_ana",getApplicationContext());
     }
 
     /**

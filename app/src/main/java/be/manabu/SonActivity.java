@@ -1,9 +1,5 @@
 package be.manabu;
 
-/**
- * @author Lucie Herrier - 3TL1
- */
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
@@ -26,19 +22,27 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static be.manabu.Utilities.*;
 
+/**
+ * Cette classe contient toutes les fonctions nécessaires au déroulement de l'exercice d'écoute du son
+ * @author Lucie Herrier - 3TL1
+ */
+
 public class SonActivity extends ActionBarActivity {
-    final Random rnd = new Random();
+
+    // Constantes spécifiant le nombre de sons par niveau, le nombre de mots et le nombre d'exercices dans une série
     final static private int NB_SONS = 34;
-    final static private int NB_MOTS = 481;
+    final static private int NB_MOTS = 480;
     private final static int NB_TOURS = 10;
-    private int compteur = 0;
-    private int lvl = 1;
-    private Niveaux niv = new Niveaux();
-    private int idLayout = 0;
-    private int[] indexSons;
-    private int[] tabSonPre;
-    private ArrayList<String> listeSons;
-    private String son;
+
+    final Random rnd = new Random();        // Seed pour le random
+    private String son;                     // Chaîne contenant le nom du son pour chaque tour
+    private ArrayList<String> listeSons;    // Liste des références pour les différents sons
+    private int compteur = 0;               // Compteur de tours de la série
+    private int[] indexSons;                // Tableau indexant la liste des sons par son
+    private int[] tabSonPre;                // Tableau de stockage des nombres déjà sortis
+    private int lvl = 1;                    // Niveau de l'exercice
+    private int idLayout;                   // Stockage de l'identifiant du layout en cours d'affichage
+    private Niveaux niv = new Niveaux();    // Objet permettant de changer de niveau
 
     /**
      * Cette fonction est exécutée par défaut lors du démarrage de l'activité.
@@ -111,8 +115,8 @@ public class SonActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param view
+     * Cette fonction permet de démarrer l'exercice d'écoute du son
+     * @param view la vue en cours
      */
     public void start(View view) {
         indexSons = new int[NB_SONS];
@@ -123,34 +127,12 @@ public class SonActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param view
-     */
-    private void startSon(View view){
-        view.invalidate();
-        if (compteur < NB_TOURS) {
-            setContentView(R.layout.activity_son);
-            idLayout = R.layout.activity_son;
-            int rand;
-            do {
-                rand = rnd.nextInt(NB_SONS);
-            } while (existeSonPre(rand) || findMotSon(rand));
-            son = "son_"+rand+"";
-            jouerSon(son, getApplicationContext());
-            tabSonPre[compteur] = rand;
-            compteur++;
-        }
-        else {
-            setContentView(R.layout.activity_img_fin);
-            idLayout = R.layout.activity_img_fin;
-        }
-    }
-
-    /**
-     *
+     * Cette fonction charge le fichier contenant les références des mots en fonction des sons qu'ils
+     * contiennent en mémoire. Ce fichier est différent selon le niveau de l'exercice.
      */
     private void lireFichier(){
         String fich = "";
+        // Définir quel fichier il faut charger selon le niveau de l'exercice
         switch (lvl){
             case 1 :
                 fich = "start_son.txt";
@@ -164,14 +146,20 @@ public class SonActivity extends ActionBarActivity {
             default:
                 break;
         }
+        // Définir un code de son inexistant
         String code = "11";
         int i = 0;
-        //Essai de lecture de fichier
+        // Lecture du fichier
         try {
+            // Ouvrir le fichier
             InputStream ips = getAssets().open(fich);//new FileInputStream(fichier);
             InputStreamReader ipsr = new InputStreamReader(ips);
             BufferedReader br = new BufferedReader(ipsr);
             String ligne;
+            /* Pour chaque ligne, ajouter la référence de la chaîne dans la liste des références, et
+            * éventuellement, si le code est différent de celui stocké auparavant, prendre ce code et
+            * le rajouter à la liste des codes indexés.
+            */
             while ((ligne = br.readLine()) != null) {
                 listeSons.add(ligne.substring(2, ligne.length()).trim());
                 if (!ligne.startsWith(code)) {
@@ -180,6 +168,7 @@ public class SonActivity extends ActionBarActivity {
                     i++;
                 }
             }
+            // Fermer le fichier
             br.close();
             ipsr.close();
             ips.close();
@@ -189,28 +178,63 @@ public class SonActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param pos
-     * @return
+     * Cette fonction permet de jouer l'exercice. Si la série n'est pas terminée, la fonction définit
+     * le son à jouer ainsi que les mots formant l'exercice en cours. Dans le cas contraire, la fonction
+     * passe à la fin.
+     * @param view la vue en cours
      */
-    private boolean findMotSon(int pos){
-        int nbMots = -1;
+    private void startSon(View view){
+        view.invalidate();
+        if (compteur < NB_TOURS) {
+            setContentView(R.layout.activity_son);
+            idLayout = R.layout.activity_son;
+            // Générer le nombre aléatoire
+            int rand;
+            do {
+                rand = rnd.nextInt(NB_SONS);
+            } while (existeSonPre(rand) || findMotsSon(rand));
+            // Jouer le son à retrouver dans le mot
+            son = "son_"+rand+"";
+            jouerSon(son, getApplicationContext());
+            // Ajouter la référence du son à la liste de ce qui est déjà sorti
+            tabSonPre[compteur] = rand;
+            compteur++;
+        }
+        else {
+            setContentView(R.layout.activity_img_fin);
+            idLayout = R.layout.activity_img_fin;
+        }
+    }
+
+    /**
+     * Cette fonction permet de générer les trois boutons de l'exercice : un correct contenant le son
+     * qui est joué, et deux incorrects ne contenant pas ce son.
+     * @param pos la position du son dans le tableau d'index
+     * @return vrai s'il n'existe pas de mots connus pour ce son, faux dans le cas contraire
+     */
+    private boolean findMotsSon(int pos){
+        int nbMots;
+        // Calcul du nombre de références de mots existants contenant le son
         if (pos == NB_SONS-1) nbMots = listeSons.size()-indexSons[pos];
         else{
             nbMots = indexSons[pos+1]-indexSons[pos];
         }
+        // Si n'y a qu'un mot et que sa référence est 0, cela signifie qu'il n'y a pas de mot avec ce son
         if(nbMots == 1 && listeSons.get(indexSons[pos]).equals("0")) return true;
+        // Dans le cas contraire, on définit les boutons
         else {
+            // La chaîne pour le bouton correct
             int randString = rnd.nextInt(nbMots) + indexSons[pos];
             String ok = getStringResourceByName("str_" + listeSons.get(randString) + "", getApplicationContext());
 
+            // La chaîne pour les deux boutons incorrects
             do {
-                randString = rnd.nextInt(NB_MOTS);
+                randString = rnd.nextInt(NB_MOTS)+1;
             } while (existeMot(indexSons[pos], indexSons[pos]+nbMots, randString));
             String ko1 = getStringResourceByName("str_" + randString + "", getApplicationContext());
 
             do {
-                randString = rnd.nextInt(NB_MOTS);
+                randString = rnd.nextInt(NB_MOTS)+1;
             } while (existeMot(indexSons[pos], indexSons[pos]+nbMots, randString));
             String ko2 = getStringResourceByName("str_" + randString + "", getApplicationContext());
 
@@ -223,11 +247,12 @@ public class SonActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param start
-     * @param end
-     * @param nbr
-     * @return
+     * Cette fonction vérifie si une référence donnée existe parmi la liste des références entre deux
+     * bornes correspondant au début et à la fin d'un son particulier.
+     * @param start la borne de début
+     * @param end la borne de fin
+     * @param nbr la référence recherchée
+     * @return vrai si la référence a été trouvée, faux dans le cas contraire
      */
     private boolean existeMot(int start, int end, int nbr){
         String nbrS = ""+nbr+"";
@@ -238,9 +263,9 @@ public class SonActivity extends ActionBarActivity {
     }
 
     /**
-     * Cette fonction verifie si le son a deja ete joue pendant la serie de 10
-     * @param rand
-     * @return
+     * Cette fonction vérifie si le son a déjà été joué pendant la série de 10 actuelle.
+     * @param rand le nombre généré aléatoirement ce tour-ci
+     * @return true si le nombre est déjà sorti, false dans le cas contraire
      */
     private boolean existeSonPre(int rand){
         for(int i=0; i<compteur; i++){
@@ -250,13 +275,14 @@ public class SonActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param b1
-     * @param b2
-     * @param b3
-     * @param ok
-     * @param ko1
-     * @param ko2
+     * Cette fonction permet de créer les boutons de choix entre les mots (1 vrai et 2 faux) dans un
+     * ordre aléatoire.
+     * @param b1 Le premier bouton
+     * @param b2 Le deuxième bouton
+     * @param b3 Le troisième bouton
+     * @param ok La chaîne de caractères contenue dans le bouton correct
+     * @param ko1 Une chaîne de caractères contenue dans un bouton incorrect
+     * @param ko2 Une chaîne de caractères contenue dans un bouton incorrect
      */
     protected void creerBoutonRandom(Button b1, Button b2, Button b3, String ok, String ko1, String ko2){
         int i = rnd.nextInt(3);
@@ -311,9 +337,9 @@ public class SonActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param b
-     * @param ok
+     * Cette fonction permet de définir un bouton comme étant celui qui contient la bonne réponse.
+     * @param b un bouton
+     * @param ok une chaîne de caractères (contenant la bonne réponse)
      */
     protected void setBonneReponse(Button b, String ok){
         final Activity act = this;
@@ -334,11 +360,11 @@ public class SonActivity extends ActionBarActivity {
     }
 
     /**
-     *
-     * @param a
-     * @param ko1
-     * @param b
-     * @param ko2
+     * Cette fonction permet de définir deux boutons comme étant ceux qui contiennent les mauvaises réponses.
+     * @param a un premier bouton
+     * @param ko1 une chaîne de caractères (incorrecte)
+     * @param b un second bouton
+     * @param ko2 une chaîne de caractères (incorrecte)
      */
     protected void setMauvaiseReponse(final Button a, String ko1, final Button b, String ko2){
         final Activity act = this;
@@ -363,7 +389,7 @@ public class SonActivity extends ActionBarActivity {
     }
 
     /**
-     *
+     * Cette fonction permet de désactiver tous les boutons du layout sons
      */
     private void disableButtons(){
         Button a = (Button) findViewById(R.id.bSons1);
@@ -375,7 +401,7 @@ public class SonActivity extends ActionBarActivity {
     }
 
     /**
-     *
+     * Cette fonction permet de ré-activer tous les boutons du layout sons
      */
     private void reEnableButtons(){
         final Handler handler = new Handler();
@@ -415,7 +441,7 @@ public class SonActivity extends ActionBarActivity {
      * @param v la vue en cours
      */
     public void jouerSonRegles(View v){
-        Utilities.jouerSon("ok", getApplicationContext());
+        Utilities.jouerSon("r_son", getApplicationContext());
     }
 
     /**

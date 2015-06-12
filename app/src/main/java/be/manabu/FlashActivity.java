@@ -29,20 +29,22 @@ import static be.manabu.Utilities.*;
 
 public class FlashActivity extends ActionBarActivity {
 
-    final Random rnd = new Random();
+    // Constantes spécifiant le nombre d'exercices dans une série et le nombre de mots par niveau
     private final static int NBTOURS = 10;
-    private final static int NBMOTS = 480;
-    private final static int NBMOTS_2 = 50;
-    private final static int NBMOTS_3 = 50;
-    private int nbEssai;
-    protected int compteur = 0;
-    protected String strTmp;
-    private int secondes=10;
-    private int lvl = 1;
-    private int idLayout = 0;
-    private int[] tabMotPre;
-    private Niveaux niv = new Niveaux();
-    CustomKeyboard mCustomKeyboard;
+    private final static int NBMOTS = 480;      // LVL 1
+    private final static int NBMOTS_2 = 50;     // LVL 2
+    private final static int NBMOTS_3 = 50;     // LVL 3
+
+    private final Random rnd = new Random();    // Seed pour le random
+    protected String strTmp;                    // La chaîne de caratères à reconstituer
+    private int nbEssai;                        // Nombre d'essais d'écriture du mot / de la phrase
+    private int secondes=10;                    // Durée d'affichage par défaut en secondes
+    private int[] tabMotPre;                    // Tableau de stockage des nombres déjà sortis
+    private int compteur = 0;                   // Compteur de tours de la série
+    private int lvl = 1;                        // Niveau de l'exercice
+    private int idLayout;                       // Stockage de l'identifiant du layout en cours d'affichage
+    private Niveaux niv = new Niveaux();        // Objet permettant de changer de niveau
+    protected CustomKeyboard mCustomKeyboard;   // Clavier personnalisé
 
     /**
      * Cette fonction est exécutée par défaut lors du démarrage de l'activité.
@@ -351,7 +353,7 @@ public class FlashActivity extends ActionBarActivity {
      * @param v la vue en cours
      */
     public void jouerSonRegles(View v){
-        Utilities.jouerSon("ok",getApplicationContext());
+        Utilities.jouerSon("r_flash",getApplicationContext());
     }
 
     /**
