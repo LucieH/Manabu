@@ -1,5 +1,8 @@
 package be.manabu;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Random;
 
 import android.app.Activity;
@@ -33,15 +36,18 @@ public class ImgActivity extends ActionBarActivity {
     // Constantes spécifiant le nombre d'images par niveau et le nombre d'exercices dans une série
     private final static int NB_IMAGES = 21;        // LVL 1
     private final static int NB_IMAGES2 = 10;       // LVL 2
+    private final static int NB_IMAGES3 = 10;       // LVL 3
     private final static int NB_TOURS = 10;
 
-    private final Random rnd = new Random();        // Seed pour le random
-    protected String strTmp;                        // Stocke à chaque tour le nom de l'image
-    private int tabNbImages[] = new int[NB_TOURS];  // Tableau de stockage des nombres déjà sortis
-    private int cmptImages = 0;                     // Compteur de tours de la série
-    private int lvl = 1;                            // Niveau de l'exercice
-    private int idLayout;                           // Stockage de l'identifiant du layout en cours d'affichage
-    private Niveaux niv = new Niveaux();            // Objet permettant de changer de niveau
+    private final Random rnd = new Random();            // Seed pour le random
+    protected String strTmp;                            // Stocke à chaque tour le nom de l'image
+    private String tabRefImg[] = new String[NB_IMAGES3*3]; // Stocke les références aux images pour le niveau 3
+    private int posLvl3 = 0;                            // Permet de savoit à quelle position aller chercher les images dans le tableau pour le niveau 3
+    private int tabNbImages[] = new int[NB_TOURS];      // Tableau de stockage des nombres déjà sortis
+    private int cmptImages = 0;                         // Compteur de tours de la série
+    private int lvl = 1;                                // Niveau de l'exercice
+    private int idLayout;                               // Stockage de l'identifiant du layout en cours d'affichage
+    private Niveaux niv = new Niveaux();                // Objet permettant de changer de niveau
 
 
     /**
@@ -59,9 +65,6 @@ public class ImgActivity extends ActionBarActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_start);
-        // Les deux lignes ci-dessous permettent de bloquer l'acces au niveau 3
-        ImageView lvl3 = (ImageView) findViewById(R.id.EtoileLvl3);
-        lvl3.setVisibility(View.GONE);
         idLayout = R.layout.activity_start;
 	}
 
@@ -108,12 +111,10 @@ public class ImgActivity extends ActionBarActivity {
      */
     @Override
     public void onBackPressed() {
-        if (idLayout == R.layout.activity_img || idLayout == R.layout.activity_img_choix || idLayout == R.layout.regles){
+        if (idLayout == R.layout.activity_img || idLayout == R.layout.activity_img_choix ||
+                idLayout == R.layout.regles || idLayout ==R.layout.activity_img_lvl3){
             setContentView(R.layout.activity_start);
             idLayout = R.layout.activity_start;
-            // Les deux lignes ci-dessous permettent de bloquer l'acces au niveau 3
-            ImageView lvl3 = (ImageView) findViewById(R.id.EtoileLvl3);
-            lvl3.setVisibility(View.GONE);
             lvl = 1;
             cmptImages = 0;
         }
@@ -121,22 +122,36 @@ public class ImgActivity extends ActionBarActivity {
     }
 
     /**
-     * Cette fonction permet de démarrer le jeu imagerie. Si la série est toujours en cours, un exercice
-     * est lancé, dans le cas contraire, l'écran de fin est affiché.
+     * Cette fonction permet de démarrer le jeu imagerie.
      * @param view la vue en cours
      */
     public void start(View view) {
+        if (lvl == 3) lireFichier();
+        startImg(view);
+    }
+
+    /**
+     * Cette fonction permet de démarrer un exercice du jeu imagerie. Si la série est toujours en
+     * cours, un exercice est lancé, dans le cas contraire, l'écran de fin est affiché.
+     * @param view la vue en cours
+     */
+    private void startImg(View view){
         view.invalidate();
         if (cmptImages < NB_TOURS) {
-            setContentView(R.layout.activity_img);
-            idLayout = R.layout.activity_img;
+            if (lvl == 3) {
+                setContentView(R.layout.activity_img_lvl3);
+                idLayout = R.layout.activity_img_lvl3;
+            }
+            else {
+                setContentView(R.layout.activity_img);
+                idLayout = R.layout.activity_img;
+            }
             randomImg();
         }
         else {
             setContentView(R.layout.activity_img_fin);
             idLayout = R.layout.activity_img_fin;
         }
-
     }
 
     /**
@@ -144,7 +159,6 @@ public class ImgActivity extends ActionBarActivity {
      * correspondante pour l'afficher pour l'exercice.
      */
     protected void randomImg(){
-        final ImageView img = (ImageView) findViewById(R.id.imgRandom);
         String str = "";
         int rand;
         int nbimg = 0;
@@ -158,6 +172,9 @@ public class ImgActivity extends ActionBarActivity {
                 str = "img2_";
                 nbimg = NB_IMAGES2;
                 break;
+            case 3 :
+                str = "img3_";
+                nbimg = NB_IMAGES3;
             default:
                 break;
         }
@@ -167,17 +184,70 @@ public class ImgActivity extends ActionBarActivity {
         }while (existeImageAffichee(rand));
         strTmp = str + rand+ "";
         // Afficher l'image
-        img.setImageDrawable
-                (
-                        getResources().getDrawable(getResourceID(strTmp, "drawable",
-                                getApplicationContext()))
-                );
-        // Afficher la chaîne de caractères correspondant à l'image
-        final TextView tv = (TextView) findViewById(R.id.tv1);
-        tv.setText(getStringResourceByName(strTmp, getApplicationContext()));
+        if (lvl == 3){
+            placerImgLvl3(rand);
+        }
+        else {
+            ImageView img = (ImageView) findViewById(R.id.imgRandom);
+            img.setImageDrawable(getResources().getDrawable(getResourceID(strTmp, "drawable",
+                                    getApplicationContext())));
+            // Afficher la chaîne de caractères correspondant à l'image
+            TextView tv = (TextView) findViewById(R.id.tv1);
+            tv.setText(getStringResourceByName(strTmp, getApplicationContext()));
+        }
         // Mémoriser que cette image est déjà sortie
         this.tabNbImages[cmptImages]=rand;
         this.cmptImages++;
+    }
+
+    /**
+     * Cette fonction permet de mettre en place les images et textes à mémoriser pour un exercice de niveau 3
+     * @param rand le nombre de l'image généré
+     */
+    private void placerImgLvl3(int rand){
+        posLvl3 = rand*3;
+        //System.out.println(posLvl3 + "-" + rand);
+        //System.out.println(tabRefImg[posLvl3+1]);
+        ImageView img1 = (ImageView) findViewById(R.id.imgRandom1);
+        ImageView img2 = (ImageView) findViewById(R.id.imgRandom2);
+        img1.setImageDrawable(getResources().getDrawable(getResourceID(tabRefImg[posLvl3+1], "drawable",
+                getApplicationContext())));
+        img2.setImageDrawable(getResources().getDrawable(getResourceID(tabRefImg[posLvl3+2], "drawable",
+                getApplicationContext())));
+
+        TextView tv1 = (TextView) findViewById(R.id.tvL31);
+        TextView tv2 = (TextView) findViewById(R.id.tvL32);
+        tv1.setText(getStringResourceByName(strTmp+"_1", getApplicationContext()));
+        tv2.setText(getStringResourceByName(strTmp+"_2", getApplicationContext()));
+    }
+
+    /**
+     * Cette fonction permet de lire le fichier contenant les références des images pour le niveau 3
+     * et de stocker celles-ci dans le tableau approprié.
+     */
+    private void lireFichier(){
+        String fich = "img3.txt";
+        int i = 0;
+        // Lecture du fichier
+        try {
+            // Ouvrir le fichier
+            InputStream ips = getAssets().open(fich);//new FileInputStream(fichier);
+            InputStreamReader ipsr = new InputStreamReader(ips);
+            BufferedReader br = new BufferedReader(ipsr);
+            String ligne;
+            /* Pour chaque ligne, ajouter la référence de l'image dans le tableau prévu à cet effet
+            */
+            while ((ligne = br.readLine()) != null) {
+                if(i != 0) tabRefImg[i-1] = ligne;
+                i++;
+            }
+            // Fermer le fichier
+            br.close();
+            ipsr.close();
+            ips.close();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
     /**
@@ -190,11 +260,14 @@ public class ImgActivity extends ActionBarActivity {
         idLayout =  R.layout.activity_img_choix;
         // Afficher l'image
         final ImageView img = (ImageView) findViewById(R.id.imgRandom);
-        img.setImageDrawable
-                (
-                        getResources().getDrawable(getResourceID(strTmp, "drawable",
-                                getApplicationContext()))
-                );
+        if (lvl == 3){
+            img.setImageDrawable(getResources().getDrawable(getResourceID(tabRefImg[posLvl3], "drawable",
+                    getApplicationContext())));
+        }
+        else {
+            img.setImageDrawable(getResources().getDrawable(getResourceID(strTmp, "drawable",
+                                    getApplicationContext())));
+        }
         // Récupérer les boutons depuis le layout
         final Button b1 = (Button) findViewById(R.id.choix1);
         final Button b2 = (Button) findViewById(R.id.choix2);
@@ -300,7 +373,7 @@ public class ImgActivity extends ActionBarActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        start(v);
+                        startImg(v);
                     }
                 }, 2500);
             }
@@ -372,9 +445,6 @@ public class ImgActivity extends ActionBarActivity {
         lvl = 1;
         setContentView(R.layout.activity_start);
         idLayout = R.layout.activity_start;
-        // Les deux lignes ci-dessous permettent de bloquer l'acces au niveau 3
-        ImageView lvl3 = (ImageView) findViewById(R.id.EtoileLvl3);
-        lvl3.setVisibility(View.GONE);
     }
 
     /**
