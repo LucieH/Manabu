@@ -18,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
@@ -84,10 +85,12 @@ public class AnagrammeActivity extends ActionBarActivity {
                         .build()
         );
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
-                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_start);
         idLayout = R.layout.activity_start;
+        TextView nom = (TextView) findViewById(R.id.nomExo);
+        nom.setText(getString(R.string.ana));
 	}
 
     /**
@@ -187,8 +190,8 @@ public class AnagrammeActivity extends ActionBarActivity {
             placerBoutons(tbBoutonLettres, arStr, tbStr);
         }
         else{
-            setContentView(R.layout.activity_img_fin);
-            idLayout = R.layout.activity_img_fin;
+            setContentView(R.layout.activity_fin);
+            idLayout = R.layout.activity_fin;
         }
     }
 

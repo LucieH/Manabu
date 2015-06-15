@@ -58,10 +58,12 @@ public class FlashActivity extends ActionBarActivity {
                         .build()
         );
 		supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
-                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_start);
         idLayout = R.layout.activity_start;
+        TextView nom = (TextView) findViewById(R.id.nomExo);
+        nom.setText(getString(R.string.flash));
     }
 
     /**
@@ -170,8 +172,8 @@ public class FlashActivity extends ActionBarActivity {
             compteur ++;
         }
         else {
-            setContentView(R.layout.activity_img_fin);
-            idLayout = R.layout.activity_img_fin;
+            setContentView(R.layout.activity_fin);
+            idLayout = R.layout.activity_fin;
         }
 
     }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -60,6 +61,8 @@ public class SonActivity extends ActionBarActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_start);
         idLayout = R.layout.activity_start;
+        TextView nom = (TextView) findViewById(R.id.nomExo);
+        nom.setText(getString(R.string.son));
     }
 
     /**
@@ -201,8 +204,8 @@ public class SonActivity extends ActionBarActivity {
             compteur++;
         }
         else {
-            setContentView(R.layout.activity_img_fin);
-            idLayout = R.layout.activity_img_fin;
+            setContentView(R.layout.activity_fin);
+            idLayout = R.layout.activity_fin;
         }
     }
 

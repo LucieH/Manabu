@@ -66,6 +66,8 @@ public class ImgActivity extends ActionBarActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_start);
         idLayout = R.layout.activity_start;
+        TextView nom = (TextView) findViewById(R.id.nomExo);
+        nom.setText(getString(R.string.img));
 	}
 
     /**
@@ -149,8 +151,8 @@ public class ImgActivity extends ActionBarActivity {
             randomImg();
         }
         else {
-            setContentView(R.layout.activity_img_fin);
-            idLayout = R.layout.activity_img_fin;
+            setContentView(R.layout.activity_fin);
+            idLayout = R.layout.activity_fin;
         }
     }
 
