@@ -269,22 +269,70 @@ public class ImgActivity extends ActionBarActivity {
                                     getApplicationContext())));
         }
         // Récupérer les boutons depuis le layout
-        final Button b1 = (Button) findViewById(R.id.choix1);
-        final Button b2 = (Button) findViewById(R.id.choix2);
-        final Button b3 = (Button) findViewById(R.id.choix3);
-        // Changer l'orientation des boutons pour le niveau 2
-        if (lvl == 2) {
-            LinearLayout ll = (LinearLayout) findViewById(R.id.imgChBtns);
-            ll.setOrientation(LinearLayout.VERTICAL);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            lp.setMargins(0,0,0,10);
-            b1.setLayoutParams(lp);
-            b2.setLayoutParams(lp);
-            b3.setLayoutParams(lp);
-            b1.setPadding(0,0,0,0);
-        }
+         Button b1 = (Button) findViewById(R.id.choix1);
+         Button b2 = (Button) findViewById(R.id.choix2);
+         Button b3 = (Button) findViewById(R.id.choix3);
         // Définir l'ordre des boutons au hasard
         creerBoutonRandom(b1, b2, b3);
+        // Changer l'orientation des boutons pour le niveau 2
+        if (lvl == 2) setBoutonsVertical(b1, b2, b3);
+        // Sinon faire en sorte qu'ils aient tous la même largeur
+        else setLargeurBoutons(b1,b2,b3);
+    }
+
+    /**
+     * Cette fonction permet de placer trois boutons l'un au dessus de l'autre verticalement dans le
+     * layout de choix de l'exercice imagerie.
+     * @param b1 le premier bouton
+     * @param b2 le deuxième bouton
+     * @param b3 le troisième bouton
+     */
+    private void setBoutonsVertical(Button b1, Button b2, Button b3){
+        LinearLayout ll = (LinearLayout) findViewById(R.id.imgChBtns);
+        ll.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(0,0,0,10);
+        b1.setLayoutParams(lp);
+        b2.setLayoutParams(lp);
+        b3.setLayoutParams(lp);
+        b1.setPadding(0, 0, 0, 0);
+    }
+
+    /**
+     * Cette fonction permet de définir la même largeur pour les trois les boutons de choix.
+     * @param b1 le premier bouton
+     * @param b2 le deuxième bouton
+     * @param b3 le troisième bouton
+     */
+    private void setLargeurBoutons(final Button b1, final Button b2, final Button b3){
+        // Le délai permet au système de déjà générer les boutons afin de calculer lequel est le plus large
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(getLargeur(b1, b2, b3), LinearLayout.LayoutParams.WRAP_CONTENT);
+                b1.setLayoutParams(lp);
+                lp.setMargins(10,0,10,0);
+                b2.setLayoutParams(lp);
+                b3.setLayoutParams(lp);
+            }
+        }, 5);
+
+    }
+
+    /**
+     * Cette fonction permet d'obtenir la largeur en pixels du bouton le plus large parmi les trois en paramètres.
+     * @param b1 le premier bouton
+     * @param b2 le deuxième bouton
+     * @param b3 le troisième bouton
+     * @return la largeur en pixels
+     */
+    private int getLargeur(Button b1, Button b2, Button b3){
+        if (b1.getWidth() > b2.getWidth()){
+            if (b1.getWidth() > b3.getWidth()) return b1.getWidth();
+        }
+        else {if (b2.getWidth() > b3.getWidth()) return b2.getWidth();}
+        return b3.getWidth();
     }
 
     /**
