@@ -115,10 +115,12 @@ public class Utilities{
      * Cette fonction permet de revenir au layout de début d'exercice.
      * @param act l'activité en cours
      * @param view la vue en cours
+     * @return l'id du layout de début d'exercice
      */
-    protected static void revenirDebut(final Activity act, View view){
+    protected static int revenirDebut(final Activity act, View view){
         view.invalidate();
         act.setContentView(R.layout.activity_start);
+        return R.layout.activity_start;
     }
 
     /**

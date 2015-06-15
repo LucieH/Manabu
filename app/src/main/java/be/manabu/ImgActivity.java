@@ -117,6 +117,8 @@ public class ImgActivity extends ActionBarActivity {
                 idLayout == R.layout.regles || idLayout ==R.layout.activity_img_lvl3){
             setContentView(R.layout.activity_start);
             idLayout = R.layout.activity_start;
+            TextView nom = (TextView) findViewById(R.id.nomExo);
+            nom.setText(getString(R.string.img));
             lvl = 1;
             cmptImages = 0;
         }
@@ -495,6 +497,8 @@ public class ImgActivity extends ActionBarActivity {
         lvl = 1;
         setContentView(R.layout.activity_start);
         idLayout = R.layout.activity_start;
+        TextView nom = (TextView) findViewById(R.id.nomExo);
+        nom.setText(getString(R.string.img));
     }
 
     /**
@@ -561,7 +565,10 @@ public class ImgActivity extends ActionBarActivity {
      * Cette fonction s'exécute lors du clic sur le bouton "revenir" de l'affichage des règles.
      * @param view la vue en cours
      */
-    public void back(View view){ revenirDebut(this, view);}
+    public void back(View view){
+        idLayout = revenirDebut(this, view);
+        TextView nom = (TextView) findViewById(R.id.nomExo);
+        nom.setText(getString(R.string.img));}
 }
 
 

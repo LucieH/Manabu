@@ -28,9 +28,8 @@
     <string name="duree">Secondes d\'affichage</string>
     <string name="niveau">Niveau</string>
     <string name="regles">Règles du jeu</string>
-    <string name="regleImg">Mémorise le mot ou la phrase associé(e) à l\'image, puis appuie sur \"Mémorisé\".
-        \nÀ l\'aide de l\'image, retrouve ensuite la proposition correcte parmi celles affichées.
-        </string>
+    <string name="regleImg">Mémorise le mot ou la phrase associé(e) à l\'image, puis appuie sur
+        \"Mémorisé\".\nÀ l\'aide de l\'image, retrouve ensuite la proposition correcte parmi celles affichées.</string>
     <string name="regleFlash">Choisis le temps d\'affichage et mémorise le mot ou la phrase dans le temps imparti.
         \nTape ensuite ce que tu as lu dans la zone blanche et vérifie ta réponse.</string>
     <string name="regleAna">Remets les lettres dans l\'ordre pour former un mot.

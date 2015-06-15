@@ -111,6 +111,8 @@ public class SonActivity extends ActionBarActivity {
         if (idLayout == R.layout.activity_son || idLayout == R.layout.regles){
             setContentView(R.layout.activity_start);
             idLayout = R.layout.activity_start;
+            TextView nom = (TextView) findViewById(R.id.nomExo);
+            nom.setText(getString(R.string.son));
             lvl = 1;
             compteur = 0;
         }
@@ -465,6 +467,8 @@ public class SonActivity extends ActionBarActivity {
         lvl = 1;
         setContentView(R.layout.activity_start);
         idLayout = R.layout.activity_start;
+        TextView nom = (TextView) findViewById(R.id.nomExo);
+        nom.setText(getString(R.string.son));
     }
 
     /**
@@ -505,5 +509,8 @@ public class SonActivity extends ActionBarActivity {
      * Cette fonction s'exécute lors du clic sur le bouton "revenir" de l'affichage des règles.
      * @param view la vue en cours
      */
-    public void back(View view){ revenirDebut(this, view);}
+    public void back(View view){
+        idLayout = revenirDebut(this, view);
+        TextView nom = (TextView) findViewById(R.id.nomExo);
+        nom.setText(getString(R.string.son));}
 }
